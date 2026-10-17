@@ -30,6 +30,7 @@ test('full brand uses the supplied transparent PNG at its original aspect ratio'
   const result = renderBrand({ width: 180 });
   assert.equal(result.props.source, '../../assets/logofull.png');
   assert.equal(result.props.style.aspectRatio, 2654 / 1568);
+  assert.equal(result.props.style.height, 180 * 1568 / 2654);
   assert.equal(result.props.resizeMode, 'contain');
   assert.equal(result.props.accessibilityLabel, 'Destiny USA');
 });
