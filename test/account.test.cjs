@@ -52,11 +52,12 @@ function screenHarness(filename, options = {}) {
     '../../ui/components': new Proxy({}, { get: (_, key) => String(key) }),
     '../../ui/commerce': new Proxy({}, { get: (_, key) => String(key) }),
     '../../ui/CommerceFooter': { CommerceFooter: 'CommerceFooter' },
+    '../../ui/BrandLogo': { BrandLogo: 'BrandLogo' },
     '../../ui/theme': { colors: {}, radius: {}, spacing: {} },
     '../../ui/VoucherFace': { VoucherFace: 'VoucherFace' },
     '../../ui/strings': { languages: [{ id: 'en', name: 'English' }] },
     '../catalog/RichProductDescription': { RichProductDescription: 'RichProductDescription' },
-    './account-ui': { accountStyles: {}, MenuRow: 'MenuRow', DataFeedback: 'DataFeedback', PageControls: 'PageControls', useAccountResource: requestedPath => options.resource ? options.resource(requestedPath) : resource, recordDate: value => value ?? 'dateUnknown' },
+    './account-ui': { accountStyles: {}, MenuRow: 'MenuRow', DataFeedback: 'DataFeedback', PageControls: 'PageControls', WalletAccess: ({ required = true, children }) => !required || mobile.catalog.showWallet ? children : null, useAccountResource: requestedPath => options.resource ? options.resource(requestedPath) : resource, recordDate: value => value ?? 'dateUnknown' },
   };
   const source = fs.readFileSync(path.join(__dirname, '../src/screens/account', filename), 'utf8');
   const compiled = typescript.transpileModule(source, { compilerOptions: { module: typescript.ModuleKind.CommonJS, target: typescript.ScriptTarget.ES2022, jsx: typescript.JsxEmit.ReactJSX } }).outputText;
@@ -64,7 +65,7 @@ function screenHarness(filename, options = {}) {
   vm.runInNewContext(compiled, { module, exports: module.exports, require: name => { if (!(name in modules)) throw new Error(`Unexpected dependency: ${name}`); return modules[name]; }, console }, { filename });
   const navigation = { navigate: (...arguments_) => navigations.push(arguments_), goBack: () => navigations.push(['back']) };
   return {
-    render(name, route) { stateIndex = 0; refIndex = 0; return module.exports[name]({ navigation, route }); },
+    render(name, route) { stateIndex = 0; refIndex = 0; let tree = module.exports[name]({ navigation, route }); while (typeof tree?.type === 'function') tree = tree.type(tree.props); return tree; },
     state, requests, alerts, navigations, mobile,
     get refreshes() { return refreshes; },
     get accountRefreshes() { return accountRefreshes; },
@@ -87,6 +88,32 @@ function button(tree, title) {
 }
 
 const requestBody = (harness, index) => JSON.parse(JSON.stringify(harness.requests[index][2]));
+
+test('hiding wallet removes Account Balance and prevents wallet, withdrawal and money-support screens mounting', () => {
+  const account = screenHarness('AccountScreen.tsx');
+  assert.ok(elements(account.render('AccountScreen')).some(node => node.props.children === 'balance'));
+  account.mobile.catalog.showWallet = false;
+  assert.equal(elements(account.render('AccountScreen')).some(node => node.props.children === 'balance'), false);
+  for (const [file, screen] of [['WalletScreen.tsx', 'WalletScreen'], ['WithdrawalScreen.tsx', 'WithdrawalScreen']]) {
+    const harness = screenHarness(file);
+    harness.mobile.catalog.showWallet = false;
+    assert.equal(harness.render(screen), null);
+    assert.equal(harness.requests.length, 0);
+  }
+  const support = screenHarness('SupportScreen.tsx');
+  support.mobile.catalog.showWallet = false;
+  assert.equal(support.render('SupportScreen', { params: { mode: 'withdrawal' } }), null);
+  assert.equal(support.render('SupportScreen', { params: { mode: 'deposit' } }), null);
+  assert.ok(support.render('SupportScreen'));
+});
+
+test('About requests the selected locale instead of a fixed English page', () => {
+  const paths = [];
+  const harness = screenHarness('AboutScreen.tsx', { resource: requestedPath => { paths.push(requestedPath); return { data: { html: '<p>About</p>' }, refresh() {} }; } });
+  harness.mobile.language = 'vi'; harness.render('AboutScreen');
+  harness.mobile.language = 'fr'; harness.render('AboutScreen');
+  assert.deepEqual(paths, ['/public/about?language=vi', '/public/about?language=fr']);
+});
 
 test('profile saves profile fields only, never balance, status, email or credentials', async () => {
   const harness = screenHarness('ProfileScreen.tsx');

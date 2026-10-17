@@ -6,9 +6,14 @@ import { captureApiSession, isApiSessionCurrent } from '../../services/api';
 import { AppText, Button, Header, Notice, Screen } from '../../ui/components';
 import { CommerceFooter } from '../../ui/CommerceFooter';
 import { colors } from '../../ui/theme';
-import { type AccountScreenProps } from './account-ui';
+import { WalletAccess, type AccountScreenProps } from './account-ui';
 
-export function SupportScreen({ navigation, route }: AccountScreenProps) {
+export function SupportScreen(props: AccountScreenProps) {
+  const mode = props.route?.params?.mode;
+  return <WalletAccess navigation={props.navigation} required={mode === 'deposit' || mode === 'withdrawal'}><SupportContent {...props}/></WalletAccess>;
+}
+
+function SupportContent({ navigation, route }: AccountScreenProps) {
   const { t } = useMobile();
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);

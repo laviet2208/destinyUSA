@@ -7,9 +7,13 @@ import { money } from '../../services/commerce';
 import { AppText, Button, Field, Header, Notice, Screen } from '../../ui/components';
 import { CommerceFooter } from '../../ui/CommerceFooter';
 import { colors, touchTarget } from '../../ui/theme';
-import { accountStyles, type AccountScreenProps } from './account-ui';
+import { accountStyles, WalletAccess, type AccountScreenProps } from './account-ui';
 
-export function WithdrawalScreen({ navigation }: AccountScreenProps) {
+export function WithdrawalScreen(props: AccountScreenProps) {
+  return <WalletAccess navigation={props.navigation}><WithdrawalContent {...props}/></WalletAccess>;
+}
+
+function WithdrawalContent({ navigation }: AccountScreenProps) {
   const { account, t, refreshAccount, refresh } = useMobile();
   const [amount, setAmount] = useState('50');
   const [customAmount, setCustomAmount] = useState(false);

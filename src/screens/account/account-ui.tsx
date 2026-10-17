@@ -8,6 +8,15 @@ import { colors, spacing } from '../../ui/theme';
 import { directionFor } from '../../ui/strings';
 
 export type AccountScreenProps = { navigation: any; route?: any };
+
+export function WalletAccess({ navigation, required = true, children }: { navigation: any; required?: boolean; children: ReactNode }) {
+  const { catalog } = useMobile();
+  const visible = !required || catalog.showWallet;
+  useEffect(() => {
+    if (!visible) navigation.replace('main_screen', { screen: 'account_page' });
+  }, [visible, navigation]);
+  return visible ? children : null;
+}
 export type OrderRow = { id: string; status: string; created_at: string | null; subtotal: number; paid_amount: number; voucher_value: number; refunded_amount: number; archived_at?: string | null; channel?: string; note?: string; receiver?: Record<string, string>; items?: OrderItem[]; events?: { status: string; created_at: string | null }[] };
 export type OrderItem = { id: string; product_name: string; variant_name: string; quantity: number; unit_price: number; image_urls: string[] };
 export type LedgerRow = { id: string; direction: string; amount: number; content: string; created_at: string | null };

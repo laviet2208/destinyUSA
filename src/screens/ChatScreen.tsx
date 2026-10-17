@@ -65,7 +65,7 @@ export function ChatScreen({ navigation }: any) {
       if (!live.current) return;
       const result = await api<Message>(`${path}/messages`, 'POST', { clientId: prepared.clientId, kind: prepared.kind, content: prepared.content });
       if (!live.current) return;
-      merge([result]); staged.current.delete(draft.clientId); setDrafts(previous => previous.filter(item => item.clientId !== draft.clientId)); atBottom.current = true;
+      merge([result]); staged.current.delete(draft.clientId); setDrafts(previous => previous.filter(item => item.clientId !== draft.clientId)); atBottom.current = true; void load();
     } catch (failure) { if (live.current) setDrafts(previous => previous.map(item => item.clientId === draft.clientId ? { ...item, error: (failure as Error).message } : item)); }
     finally { sending.current.delete(draft.clientId); }
   };

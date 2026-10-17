@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import { io } from 'socket.io-client';
 import { api, apiBase, captureApiSession, getApiToken, isApiSessionCurrent, mediaUrl, setApiSession } from '../services/api';
 import { addCartItem, eligibleVariant } from '../services/commerce';
+import { walletIsVisible } from '../services/wallet-visibility';
 import { normalizeLanguage, translate, type Language } from '../ui/strings';
 import type { FlashSchedule, Account, Banner, CartItem, Category, Channel, ContentRecord, PageResult, Product, Variant } from '../types';
 
@@ -114,7 +115,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
       }
       const [types, directories, ads, ui, flash, wallet] = await Promise.all([fetchContent('productType'), fetchContent('productDirectory'), fetchContent('adsData'), fetchContent('UI'), fetchContent('Flashsale'), account ? fetchContent('isShowWallet') : Promise.resolve({ items: [] as ContentRecord[] })]);
       if (controller.signal.aborted || !isApiSessionCurrent(session)) return;
-      setCatalog({ products, types: types.items.map(toCategory), directories: directories.items.filter(row => Number((row.data as any).status ?? 1) === 1).map(toCategory), banners: ads.items.filter(row => Number((row.data as any).status) === 1).map(row => ({ id: row.id, image: mediaUrl((row.data as any).image), productId: (row.data as any).productId })), topIds: idList(recordValue(ui.items, 'productTop')), directoryIds: idList(recordValue(ui.items, 'productDirectory')), flashIds: idList(recordValue(flash.items, 'product')), flashActive: Number(recordValue(flash.items, 'isStart')) === 1, flashSchedule: recordValue(flash.items, 'schedule') ? { ...(recordValue(flash.items, 'schedule') as FlashSchedule), receivedAt: Date.now() } : undefined, showWallet: Number(recordValue(wallet.items, '__value')) === 1 });
+      setCatalog({ products, types: types.items.map(toCategory), directories: directories.items.filter(row => Number((row.data as any).status ?? 1) === 1).map(toCategory), banners: ads.items.filter(row => Number((row.data as any).status) === 1).map(row => ({ id: row.id, image: mediaUrl((row.data as any).image), productId: (row.data as any).productId })), topIds: idList(recordValue(ui.items, 'productTop')), directoryIds: idList(recordValue(ui.items, 'productDirectory')), flashIds: idList(recordValue(flash.items, 'product')), flashActive: Number(recordValue(flash.items, 'isStart')) === 1, flashSchedule: recordValue(flash.items, 'schedule') ? { ...(recordValue(flash.items, 'schedule') as FlashSchedule), receivedAt: Date.now() } : undefined, showWallet: walletIsVisible(recordValue(wallet.items, '__value')) });
     };
     load().catch(failure => { if (!controller.signal.aborted) setError((failure as Error).message); }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
@@ -140,11 +141,25 @@ export function MobileProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!account || account.status !== 'active') return;
     const socket = io(apiBase, { auth: { token: getApiToken() } });
+    const controller = new AbortController();
+    const session = captureApiSession();
+    let walletRequest = 0;
+    const syncWallet = () => {
+      const request = ++walletRequest;
+      void api<{ items: ContentRecord[] }>('/content/isShowWallet', 'GET', undefined, undefined, controller.signal).then(result => {
+        if (!controller.signal.aborted && isApiSessionCurrent(session) && request === walletRequest) {
+          setCatalog(previous => ({ ...previous, showWallet: walletIsVisible(recordValue(result.items, '__value')) }));
+        }
+      }).catch(() => {});
+    };
+    const pollWallet = setInterval(syncWallet, 30000);
+    socket.on('settings:changed', syncWallet);
+    socket.on('connect', syncWallet);
     const changed = () => { void refreshAccount().catch(() => {}); refresh(); };
     socket.on('data:changed', changed);
     socket.on('connect', changed);
-    const onActive = AppState.addEventListener('change', state => { if (state === 'active') { void refreshAccount().catch(() => {}); refresh(); } });
-    return () => { onActive.remove(); socket.disconnect(); };
+    const onActive = AppState.addEventListener('change', state => { if (state === 'active') { syncWallet(); void refreshAccount().catch(() => {}); refresh(); } });
+    return () => { controller.abort(); clearInterval(pollWallet); onActive.remove(); socket.disconnect(); };
   }, [account?.id, account?.status, refreshAccount, refresh]);
   const addToCart = async (channel: Channel, product: Product, variant: Variant, quantity: number) => {
     if (!account) throw new Error(translate(language, 'loginRequired'));

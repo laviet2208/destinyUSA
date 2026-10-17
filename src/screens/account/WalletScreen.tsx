@@ -8,9 +8,13 @@ import { AppText, Header, Screen } from '../../ui/components';
 import { SegmentedControl, StatusPill } from '../../ui/commerce';
 import { CommerceFooter } from '../../ui/CommerceFooter';
 import { colors, touchTarget } from '../../ui/theme';
-import { accountStyles, DataFeedback, PageControls, recordDate, useAccountResource, type AccountScreenProps, type LedgerRow, type MoneyRequestRow } from './account-ui';
+import { accountStyles, DataFeedback, PageControls, recordDate, useAccountResource, WalletAccess, type AccountScreenProps, type LedgerRow, type MoneyRequestRow } from './account-ui';
 
-export function WalletScreen({ navigation }: AccountScreenProps) {
+export function WalletScreen(props: AccountScreenProps) {
+  return <WalletAccess navigation={props.navigation}><WalletContent {...props}/></WalletAccess>;
+}
+
+function WalletContent({ navigation }: AccountScreenProps) {
   const { account, t, language, refreshAccount } = useMobile();
   const [mode, setMode] = useState<'ledger' | 'requests'>('ledger');
   const [offset, setOffset] = useState(0);
