@@ -4,7 +4,7 @@
 - Source app khách: https://github.com/laviet2208/destinyUSA
 - Expo project: https://expo.dev/accounts/vitla22/projects/destiny-usa-customer
 - Đã liên kết EAS project, chưa tạo APK/IPA hoặc phát hành Store. App có RNFirebase native nên không chạy bằng Expo Go.
-- URL API production chờ cấu hình VPS: đặt EXPO_PUBLIC_API_URL trước khi build bản cài. Không dùng localhost của máy tính cho điện thoại thật.
+- API VPS: https://103-195-238-221.sslip.io. Biến EXPO_PUBLIC_API_URL được cấu hình trên EAS preview/production; khi build local dùng .env.example làm mẫu. Không dùng localhost của máy tính cho điện thoại thật.
 - Repository không chứa admin/backend/database, .env, Firebase service account hoặc khóa ký. Cần cung cấp hai file Firebase client và keystore cũ riêng theo các mục bên dưới khi build/phát hành.
 
 Thư mục này không phụ thuộc mã nguồn admin/backend và không thuộc npm workspace của hai phần đó. Chỉ bàn giao thư mục này cho đội phát hành app. Giao diện mobile đang được triển khai theo `Codex_UI_UX_Premium_Purple_Only.txt`, kết nối API nội bộ thay vì Firebase Auth. Chỉ phát hành sau khi kiểm thử đầy đủ trên thiết bị Android/iOS.
