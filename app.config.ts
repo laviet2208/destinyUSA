@@ -36,7 +36,7 @@ export default {
   plugins: [
     ['@react-native-firebase/app', { ios: { disableSPM: true } }],
     '@react-native-firebase/messaging',
-    ['expo-build-properties', { android: { minSdkVersion: 24, compileSdkVersion: 37, targetSdkVersion: 36, usesCleartextTraffic: isDevelopment }, ios: { deploymentTarget: '16.6', useFrameworks: 'static', forceStaticLinking: ['RNFBApp', 'RNFBMessaging'] } }],
+    ['expo-build-properties', { android: { minSdkVersion: 24, compileSdkVersion: 36, targetSdkVersion: 36, usesCleartextTraffic: isDevelopment }, ios: { deploymentTarget: '16.6', useFrameworks: 'static', forceStaticLinking: ['RNFBApp', 'RNFBMessaging'] } }],
     ['expo-image-picker', { photosPermission: 'Cho phép Destiny USA chọn ảnh để gửi cho bộ phận hỗ trợ.', cameraPermission: 'Cho phép Destiny USA chụp ảnh để gửi hỗ trợ.', microphonePermission: false }],
     'expo-secure-store',
     'expo-notifications',

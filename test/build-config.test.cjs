@@ -1,0 +1,25 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const test = require('node:test');
+const vm = require('node:vm');
+const ts = require('typescript');
+
+test('Android SDK matches the installed React Native baseline without changing identity or target', () => {
+  const source = fs.readFileSync(path.join(__dirname, '../app.config.ts'), 'utf8');
+  const module = { exports: {} };
+  const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
+  vm.runInNewContext(compiled, { module, exports: module.exports, process: { env: {} } });
+  const config = module.exports.default;
+  const android = config.plugins.find(plugin => Array.isArray(plugin) && plugin[0] === 'expo-build-properties')[1].android;
+  const versions = fs.readFileSync(path.join(__dirname, '../node_modules/react-native/gradle/libs.versions.toml'), 'utf8');
+  assert.equal(android.compileSdkVersion, Number(versions.match(/^compileSdk = "(\d+)"/m)[1]));
+  assert.equal(android.targetSdkVersion, 36);
+  assert.equal(android.minSdkVersion, 24);
+  assert.equal(config.android.package, 'destn.dstnm.destinymain');
+  assert.equal(config.ios.bundleIdentifier, config.android.package);
+  assert.equal(config.ios.appleTeamId, '827H8UVFKV');
+  const profiles = JSON.parse(fs.readFileSync(path.join(__dirname, '../eas.json'), 'utf8')).build;
+  assert.equal(profiles.preview.android.credentialsSource, 'local');
+  assert.equal(profiles.production.android.credentialsSource, 'local');
+});

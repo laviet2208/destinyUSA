@@ -20,7 +20,7 @@ Thư mục này không phụ thuộc mã nguồn admin/backend và không thuộ
 
 ## Chạy Android local trên Windows
 
-Cần JDK 17 và Android SDK. Cấu hình hiện giữ compileSDK 37, targetSDK 36, minSDK 24. Trong SDK Manager cài `platforms;android-37.0`, `build-tools;36.0.0`; NDK/CMake còn thiếu sẽ được Gradle yêu cầu. Không đổi compile/target chỉ để bỏ qua lỗi môi trường.
+Cần JDK 17 và Android SDK. Cấu hình dùng compileSDK36, targetSDK36, minSDK24 tương thích React Native hiện tại. Trong SDK Manager cài `platforms;android-36`, `build-tools;36.0.0`; NDK/CMake còn thiếu sẽ được Gradle yêu cầu. Không ép compileSDK37: bản SDK đó cài dưới tên android-37.0 nhưng một số thư viện hiện yêu cầu android-37, làm EAS build lỗi. Target SDK và định danh phát hành không đổi.
 
 Ví dụ PowerShell với emulator Android mặc định:
 
@@ -87,7 +87,7 @@ RNFirebase 26 yêu cầu New Architecture (Expo 57 dùng sẵn). iOS giữ Cocoa
 - Android/iOS: `destn.dstnm.destinymain`; Apple team `827H8UVFKV`.
 - Android giữ nhãn Destiny USA. iOS giữ CFBundleDisplayName Destinymain của bản cũ.
 - Bản code cũ: 1.0.8+8. Cấu hình khởi điểm 1.0.9/build9; **phải kiểm tra số build mới nhất trên Play/App Store Connect và tăng cao hơn trước khi upload**.
-- Android compileSDK37, targetSDK36; minSDK24 theo stack mới (khác min23 của Flutter cũ). Target mới không đồng nghĩa đã được kiểm thử mọi thiết bị.
+- Android compileSDK36, targetSDK36; minSDK24 theo stack mới (khác min23 của Flutter cũ). Target mới không đồng nghĩa đã được kiểm thử mọi thiết bị.
 - Khi build Android: chủ dự án chạy `npm run signing:prepare` ở thư mục hệ thống gốc để tạo local `credentials.json` trỏ keystore cũ. Không tạo key mới. Không gửi keystore cho bên chỉ phát hành iOS.
 - iOS dùng bundle/team/provisioning đúng app đang phát hành; APNs key nằm trên Firebase/server, không nhúng vào source.
 - Kiểm tra notification permission Android13+, edge-to-edge/insets, predictive back, system Photo Picker và native libraries16KB trước release. Xem [Android target SDK](https://developer.android.com/google/play/requirements/target-sdk), [16KB](https://developer.android.com/guide/practices/page-sizes), [Expo compatibility](https://docs.expo.dev/versions/latest/).
