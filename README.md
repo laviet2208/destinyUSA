@@ -1,6 +1,7 @@
 # Destiny USA — app khách độc lập
 
 ## GitHub và Expo
+- Quy trình bàn giao clone → build iOS → TestFlight → cập nhật App Store: [IOS_RELEASE.md](IOS_RELEASE.md).
 - Source app khách: https://github.com/laviet2208/destinyUSA
 - Expo project: https://expo.dev/accounts/vitla22/projects/destiny-usa-customer
 - Đã liên kết EAS project, chưa tạo APK/IPA hoặc phát hành Store. App có RNFirebase native nên không chạy bằng Expo Go.
