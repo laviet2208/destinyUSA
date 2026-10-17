@@ -1,0 +1,13 @@
+export type Channel = 'regular' | 'flashsale';
+export type FlashSchedule = { timeZone: string; serverNow: string; startsAt: string; endsAt: string; nextStartsAt: string; active: boolean; receivedAt?: number };
+export type Account = { id: string; email: string; role: 'customer' | 'admin'; status: 'active' | 'locked' | 'referral_required'; first_name: string; last_name: string; phone: string; address: string; referral_code: string; balance: number };
+export type Variant = { id: string; product_id: string; name: string; price: number; original_price: number; inventory: number; image: string; active: boolean };
+export type Product = { id: string; name: string; description: string; description_format: 'legacy' | 'html'; type_id: string; directory_id: string; images: string[]; variants: Variant[]; visible: boolean };
+export type Category = { id: string; name: string; image?: string };
+export type Banner = { id: string; image: string; productId?: string };
+export type ContentRecord = { id: string; data: unknown };
+export type CartItem = { product: Product; variant: Variant; quantity: number };
+export type VoucherData = { code?: string; eventName?: string; Money: number; type: number; mincost?: number; maxSale?: number; maxCount?: number; perCustom?: number };
+export type Voucher = { id: string; scope: Channel; data?: VoucherData; voucher?: VoucherData; voucher_snapshot?: VoucherData; starts_at?: string | null; ends_at?: string | null; active?: boolean; used_at?: string | null; revoked_at?: string | null; status?: string };
+export type VoucherSelection = { id: string; personal: boolean; voucher: Voucher };
+export type PageResult<Item> = { items: Item[]; total: number };
