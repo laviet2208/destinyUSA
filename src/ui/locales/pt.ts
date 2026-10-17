@@ -254,6 +254,8 @@ export const pt: Dictionary = {
   "clearFilters": "Limpar filtros",
   "clearCart": "Esvaziar carrinho",
   "clearCartConfirm": "Remover todos os produtos deste carrinho?",
-  "quickAdd": "Escolher opções"
+  "quickAdd": "Escolher opções",
+  "sampleComments": "Comentários de exemplo",
+  "sampleIllustration": "Exemplo ilustrativo"
 };
 

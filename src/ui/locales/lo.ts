@@ -254,5 +254,7 @@ export const lo: Dictionary = {
   "clearFilters": "ລ້າງຕົວກອງ",
   "clearCart": "ລ້າງກະຕ່າ",
   "clearCartConfirm": "ເອົາສິນຄ້າທັງໝົດອອກຈາກກະຕ່ານີ້ບໍ?",
-  "quickAdd": "ເລືອກຕົວເລືອກ"
+  "quickAdd": "ເລືອກຕົວເລືອກ",
+  "sampleComments": "ຄຳເຫັນຕົວຢ່າງ",
+  "sampleIllustration": "ຕົວຢ່າງປະກອບ"
 };

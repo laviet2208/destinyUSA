@@ -254,5 +254,7 @@ export const my: Dictionary = {
   "clearFilters": "စစ်ထုတ်မှုများရှင်းရန်",
   "clearCart": "ဈေးခြင်းရှင်းရန်",
   "clearCartConfirm": "ဤဈေးခြင်းထဲရှိ ပစ္စည်းအားလုံးကို ဖယ်ရှားမလား။",
-  "quickAdd": "ရွေးချယ်စရာများ"
+  "quickAdd": "ရွေးချယ်စရာများ",
+  "sampleComments": "နမူနာမှတ်ချက်များ",
+  "sampleIllustration": "သရုပ်ပြနမူနာ"
 };

@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react';
-import { FlatList, Pressable, RefreshControl, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Alert, FlatList, Pressable, RefreshControl, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Bell, BellRing, MessageCircle, Package, Ticket, Wallet } from 'lucide-react-native';
 import { useMobile } from '../../state/MobileContext';
 import { api, captureApiSession, isApiSessionCurrent } from '../../services/api';
 import { enablePush } from '../../services/push';
+import { enterFlashSale } from '../../services/flash-sale-access';
 import type { ContentRecord } from '../../types';
 import { AppText, Button, Header, Notice, Screen } from '../../ui/components';
 import { SegmentedControl } from '../../ui/commerce';
@@ -16,7 +17,7 @@ type NotificationRow = { id: string; title: string; body: string; created_at: st
 type Announcement = { id: string; title?: string; sub?: string; content?: string; status?: number };
 
 export function NotificationsScreen({ navigation }: AccountScreenProps) {
-  const { account, t, language } = useMobile();
+  const { account, t, language, catalog } = useMobile();
   const { width } = useWindowDimensions();
   const [tab, setTab] = useState<'personal' | 'content'>('personal');
   const [offset, setOffset] = useState(0);
@@ -49,7 +50,7 @@ export function NotificationsScreen({ navigation }: AccountScreenProps) {
     catch (failure) { if (isApiSessionCurrent(session)) setError((failure as Error).message); }
     finally { enabling.current = false; if (isApiSessionCurrent(session)) setPushBusy(false); }
   };
-  const open = (item: NotificationRow) => { if (item.data?.boundary && item.data?.event) navigation.navigate('flash_sale_screen'); else if (item.data?.orderId) navigation.navigate('order_detail_screen', { id: item.data.orderId }); else if (item.data?.conversationId) navigation.navigate('chat_room'); else if (item.data?.requestId) navigation.navigate('wallet_info'); else if (item.data?.grantId) navigation.navigate('voucher_page'); };
+  const open = (item: NotificationRow) => { if (item.data?.boundary && item.data?.event) enterFlashSale(catalog.flashSchedule, () => navigation.navigate('flash_sale_screen'), () => Alert.alert(t('flashSale'), t('saleNotStarted'))); else if (item.data?.orderId) navigation.navigate('order_detail_screen', { id: item.data.orderId }); else if (item.data?.conversationId) navigation.navigate('chat_room'); else if (item.data?.requestId) navigation.navigate('wallet_info'); else if (item.data?.grantId) navigation.navigate('voucher_page'); };
   return <Screen scroll={false}>
     <Header title={t('notifications')} onBack={() => navigation.goBack()} action={tab === 'personal' && Boolean(personal.data?.unread) ? <Button title={t('readAll')} onPress={() => { void markRead(); }} loading={busy} variant="quiet" style={styles.readAll}/> : undefined}/>
     <SegmentedControl items={([{ value: 'personal', label: t('personalNotices') }, { value: 'content', label: t('contentNotices') }] as const).map(item => item)} value={tab} onChange={setTab}/>

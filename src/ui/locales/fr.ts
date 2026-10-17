@@ -254,6 +254,8 @@ export const fr: Dictionary = {
   "clearFilters": "Effacer les filtres",
   "clearCart": "Vider le panier",
   "clearCartConfirm": "Retirer tous les articles de ce panier ?",
-  "quickAdd": "Choisir les options"
+  "quickAdd": "Choisir les options",
+  "sampleComments": "Commentaires exemples",
+  "sampleIllustration": "Exemple illustratif"
 };
 

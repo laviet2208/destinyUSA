@@ -254,5 +254,7 @@ export const vi: Dictionary = {
   "clearFilters": "Xóa bộ lọc",
   "clearCart": "Xóa tất cả",
   "clearCartConfirm": "Xóa tất cả sản phẩm trong giỏ hàng này?",
-  "quickAdd": "Chọn phân loại"
+  "quickAdd": "Chọn phân loại",
+  "sampleComments": "Bình luận mẫu",
+  "sampleIllustration": "Mẫu minh họa"
 };

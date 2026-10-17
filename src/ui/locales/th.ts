@@ -254,5 +254,7 @@ export const th: Dictionary = {
   "clearFilters": "ล้างตัวกรอง",
   "clearCart": "ล้างตะกร้า",
   "clearCartConfirm": "นำสินค้าทั้งหมดออกจากตะกร้านี้หรือไม่?",
-  "quickAdd": "เลือกตัวเลือก"
+  "quickAdd": "เลือกตัวเลือก",
+  "sampleComments": "ความคิดเห็นตัวอย่าง",
+  "sampleIllustration": "ตัวอย่างประกอบ"
 };

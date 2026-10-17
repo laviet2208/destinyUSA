@@ -252,7 +252,9 @@ export const en = {
   "clearFilters": "Clear filters",
   "clearCart": "Clear cart",
   "clearCartConfirm": "Remove all items from this cart?",
-  "quickAdd": "Choose options"
+  "quickAdd": "Choose options",
+  "sampleComments": "Sample comments",
+  "sampleIllustration": "Illustrative sample"
 };
 
 export type TranslationKey = keyof typeof en;

@@ -97,6 +97,8 @@ RNFirebase 26 yêu cầu New Architecture (Expo 57 dùng sẵn). iOS giữ Cocoa
 
 Giới thiệu ứng dụng lấy HTML theo ngôn ngữ đang chọn qua `/public/about?language=...`, thiếu bản dịch dùng tiếng Anh. Công tắc ví toàn cục ẩn cả Balance trong Account và các màn ví/nạp/rút, đồng bộ qua Socket.IO và polling dự phòng 30 giây; không thay đổi số dư hay logic thanh toán. Chat hiển thị lời chào tự động do server lưu khi khách gửi tin đầu tiên, không tự sinh tin nhắn ở client.
 
+Chi tiết sản phẩm tải bình luận mẫu từ `/public/products/:id/review-examples`, hiển thị nhãn minh họa và8ảnh avatar mẫu đóng gói, không giả làm đánh giá mua hàng thật. Flash Sale chỉ mở trong13:30–20:30 giờ Việt Nam theo đồng hồ server: bấm ngoài giờ báo chưa bắt đầu; điều hướng trực tiếp kiểm tra lại lịch server, hết giờ đóng danh sách. Giỏ hàng và quy tắc thanh toán không thay đổi.
+
 Khách đăng nhập bằng `/api/auth/login` (email/password), không dùng Firebase Auth. Bearer token lưu SecureStore. Tài khoản `referral_required` chỉ được mở màn nhập mã. Các request tạo đơn/giao dịch/hủy có `Idempotency-Key` UUID giữ nguyên khi retry. Chat dùng clientId UUID và Socket.IO `/socket.io`; API chi tiết trong `api-contract.md` khi tạo gói bàn giao. Mọi tiền mới là số nguyên; voucher ghi nhận nhưng không giảm tiền thu.
 
 Không có module admin, database hoặc Supabase SDK trong app. Ảnh upload API `/api/media`, sau đó gửi URL trả về vào chat. FCM token đăng ký `/api/devices`, tắt đăng ký trước logout và xử lý token refresh.

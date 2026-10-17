@@ -254,5 +254,7 @@ export const zh: Dictionary = {
   "clearFilters": "清除筛选",
   "clearCart": "清空购物车",
   "clearCartConfirm": "移除此购物车中的所有商品？",
-  "quickAdd": "选择规格"
+  "quickAdd": "选择规格",
+  "sampleComments": "示例评论",
+  "sampleIllustration": "示例展示"
 };

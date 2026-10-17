@@ -49,6 +49,7 @@ function screenHarness(filename, options = {}) {
     '../../services/api': { api: async (...arguments_) => { requests.push(arguments_); return options.api ? options.api(...arguments_) : {}; }, mediaUrl: value => value ?? '', captureApiSession: () => ({ ...session }), isApiSessionCurrent: value => value.token === session.token && value.generation === session.generation },
     '../../services/commerce': { money: value => String(value), voucherData: value => value.voucher ?? value.voucher_snapshot ?? value.data },
     '../../services/push': { enablePush: () => options.enablePush?.() ?? Promise.resolve(() => {}) },
+    '../../services/flash-sale-access': { enterFlashSale: (schedule, open, unavailable) => schedule?.active ? open() : unavailable() },
     '../../ui/components': new Proxy({}, { get: (_, key) => String(key) }),
     '../../ui/commerce': new Proxy({}, { get: (_, key) => String(key) }),
     '../../ui/CommerceFooter': { CommerceFooter: 'CommerceFooter' },

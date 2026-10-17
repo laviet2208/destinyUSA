@@ -9,6 +9,7 @@ import { CatalogFeedback, catalogStyles, moneyLabel, productPrice, type CatalogS
 import { RichProductDescription } from './RichProductDescription';
 import { prefetchGalleryImages } from '../../ui/media';
 import { BottomSheet, StatusPill } from '../../ui/commerce';
+import { ProductReviewExamples } from './ProductReviewExamples';
 
 export type ProductScreenProps = CatalogStatus & {
   product?: Product;
@@ -59,6 +60,7 @@ export function ProductScreen(props: ProductScreenProps) {
           <AppText style={styles.fieldTitle}>{t('description')}</AppText>
           {product.description ? <RichProductDescription html={product.description} width={width - 36}/> : <AppText muted>—</AppText>}
         </View>
+        <ProductReviewExamples key={product.id} productId={product.id} t={t}/>
       </ScrollView>
       <BottomAction><View style={styles.actions}><Button title={t('addToCart')} onPress={() => props.onOpenPurchase('cart')} disabled={props.busy} variant="secondary" icon={<ShoppingCart size={17} color={colors.primary}/>} style={styles.action}/><Button title={t('buyNow')} onPress={() => props.onOpenPurchase('buyNow')} disabled={props.busy} style={styles.action}/></View></BottomAction>
     </>}

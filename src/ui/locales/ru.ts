@@ -254,5 +254,7 @@ export const ru: Dictionary = {
   "clearFilters": "Сбросить фильтры",
   "clearCart": "Очистить корзину",
   "clearCartConfirm": "Удалить все товары из этой корзины?",
-  "quickAdd": "Выбрать вариант"
+  "quickAdd": "Выбрать вариант",
+  "sampleComments": "Примеры комментариев",
+  "sampleIllustration": "Иллюстративный пример"
 };
