@@ -60,16 +60,22 @@ test('direct Flash Sale navigation fetches fresh schedule, blocks closed content
 
 test('customer sample comments preserve admin content, real supplied photo assets and explicit sample labels', () => {
   let state = { data: { items: [{ id: 'sample', display_name: 'Admin sample', avatar_style: 'photo-08', rating: 4, content: 'Original sample text', is_demo: true }, { id: 'unknown', is_demo: false, content: 'Do not present as a sample' }] }, error: '', refresh() {} };
+  const alerts = [];
   const { ProductReviewExamples, reviewAvatars } = load('screens/catalog/ProductReviewExamples.tsx', {
     'react/jsx-runtime': { jsx, jsxs: jsx }, 'expo-image': { Image: 'Photo' },
-    'react-native': { StyleSheet: { create: value => value }, View: 'View' }, 'lucide-react-native': { Star: 'Star' },
+    'react-native': { StyleSheet: { create: value => value }, View: 'View', Alert: { alert: (...args) => alerts.push(args) } }, 'lucide-react-native': { Star: 'Star', Info: 'Info' },
     '../../hooks/useResource': { useResource: requested => { assert.equal(requested, '/public/products/item%2Fone/review-examples'); return state; } },
     '../../ui/components': ui, '../../ui/theme': { colors: {} },
   });
   const nodes = tree => !tree || typeof tree !== 'object' ? [] : Array.isArray(tree) ? tree.flatMap(nodes) : [tree, ...nodes(tree.props?.children)];
   const rendered = nodes(ProductReviewExamples({ productId: 'item/one', t: key => key }));
   assert.ok(rendered.some(node => node.props.children === 'Original sample text'));
-  assert.ok(rendered.some(node => node.props.children === 'sampleIllustration'));
+  assert.equal(rendered.some(node => node.type === 'AppText' && node.props.children === 'sampleIllustration'), false);
+  const disclosure = rendered.find(node => node.type === 'IconButton' && node.props.label === 'sampleIllustration');
+  assert.ok(disclosure);
+  assert.equal(rendered.filter(node => node.type === 'Info').length, 1);
+  disclosure.props.onPress();
+  assert.deepEqual(alerts, [['sampleIllustration', 'commentDisclosure']]);
   assert.equal(rendered.some(node => node.props.children === 'Do not present as a sample'), false);
   assert.equal(rendered.filter(node => node.type === 'Star').length, 5);
   assert.equal(rendered.find(node => node.type === 'Photo').props.source, reviewAvatars['photo-08']);

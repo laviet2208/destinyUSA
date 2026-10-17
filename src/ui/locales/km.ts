@@ -255,6 +255,7 @@ export const km: Dictionary = {
   "clearCart": "សម្អាតកន្ត្រក",
   "clearCartConfirm": "ដកទំនិញទាំងអស់ចេញពីកន្ត្រកនេះ?",
   "quickAdd": "ជ្រើសរើសជម្រើស",
-  "sampleComments": "មតិយោបល់គំរូ",
-  "sampleIllustration": "គំរូបង្ហាញ"
+  "sampleComments": "មតិយោបល់",
+  "sampleIllustration": "គំរូបង្ហាញ",
+  "commentDisclosure": "មតិយោបល់នេះសម្រាប់បង្ហាញផលិតផលជាឧទាហរណ៍ មិនមែនជាការវាយតម្លៃពីអ្នកទិញទេ។"
 };

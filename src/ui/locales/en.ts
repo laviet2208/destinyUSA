@@ -253,8 +253,9 @@ export const en = {
   "clearCart": "Clear cart",
   "clearCartConfirm": "Remove all items from this cart?",
   "quickAdd": "Choose options",
-  "sampleComments": "Sample comments",
-  "sampleIllustration": "Illustrative sample"
+  "sampleComments": "Comments",
+  "sampleIllustration": "Illustrative sample",
+  "commentDisclosure": "This comment illustrates the product. It is not a review from a buyer."
 };
 
 export type TranslationKey = keyof typeof en;

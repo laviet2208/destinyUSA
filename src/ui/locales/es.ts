@@ -255,7 +255,8 @@ export const es: Dictionary = {
   "clearCart": "Vaciar carrito",
   "clearCartConfirm": "¿Eliminar todos los artículos de este carrito?",
   "quickAdd": "Elegir opciones",
-  "sampleComments": "Comentarios de muestra",
-  "sampleIllustration": "Ejemplo ilustrativo"
+  "sampleComments": "Comentarios",
+  "sampleIllustration": "Ejemplo ilustrativo",
+  "commentDisclosure": "Este comentario ilustra el producto. No es una opinión de un comprador."
 };
 

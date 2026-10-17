@@ -255,6 +255,7 @@ export const th: Dictionary = {
   "clearCart": "ล้างตะกร้า",
   "clearCartConfirm": "นำสินค้าทั้งหมดออกจากตะกร้านี้หรือไม่?",
   "quickAdd": "เลือกตัวเลือก",
-  "sampleComments": "ความคิดเห็นตัวอย่าง",
-  "sampleIllustration": "ตัวอย่างประกอบ"
+  "sampleComments": "ความคิดเห็น",
+  "sampleIllustration": "ตัวอย่างประกอบ",
+  "commentDisclosure": "ความคิดเห็นนี้ใช้เพื่อประกอบการแสดงสินค้า ไม่ใช่รีวิวจากผู้ซื้อ"
 };

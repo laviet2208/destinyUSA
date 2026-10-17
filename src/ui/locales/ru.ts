@@ -255,6 +255,7 @@ export const ru: Dictionary = {
   "clearCart": "Очистить корзину",
   "clearCartConfirm": "Удалить все товары из этой корзины?",
   "quickAdd": "Выбрать вариант",
-  "sampleComments": "Примеры комментариев",
-  "sampleIllustration": "Иллюстративный пример"
+  "sampleComments": "Комментарии",
+  "sampleIllustration": "Иллюстративный пример",
+  "commentDisclosure": "Этот комментарий иллюстрирует товар и не является отзывом покупателя."
 };

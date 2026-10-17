@@ -255,6 +255,7 @@ export const lo: Dictionary = {
   "clearCart": "ລ້າງກະຕ່າ",
   "clearCartConfirm": "ເອົາສິນຄ້າທັງໝົດອອກຈາກກະຕ່ານີ້ບໍ?",
   "quickAdd": "ເລືອກຕົວເລືອກ",
-  "sampleComments": "ຄຳເຫັນຕົວຢ່າງ",
-  "sampleIllustration": "ຕົວຢ່າງປະກອບ"
+  "sampleComments": "ຄຳເຫັນ",
+  "sampleIllustration": "ຕົວຢ່າງປະກອບ",
+  "commentDisclosure": "ຄຳເຫັນນີ້ໃຊ້ປະກອບການສະແດງສິນຄ້າ ບໍ່ແມ່ນການປະເມີນຈາກຜູ້ຊື້."
 };

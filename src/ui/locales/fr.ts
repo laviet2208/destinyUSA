@@ -255,7 +255,8 @@ export const fr: Dictionary = {
   "clearCart": "Vider le panier",
   "clearCartConfirm": "Retirer tous les articles de ce panier ?",
   "quickAdd": "Choisir les options",
-  "sampleComments": "Commentaires exemples",
-  "sampleIllustration": "Exemple illustratif"
+  "sampleComments": "Commentaires",
+  "sampleIllustration": "Exemple illustratif",
+  "commentDisclosure": "Ce commentaire illustre le produit. Il ne s’agit pas d’un avis d’acheteur."
 };
 
