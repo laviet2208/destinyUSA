@@ -13,6 +13,7 @@ function renderBrand(props) {
   vm.runInNewContext(compiled, { module, exports: module.exports, require(name) {
     if (name === 'react/jsx-runtime') return { jsx, jsxs: jsx };
     if (name === 'react-native') return { Image: 'Image', Text: 'Text', View: 'View' };
+    if (name === 'expo-image') return { Image: 'Image' };
     assert.ok(name.startsWith('../../assets/'));
     assert.ok(fs.existsSync(path.join(__dirname, '../src/ui', name)));
     return name;
@@ -26,21 +27,32 @@ function images(node) {
   return [...(node.type === 'Image' ? [node] : []), ...images(node.props?.children)];
 }
 
-test('full brand uses the supplied transparent PNG at its original aspect ratio', () => {
-  const result = renderBrand({ width: 180 });
-  assert.equal(result.props.source, '../../assets/logofull.png');
-  assert.equal(result.props.style.aspectRatio, 2654 / 1568);
-  assert.equal(result.props.style.height, 180 * 1568 / 2654);
-  assert.equal(result.props.resizeMode, 'contain');
-  assert.equal(result.props.accessibilityLabel, 'Destiny USA');
+test('every brand placement uses the exact inline symbol and wordmark extracted from the auth reference', () => {
+  for (const props of [{}, { width: 180 }, { compact: true }, { light: true }]) {
+    const result = renderBrand(props);
+    assert.deepEqual(images(result).map(node => node.props.source), ['../../assets/auth/brand-mark.webp', '../../assets/auth/brand-wordmark.webp']);
+    assert.equal(result.props.accessibilityLabel, 'Destiny USA');
+    for (const node of images(result)) {
+      assert.equal(node.props.contentFit, 'contain');
+      assert.ok(node.props.style.width > 0 && node.props.style.height > 0);
+    }
+  }
 });
 
-test('purple and compact headers use real earth and wordmark images on a readable surface', () => {
+test('purple headers use the reference white badge while light surfaces do not add another logo card', () => {
   for (const props of [{ light: true, subtitle: 'Premium shopping' }, { compact: true }]) {
     const result = renderBrand(props);
-    assert.deepEqual(images(result).map(node => node.props.source), ['../../assets/logoonlyearth.png', '../../assets/logoonlytext.png']);
     assert.equal(result.props.style.flexShrink, 1);
-    assert.equal(result.props.children[0].props.style.backgroundColor, '#FFFFFF');
+    assert.equal(result.props.children[0].props.style.backgroundColor, props.light ? '#FFFFFF' : 'transparent');
+  }
+});
+
+test('all embedded auth illustration assets are bundled WebP files rather than HTML or external demo URLs', () => {
+  for (const name of ['brand-mark', 'brand-wordmark', 'scene-headphones', 'scene-perfume', 'scene-watch']) {
+    const image = fs.readFileSync(path.join(__dirname, `../assets/auth/${name}.webp`));
+    assert.equal(image.subarray(0, 4).toString(), 'RIFF');
+    assert.equal(image.subarray(8, 12).toString(), 'WEBP');
+    assert.ok(image.length > 1000);
   }
 });
 

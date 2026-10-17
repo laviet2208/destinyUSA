@@ -12,13 +12,17 @@ function harness(initial = []) {
   const jsx = (type, props) => ({ type, props: props ?? {} });
   const ui = new Proxy({}, { get: (_, key) => String(key) });
   const modules = {
-    react: { useState(value) { const position = index++; if (!(position in state)) state[position] = value; return [state[position], next => { state[position] = typeof next === 'function' ? next(state[position]) : next; }]; } },
+    react: { useLayoutEffect() {}, useState(value) { const position = index++; if (!(position in state)) state[position] = value; return [state[position], next => { state[position] = typeof next === 'function' ? next(state[position]) : next; }]; } },
     'react/jsx-runtime': { jsx, jsxs: jsx },
-    'react-native': new Proxy({ StyleSheet: { create: value => value }, Alert: { alert: (...args) => actions.push(['alert', ...args]) } }, { get: (target, key) => target[key] ?? String(key) }),
+    'react-native': new Proxy({ useWindowDimensions: () => ({ width: 390, height: 844 }), StyleSheet: { create: value => value }, Alert: { alert: (...args) => actions.push(['alert', ...args]) } }, { get: (target, key) => target[key] ?? String(key) }),
+    'react-native-safe-area-context': { useSafeAreaInsets: () => ({ top: 44, bottom: 34 }) },
+    'expo-status-bar': { StatusBar: 'StatusBar' },
     'lucide-react-native': ui,
     '../ui/components': ui,
     '../ui/theme': { colors: {}, touchTarget: 48 },
     '../ui/BrandLogo': { BrandLogo: 'BrandLogo' },
+    '../ui/AuthScenery': { AuthBackdrop: 'AuthBackdrop', AuthProductScene: 'AuthProductScene' },
+    '../ui/auth-layout': { authLayout: () => ({ padding: 23, heroHeight: 475, headlineSize: 36, sceneScale: 1, bottomPadding: 46 }), passwordPresentation: () => 0 },
     '../state/MobileContext': { useMobile: () => ({ t: key => key, login: async body => actions.push(['login', body]), signup: async body => actions.push(['signup', body]), referral: async code => actions.push(['referral', code]), logout: async () => actions.push(['logout']), enterGuest: () => actions.push(['guest']) }) },
   };
   const source = fs.readFileSync(path.join(__dirname, '../src/screens/AuthScreens.tsx'), 'utf8');
@@ -60,11 +64,24 @@ test('redesigned login retains independent remember choices, password visibility
 });
 
 test('signup does not copy the demo optional-referral field or embed a referral bypass', async () => {
-  const app = harness(['First', 'Last', 'buyer@example.test', 'fixture-secret', false, '']);
+  const app = harness(['First', 'Last', 'buyer@example.test', 'fixture-secret', 'fixture-secret', false, false, false, '']);
   const tree = app.render('SignupScreen');
-  assert.deepEqual(nodes(tree).filter(item => item.type === 'Field').map(item => item.props.label), ['firstName', 'lastName', 'email', 'password']);
+  assert.deepEqual(nodes(tree).filter(item => item.type === 'Field').map(item => item.props.label), ['firstName', 'lastName', 'email', 'password', 'authConfirmPassword']);
   button(tree, 'signup').onPress(); await app.flush();
   assert.deepEqual(JSON.parse(JSON.stringify(app.actions[0])), ['signup', { firstName: 'First', lastName: 'Last', email: 'buyer@example.test', password: 'fixture-secret' }]);
+});
+
+test('signup confirmation is presentation-only and never submits mismatched passwords or a referral field', async () => {
+  const app = harness(['First', '', 'buyer@example.test', 'fixture-secret', 'not-the-same', false, false, false, '']);
+  button(app.render('SignupScreen'), 'signup').onPress(); await app.flush();
+  const tree = app.render('SignupScreen');
+  assert.deepEqual(app.actions, []);
+  assert.equal(nodes(tree).find(item => item.type === 'Notice').props.message, 'authPasswordMismatch');
+  const confirmation = nodes(tree).find(item => item.type === 'Field' && item.props.label === 'authConfirmPassword');
+  confirmation.props.onChangeText('fixture-secret');
+  button(app.render('SignupScreen'), 'signup').onPress(); await app.flush();
+  assert.deepEqual(JSON.parse(JSON.stringify(app.actions)), [['signup', { firstName: 'First', lastName: '', email: 'buyer@example.test', password: 'fixture-secret' }]]);
+  assert.ok(!nodes(tree).some(item => item.type === 'Field' && /referral/i.test(item.props.label)));
 });
 
 test('referral gate keeps both required decorative controls disabled and submits only the entered code', async () => {
