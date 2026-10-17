@@ -255,7 +255,4 @@ export const my: Dictionary = {
   "clearCart": "ဈေးခြင်းရှင်းရန်",
   "clearCartConfirm": "ဤဈေးခြင်းထဲရှိ ပစ္စည်းအားလုံးကို ဖယ်ရှားမလား။",
   "quickAdd": "ရွေးချယ်စရာများ",
-  "sampleComments": "မှတ်ချက်များ",
-  "sampleIllustration": "သရုပ်ပြနမူနာ",
-  "commentDisclosure": "ဤမှတ်ချက်သည် ကုန်ပစ္စည်းကို သရုပ်ဖော်ရန်ဖြစ်ပြီး ဝယ်ယူသူ၏ သုံးသပ်ချက်မဟုတ်ပါ။"
 };

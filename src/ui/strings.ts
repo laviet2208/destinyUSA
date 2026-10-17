@@ -10,8 +10,12 @@ import { lo } from './locales/lo';
 import { my } from './locales/my';
 import { ru } from './locales/ru';
 import { id } from './locales/id';
+import { ja } from './locales/ja';
+import { ko } from './locales/ko';
+import { fil } from './locales/fil';
+import { ms } from './locales/ms';
 
-export type Language = 'en' | 'zh' | 'vi' | 'fr' | 'es' | 'pt' | 'km' | 'th' | 'lo' | 'my' | 'ru' | 'id';
+export type Language = 'en' | 'zh' | 'vi' | 'fr' | 'es' | 'pt' | 'km' | 'th' | 'lo' | 'my' | 'ru' | 'id' | 'ja' | 'ko' | 'fil' | 'ms';
 export const defaultLanguage: Language = 'en';
 export const languages: { id: Language; name: string }[] = [
   { id: 'en', name: 'English' },
@@ -26,8 +30,12 @@ export const languages: { id: Language; name: string }[] = [
   { id: 'my', name: 'မြန်မာ' },
   { id: 'ru', name: 'Русский' },
   { id: 'id', name: 'Bahasa Indonesia' },
+  { id: 'ja', name: '日本語' },
+  { id: 'ko', name: '한국어' },
+  { id: 'fil', name: 'Filipino' },
+  { id: 'ms', name: 'Bahasa Melayu' },
 ];
-export const translations: Record<Language, Dictionary> = { en, zh, vi, fr, es, pt, km, th, lo, my, ru, id };
+export const translations: Record<Language, Dictionary> = { en, zh, vi, fr, es, pt, km, th, lo, my, ru, id, ja, ko, fil, ms };
 
 export function normalizeLanguage(value: unknown): Language {
   return languages.find(language => language.id === value)?.id ?? defaultLanguage;

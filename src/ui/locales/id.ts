@@ -255,7 +255,4 @@ export const id: Dictionary = {
   "clearCart": "Kosongkan keranjang",
   "clearCartConfirm": "Hapus semua barang dari keranjang ini?",
   "quickAdd": "Pilih opsi",
-  "sampleComments": "Komentar",
-  "sampleIllustration": "Contoh ilustrasi",
-  "commentDisclosure": "Komentar ini merupakan ilustrasi produk, bukan ulasan dari pembeli."
 };

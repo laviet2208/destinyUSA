@@ -108,10 +108,10 @@ test('catalog search, category type/directory and sort are presentation-only, wi
   assert.equal(JSON.stringify(products), original);
 });
 
-test('all twelve languages include browsing labels and no Arabic dictionary', () => {
+test('all sixteen languages include browsing labels and no Arabic dictionary', () => {
   const directory = path.join(__dirname, '../src/ui/locales');
   const files = fs.readdirSync(directory).filter(filename => filename.endsWith('.ts'));
-  assert.equal(files.length, 12);
+  assert.equal(files.length, 16);
   assert.ok(!files.includes('ar.ts'));
   for (const filename of files) {
     const content = fs.readFileSync(path.join(directory, filename), 'utf8');
