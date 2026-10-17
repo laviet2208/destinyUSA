@@ -4,7 +4,7 @@
 - Quy trình bàn giao clone → build iOS → TestFlight → cập nhật App Store: [IOS_RELEASE.md](IOS_RELEASE.md).
 - Source app khách: https://github.com/laviet2208/destinyUSA
 - Expo project: https://expo.dev/accounts/vitla22/projects/destiny-usa-customer
-- Đã liên kết EAS project, chưa tạo APK/IPA hoặc phát hành Store. App có RNFirebase native nên không chạy bằng Expo Go.
+- Đã build APK preview thành công trên EAS ngày17/10/2026: https://expo.dev/accounts/vitla22/projects/destiny-usa-customer/builds/420682b8-b811-4147-86fe-9462e0f28e73. Chưa build IPA hoặc phát hành Store. App có RNFirebase native nên không chạy bằng Expo Go; APK build thành công không thay thế kiểm thử thiết bị thật/push.
 - API VPS: https://103-195-238-221.sslip.io. Biến EXPO_PUBLIC_API_URL được cấu hình trên EAS preview/production; khi build local dùng .env.example làm mẫu. Không dùng localhost của máy tính cho điện thoại thật.
 - Repository không chứa admin/backend/database, .env, Firebase service account hoặc khóa ký. Cần cung cấp hai file Firebase client và keystore cũ riêng theo các mục bên dưới khi build/phát hành.
 
