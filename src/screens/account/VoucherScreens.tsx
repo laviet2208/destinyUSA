@@ -5,9 +5,9 @@ import { Clock3, Gift, Ticket } from 'lucide-react-native';
 import { useMobile } from '../../state/MobileContext';
 import { api, captureApiSession, isApiSessionCurrent } from '../../services/api';
 import { money, voucherData } from '../../services/commerce';
-import type { Channel, PageResult, Voucher, VoucherData } from '../../types';
+import type { PageResult, Voucher, VoucherData } from '../../types';
 import { AppText, Button, Field, Header, IconButton, Notice, Screen } from '../../ui/components';
-import { BottomSheet, SegmentedControl } from '../../ui/commerce';
+import { BottomSheet } from '../../ui/commerce';
 import { VoucherFace } from '../../ui/VoucherFace';
 import { CommerceFooter } from '../../ui/CommerceFooter';
 import { colors, touchTarget } from '../../ui/theme';
@@ -25,20 +25,20 @@ function voucherDate(value: Record<string, number> | undefined) {
 
 export function VouchersScreen({ navigation }: AccountScreenProps) {
   const { account, t, refresh } = useMobile();
-  const [channel, setChannel] = useState<Channel>('regular');
+  const channel = 'flashsale';
   const resource = useAccountResource<WalletResponse>(account ? `/vouchers?channel=${channel}` : null);
   const [gift, setGift] = useState<Voucher | null>(null);
   const [recipient, setRecipient] = useState('');
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
+  const [error] = useState('');
   const [giftError, setGiftError] = useState('');
   const [message, setMessage] = useState('');
   const attempt = useRef<{ signature: string; key: string } | null>(null);
   const submitting = useRef(false);
-  const rows: VoucherRow[] = [...(resource.data?.grants ?? []).map(voucher => ({ voucher, personal: true })), ...(resource.data?.items ?? []).map(voucher => ({ voucher, personal: false }))];
+  const rows: VoucherRow[] = [...(resource.data?.grants ?? []).filter(voucher => voucher.scope === 'flashsale').map(voucher => ({ voucher, personal: true })), ...(resource.data?.items ?? []).filter(voucher => voucher.scope === 'flashsale').map(voucher => ({ voucher, personal: false }))];
   const openGift = (voucher: Voucher) => { setGift(voucher); setRecipient(''); setGiftError(''); attempt.current = null; };
   const sendGift = async () => {
-    if (submitting.current || !gift || !recipient.trim()) return;
+    if (submitting.current || !gift || gift.scope !== 'flashsale' || !recipient.trim()) return;
     const session = captureApiSession();
     if (!session.token) return;
     submitting.current = true;
@@ -52,7 +52,6 @@ export function VouchersScreen({ navigation }: AccountScreenProps) {
   };
   return <Screen scroll={false}>
     <Header title={t('voucherWallet')} onBack={() => navigation.goBack()} action={<IconButton label={t('voucherhistory')} onPress={() => navigation.navigate('history_voucher_screen')}><Clock3 size={20} color={colors.text}/></IconButton>}/>
-    <SegmentedControl items={(['regular', 'flashsale'] as const).map(value => ({ value, label: t(value === 'regular' ? 'normalCart' : 'flashSale') }))} value={channel} onChange={value => { setChannel(value); setMessage(''); setError(''); }}/>
     {message && <View style={accountStyles.inset}><Notice message={message}/></View>}{error && <View style={accountStyles.inset}><Notice message={error} danger/></View>}
     <FlatList data={rows} keyExtractor={item => `${item.personal ? 'private' : 'common'}:${item.voucher.id}`} contentContainerStyle={styles.voucherList} refreshControl={<RefreshControl refreshing={resource.loading && Boolean(resource.data)} onRefresh={resource.refresh} tintColor={colors.primary}/>}
       ListHeaderComponent={<View style={styles.listHeading}><AppText style={styles.listTitle}>{t('yourVouchers')}</AppText><AppText muted style={styles.count}>{rows.length}</AppText>{resource.error && rows.length ? <DataFeedback loading={resource.loading} error={resource.error} empty={false} title={t('thereAreNotVoucherInHere')} onRetry={resource.refresh}/> : null}</View>}
@@ -62,7 +61,7 @@ export function VouchersScreen({ navigation }: AccountScreenProps) {
         const status = item.voucher.used_at ? 'used' : item.voucher.revoked_at ? 'revoked' : item.voucher.status;
         const start = voucherDate(data?.startTime);
         const end = voucherDate(data?.endTime);
-        return <View style={styles.voucher}><VoucherFace value={data ? money(data.Money) : '—'} unit={Number(data?.type) === 0 ? '%' : 'USDT'} kind={t(item.personal ? 'individualVoucher' : 'generalVoucher')} scope={t(item.voucher.scope || channel)} title={data?.eventName || data?.code || t('voucher')} details={<View style={styles.voucherMeta}><View style={styles.voucherMetaText}>{Boolean(start || end) && <AppText numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.cardDate}>{start || '—'} – {end || '—'}</AppText>}{Boolean(data?.mincost) && <AppText numberOfLines={1} style={styles.cardCaption}>{t('subTotal')}: ≥ {money(data!.mincost!)} USDT</AppText>}{status && <AppText numberOfLines={1} style={styles.cardStatus}>{t(status)}</AppText>}</View>{item.personal && !item.voucher.used_at && !item.voucher.revoked_at && <Pressable accessibilityRole="button" accessibilityLabel={t('giftThisVoucher')} onPress={() => openGift(item.voucher)} style={styles.giftButton}><Gift size={14} color="#563B16"/><AppText numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.giftLabel}>{t('gift')}</AppText></Pressable>}</View>}/></View>;
+        return <View style={styles.voucher}><VoucherFace value={data ? money(data.Money) : '—'} unit={Number(data?.type) === 0 ? '%' : 'USDT'} kind={t(item.personal ? 'individualVoucher' : 'generalVoucher')} scope={t(channel)} title={data?.eventName || data?.code || t('voucher')} details={<View style={styles.voucherMeta}><View style={styles.voucherMetaText}>{Boolean(start || end) && <AppText numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.cardDate}>{start || '—'} – {end || '—'}</AppText>}{status && <AppText numberOfLines={1} style={styles.cardStatus}>{t(status)}</AppText>}</View>{item.personal && !item.voucher.used_at && !item.voucher.revoked_at && <Pressable accessibilityRole="button" accessibilityLabel={t('giftThisVoucher')} onPress={() => openGift(item.voucher)} style={styles.giftButton}><Gift size={14} color="#563B16"/><AppText numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.giftLabel}>{t('gift')}</AppText></Pressable>}</View>}/></View>;
       }}/>
     <CommerceFooter/>
     <BottomSheet visible={Boolean(gift)} title={t('giftThisVoucher')} closeLabel={t('close')} onClose={() => setGift(null)} busy={busy} footer={<Button title={t('gift')} onPress={() => { void sendGift(); }} loading={busy} disabled={!recipient.trim()}/>}>

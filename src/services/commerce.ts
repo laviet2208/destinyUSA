@@ -13,5 +13,5 @@ export function addCartItem(items: CartItem[], product: Product, variant: Varian
 }
 export function voucherData(voucher: Voucher) { return voucher.voucher ?? voucher.voucher_snapshot ?? voucher.data!; }
 export function orderPayload(items: CartItem[], channel: Channel, receiver: { name: string; phoneNumber: string; address: string }, note: string, selection?: { id: string; personal: boolean } | null) {
-  return { items: items.map(item => ({ variantId: item.variant.id, quantity: item.quantity })), channel, receiver, note, ...(selection ? selection.personal ? { grantId: selection.id } : { voucherId: selection.id } : {}) };
+  return { items: items.map(item => ({ variantId: item.variant.id, quantity: item.quantity })), channel, receiver, note, ...(channel === 'flashsale' && selection ? selection.personal ? { grantId: selection.id } : { voucherId: selection.id } : {}) };
 }

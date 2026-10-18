@@ -170,7 +170,7 @@ test('order cancellation only requests admin approval and retries the same opera
 test('gifting a personal voucher sends only the grant and recipient, retaining the key on retry', async () => {
   let attempts = 0;
   const voucher = { id: 'grant-fixture', scope: 'flashsale', voucher: { Money: 20, type: 1, eventName: 'Fixture voucher' } };
-  const harness = screenHarness('VoucherScreens.tsx', { state: ['flashsale', voucher, 'receiver@example.test', false, '', '', ''], data: { items: [], grants: [voucher] }, api: async () => { if (++attempts === 1) throw new Error('timeout'); return {}; } });
+  const harness = screenHarness('VoucherScreens.tsx', { state: [voucher, 'receiver@example.test', false, '', '', ''], data: { items: [], grants: [voucher] }, api: async () => { if (++attempts === 1) throw new Error('timeout'); return {}; } });
   button(harness.render('VouchersScreen'), 'gift').onPress(); await harness.flush();
   button(harness.render('VouchersScreen'), 'gift').onPress(); await harness.flush();
   assert.equal(harness.requests[0][0], '/vouchers/transfer');
@@ -178,7 +178,7 @@ test('gifting a personal voucher sends only the grant and recipient, retaining t
   assert.equal(harness.requests[0][3], harness.requests[1][3]);
 });
 
-test('voucher keeps actual dates, conditions, status and gift action inside one artwork without an extra information panel', () => {
+test('Flash sale voucher keeps dates, status and gift action in the artwork without a subtotal line or extra panel', () => {
   const voucher = { id: 'compact-grant', scope: 'flashsale', status: 'available', voucher: { Money: 51, type: 1, eventName: 'Purchase reward', mincost: 1000, startTime: { year: 2026, month: 10, day: 17 }, endTime: { year: 2026, month: 10, day: 27 } } };
   const harness = screenHarness('VoucherScreens.tsx', { data: { items: [], grants: [voucher] } });
   const list = elements(harness.render('VouchersScreen')).find(element => element.type === 'FlatList');
@@ -190,11 +190,29 @@ test('voucher keeps actual dates, conditions, status and gift action inside one 
   const details = card.props.children.props.details;
   assert.ok(JSON.stringify(details).includes('17/10/2026'));
   assert.ok(JSON.stringify(details).includes('27/10/2026'));
-  assert.ok(JSON.stringify(details).includes('1000'));
+  assert.ok(!JSON.stringify(details).includes('1000'));
+  assert.ok(!JSON.stringify(details).includes('subTotal'));
   const gift = elements(details).find(element => element.type === 'Pressable' && element.props.accessibilityLabel === 'giftThisVoucher');
   assert.ok(gift); gift.props.onPress();
-  assert.equal(harness.state[1].id, 'compact-grant');
+  assert.equal(harness.state[0].id, 'compact-grant');
   assert.equal(harness.requests.length, 0);
+});
+
+test('voucher wallet contains only Flash sale vouchers and only personal grants have a gift action', () => {
+  const personal = { id: 'private-flash', scope: 'flashsale', voucher: { Money: 20, type: 1 } };
+  const common = { id: 'common-flash', scope: 'flashsale', data: { Money: 30, type: 1 } };
+  const legacy = { id: 'legacy-private', scope: 'regular', voucher: { Money: 40, type: 1 } };
+  let requested;
+  const harness = screenHarness('VoucherScreens.tsx', { resource: path => { requested = path; return { loading: false, error: '', data: { grants: [personal, legacy], items: [common] }, refresh() {} }; } });
+  const tree = harness.render('VouchersScreen');
+  assert.equal(requested, '/vouchers?channel=flashsale');
+  assert.equal(elements(tree).some(node => node.type === 'SegmentedControl'), false);
+  const list = elements(tree).find(node => node.type === 'FlatList');
+  assert.deepEqual(Array.from(list.props.data, item => item.voucher.id), ['private-flash', 'common-flash']);
+  const privateCard = list.props.renderItem({ item: { voucher: personal, personal: true } });
+  const commonCard = list.props.renderItem({ item: { voucher: common, personal: false } });
+  assert.ok(elements(privateCard.props.children.props.details).some(node => node.type === 'Pressable' && node.props.accessibilityLabel === 'giftThisVoucher'));
+  assert.ok(!elements(commonCard.props.children.props.details).some(node => node.type === 'Pressable'));
 });
 
 test('notification enable success is displayed only after push registration resolves', async () => {
@@ -249,8 +267,8 @@ test('profile completion from an old session cannot refresh or report success fo
 test('voucher gift completion and cancellation completion ignore a switched session', async () => {
   let completeGift;
   const pendingGift = new Promise(resolve => { completeGift = resolve; });
-  const voucher = { id: 'grant-fixture', scope: 'regular', voucher: { Money: 20, type: 1 } };
-  const gift = screenHarness('VoucherScreens.tsx', { state: ['regular', voucher, 'receiver@example.test', false, '', '', ''], data: { items: [], grants: [voucher] }, api: () => pendingGift });
+  const voucher = { id: 'grant-fixture', scope: 'flashsale', voucher: { Money: 20, type: 1 } };
+  const gift = screenHarness('VoucherScreens.tsx', { state: [voucher, 'receiver@example.test', false, '', '', ''], data: { items: [], grants: [voucher] }, api: () => pendingGift });
   const submitGift = button(gift.render('VouchersScreen'), 'gift').onPress;
   submitGift(); submitGift(); assert.equal(gift.requests.length, 1);
   gift.invalidateSession(); completeGift({ id: 'transfer-fixture' }); await gift.flush();
