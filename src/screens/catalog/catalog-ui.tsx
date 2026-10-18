@@ -38,12 +38,14 @@ export function CategoryGlyph({ name, size = 25 }: { name: string; size?: number
 export function ProductCard({ product, channel = 'regular', onProduct, onQuickAdd, quickAddLabel, layout = 'grid', categoryName, enterDelay, style }: { product: Product; channel?: Channel; onProduct: (id: string, channel: Channel) => void; onQuickAdd?: (id: string, channel: Channel) => void; quickAddLabel?: string; layout?: 'grid' | 'list' | 'compact'; categoryName?: string; enterDelay?: number; style?: StyleProp<ViewStyle> }) {
   const feedback = usePressFeedback();
   const entrance = useEntrance(enterDelay ?? 0, 8, enterDelay !== undefined);
+  const cardWidth = StyleSheet.flatten(style)?.width;
+  const imageHeight = layout === 'list' ? 116 : layout === 'compact' ? 75 : typeof cardWidth === 'number' ? Math.max(0, cardWidth) * 1.04 : undefined;
   return <MotionPressable accessibilityRole="button" accessibilityLabel={product.name} onPress={() => onProduct(product.id, channel)} onPressIn={feedback.onPressIn} onPressOut={feedback.onPressOut} style={[{ opacity: entrance.opacity, transform: [...entrance.transform, ...feedback.style.transform] }, styles.product, layout === 'list' && styles.listProduct, layout === 'compact' && styles.compactProduct, style]}>
-    <View style={[styles.imageFrame, layout === 'list' && styles.listFrame]}>
-      <ProductImage key={product.images[0] || product.variants[0]?.image} uri={mediaUrl(product.images[0] || product.variants[0]?.image)} label={product.name} inset={8} style={[styles.productImage, layout === 'list' && styles.listImage, layout === 'compact' && styles.compactImage]}/>
+    <View style={[styles.imageFrame, layout === 'list' && styles.listFrame, imageHeight !== undefined && { height: imageHeight }]}>
+      <ProductImage key={product.images[0] || product.variants[0]?.image} uri={mediaUrl(product.images[0] || product.variants[0]?.image)} label={product.name} inset={8} style={[styles.productImage, layout === 'list' && styles.listImage, layout === 'compact' && styles.compactImage, imageHeight !== undefined && { height: imageHeight, aspectRatio: undefined }]}/>
       {onQuickAdd && <Pressable accessibilityRole="button" accessibilityLabel={`${quickAddLabel ?? product.name} · ${product.name}`} onPress={event => { event.stopPropagation(); onQuickAdd(product.id, channel); }} style={({ pressed }) => [styles.quickAdd, pressed && styles.pressed]}><View style={styles.quickAddFace}><Plus size={16} color={colors.primary}/></View></Pressable>}
     </View>
-    <View style={[styles.productInfo, layout === 'compact' && styles.compactInfo]}><AppText variant="productName" numberOfLines={layout === 'compact' ? 1 : 2} style={[styles.productName, layout === 'compact' && styles.compactName]}>{product.name}</AppText>{Boolean(categoryName) && layout !== 'compact' && <AppText style={styles.metadata} numberOfLines={1}>{categoryName}</AppText>}
+    <View style={[styles.productInfo, layout === 'list' && styles.listInfo, layout === 'compact' && styles.compactInfo]}><AppText variant="productName" numberOfLines={layout === 'compact' ? 1 : 2} style={[styles.productName, layout === 'compact' && styles.compactName]}>{product.name}</AppText>{Boolean(categoryName) && layout !== 'compact' && <AppText style={styles.metadata} numberOfLines={1}>{categoryName}</AppText>}
       {layout !== 'compact' && <AppText variant="cardPrice" style={styles.price}>{productPrice(product)}</AppText>}
       {layout !== 'compact' && product.variants.length === 1 && Number(product.variants[0].original_price) > Number(product.variants[0].price) && <AppText style={styles.originalPrice}>{moneyLabel(Number(product.variants[0].original_price))}</AppText>}
     </View>
@@ -68,7 +70,8 @@ const styles = StyleSheet.create({
   product: { alignSelf: 'flex-start', minWidth: 0, backgroundColor: colors.background },
   imageFrame: { position: 'relative' },
   productImage: { width: '100%', aspectRatio: 1 / 1.04, borderRadius: 13, backgroundColor: '#F6F3F8' },
-  productInfo: { paddingTop: 9, paddingHorizontal: 2, paddingBottom: 4, gap: 4, flex: 1 },
+  productInfo: { paddingTop: 9, paddingHorizontal: 2, paddingBottom: 4, gap: 4 },
+  listInfo: { flex: 1, minWidth: 0 },
   productName: { fontSize: 12, lineHeight: 17, minHeight: 34, fontWeight: '600' },
   metadata: { color: '#9B91A4', fontSize: 10, lineHeight: 14 },
   price: { color: colors.primary, fontSize: 15, lineHeight: 21, fontWeight: '800', flexShrink: 1 },

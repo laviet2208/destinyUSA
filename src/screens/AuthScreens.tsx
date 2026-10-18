@@ -96,7 +96,7 @@ export function SignupScreen({ navigation }: any) {
 }
 
 export function ReferralScreen() {
-  const { t, referral, logout } = useMobile(); const [code, setCode] = useState(''); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
+  const { t, referral, logout, catalog } = useMobile(); const [code, setCode] = useState(''); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
   const { width } = useWindowDimensions(); const insets = useSafeAreaInsets(); const padding = authLayout(width, 0).padding;
   return <Screen scroll={false}><StatusBar style="dark"/><ScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false} contentContainerStyle={styles.formPage}>
     <AuthHeader chip="DESTINY USA" eyebrow={t('verifyAccount')} title={t('enterReferral')} description={t('referralDescription')} padding={padding}/>
@@ -105,7 +105,7 @@ export function ReferralScreen() {
       <Field {...fieldAppearance} label={t('referral')} value={code} onChangeText={setCode} autoCapitalize="none" leading={<Gift size={17} color="#8C7D9D"/>}/>
       {error && <Notice message={error} danger/>}
       <Button title={t('confirm')} loading={busy} disabled={!code.trim()} style={styles.actionButton} textStyle={styles.buttonText} onPress={async () => { setBusy(true); setError(''); try { await referral(code); } catch (failure) { setError((failure as Error).message); } finally { setBusy(false); } }}/>
-      {['Destiny USA Code/Login OTP', 'Buying Agent Referral Code'].map(title => <View key={title} accessibilityRole="button" accessibilityState={{ disabled: true }} style={styles.decorativeButton}><AppText muted style={styles.decorativeLabel}>{title}</AppText></View>)}
+      {catalog.showReferralButtons && ['Destiny USA Code/Login OTP', 'Buying Agent Referral Code'].map(title => <Button key={title} title={title} variant="secondary" onPress={() => {}} style={[styles.actionButton, styles.outlineButton]} textStyle={styles.buttonText}/>)}
       <Button title="Log out" variant="quiet" onPress={() => { void logout().catch(failure => Alert.alert(t('loadError'), failure.message)); }}/>
     </View>
   </ScrollView></Screen>;
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   divider: { flexDirection: 'row', alignItems: 'center', gap: 12, marginVertical: 1 }, dividerLine: { height: 1, backgroundColor: '#EEE8F1', flex: 1 }, dividerText: { fontSize: 10, lineHeight: 16, color: '#A9A0B0' }, outlineButton: { backgroundColor: '#FFFFFF', borderColor: '#D8C8E8', borderWidth: 1 },
   securityNote: { marginTop: 3, padding: 13, borderRadius: 13, borderWidth: 1, borderColor: '#E9DDF2', backgroundColor: '#FCF9FE', flexDirection: 'row', gap: 9, alignItems: 'center' }, securityIcon: { width: 31, height: 31, borderRadius: 10, backgroundColor: '#F0E4F9', alignItems: 'center', justifyContent: 'center' }, securityCopy: { flex: 1, gap: 2 }, securityTitle: { fontSize: 10.7, lineHeight: 15, fontWeight: '700', color: '#4D3370' }, securityDescription: { fontSize: 10, lineHeight: 15, color: '#9687A6' },
   nameRow: { flexDirection: 'row', gap: 10 }, nameField: { flex: 1, minWidth: 0 }, passwordMeter: { flexDirection: 'row', gap: 4, marginTop: 9, marginBottom: 3 }, meterPart: { height: 3, flex: 1, backgroundColor: '#ECE7F0', borderRadius: 2 }, strengthCopy: { fontSize: 9.5, lineHeight: 15, color: '#9A8E9F' }, signupSubmit: { marginTop: 3 }, accountSwitch: { flexDirection: 'row', flexWrap: 'wrap', gap: 4, alignItems: 'center', justifyContent: 'center', paddingTop: 1 }, accountSwitchText: { fontSize: 12, lineHeight: 19, color: '#8B8293' }, accountSwitchButton: { minHeight: touchTarget, justifyContent: 'center' }, accountSwitchLink: { color: '#512087', fontSize: 12, lineHeight: 19, fontWeight: '800' },
-  referralSymbol: { width: 58, height: 58, borderRadius: 17, backgroundColor: '#F0E4F9', alignItems: 'center', justifyContent: 'center' }, decorativeButton: { minHeight: 48, justifyContent: 'center', alignItems: 'center', padding: 12, borderWidth: 1, borderColor: colors.line, borderRadius: 12, backgroundColor: colors.surface, opacity: 0.6 }, decorativeLabel: { fontSize: 12, textAlign: 'center' },
+  referralSymbol: { width: 58, height: 58, borderRadius: 17, backgroundColor: '#F0E4F9', alignItems: 'center', justifyContent: 'center' },
 });
 
 const fieldAppearance = { labelStyle: styles.fieldLabel, frameStyle: styles.fieldFrame, style: styles.fieldInput, placeholderTextColor: '#B6ADBF' };

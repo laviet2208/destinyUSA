@@ -42,7 +42,7 @@ export function CartScreen({ navigation, route }: any) {
   return <Screen scroll={false}>
     <Header title={t('cart')} onBack={isolated || channel === 'flashsale' ? () => navigation.goBack() : undefined} action={account && items.length > 0 ? <IconButton label={t('clearCart')} onPress={clearAll} disabled={Boolean(busy)}><Trash2 size={19} color={colors.text}/></IconButton> : undefined}/>
     {!isolated && <SegmentedControl items={(['regular', 'flashsale'] as const).map(value => ({ value, label: t(value === 'regular' ? 'normalCart' : 'flashCart') }))} value={channel} disabled={Boolean(busy)} onChange={value => { if (channel === value) return; if (value === 'regular') navigation.navigate('main_screen', { screen: 'cart_page' }, { pop: true }); else navigation.navigate('cart_sale_screen'); }}/>}
-    {!account ? <EmptyState title={t('loginRequired')} action={t('login')} onPress={() => navigation.navigate('welcome_screen')}/> : <>
+    {!account ? <View style={styles.guestContent}><EmptyState title={t('loginRequired')} action={t('login')} onPress={() => navigation.navigate('welcome_screen')}/></View> : <>
       <FlatList data={items} keyExtractor={item => item.variant.id} contentContainerStyle={styles.list} ItemSeparatorComponent={Divider}
         ListHeaderComponent={items.length > 0 ? <View style={styles.cartHeading}><AppText variant="label">{items.reduce((sum, item) => sum + item.quantity, 0)} {t('products')}</AppText><AppText muted variant="caption">{t(channel === 'regular' ? 'normalCart' : 'flashCart')}</AppText></View> : null}
         renderItem={({ item }) => <View style={styles.cartRow}>
@@ -112,6 +112,7 @@ export function CheckoutScreen({ navigation, route }: any) {
 }
 
 const styles = StyleSheet.create({
+  guestContent: { flex: 1, justifyContent: 'center' },
   list: { flexGrow: 1, paddingHorizontal: 18, paddingBottom: 26 }, cartHeading: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 10, marginVertical: 13 },
   cartRow: { flexDirection: 'row', gap: 12, paddingVertical: 14 }, cartInfo: { flex: 1, minWidth: 0, gap: 4 }, thumb: { width: 82, height: 86, borderRadius: 11, backgroundColor: '#F6F2F9' },
   variantText: { fontSize: 10, lineHeight: 15, color: '#9A8F9F' }, rowBottom: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 6 },

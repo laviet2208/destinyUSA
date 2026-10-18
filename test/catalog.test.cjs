@@ -52,6 +52,7 @@ function find(node, predicate) {
 for (const rtl of [false, true]) test(`home uses grid previews, all categories and real callbacks in ${rtl ? 'RTL' : 'LTR'}`, () => {
   const { tree, props, actions } = renderHome(rtl);
   const vertical = find(tree, item => item.type === 'FlatList' && !item.props.horizontal)[0];
+  assert.equal(vertical.props.removeClippedSubviews, false);
   assert.equal(vertical.props.ListFooterComponent.type, 'AppInfoFooter');
   const horizontal = find(tree, item => item.type === 'FlatList' && item.props.horizontal);
   assert.equal(horizontal.length, 1);

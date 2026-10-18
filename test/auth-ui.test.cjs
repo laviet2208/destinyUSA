@@ -5,9 +5,10 @@ const test = require('node:test');
 const vm = require('node:vm');
 const ts = require('typescript');
 
-function harness(initial = []) {
+function harness(initial = [], showReferralButtons = true) {
   const state = [...initial];
   const actions = [];
+  const catalog = { showReferralButtons };
   let index = 0;
   const jsx = (type, props) => ({ type, props: props ?? {} });
   const ui = new Proxy({}, { get: (_, key) => String(key) });
@@ -23,7 +24,7 @@ function harness(initial = []) {
     '../ui/BrandLogo': { BrandLogo: 'BrandLogo' },
     '../ui/AuthScenery': { AuthBackdrop: 'AuthBackdrop', AuthProductScene: 'AuthProductScene' },
     '../ui/auth-layout': { authLayout: () => ({ padding: 23, heroHeight: 475, headlineSize: 36, sceneScale: 1, bottomPadding: 46 }), passwordPresentation: () => 0 },
-    '../state/MobileContext': { useMobile: () => ({ t: key => key, login: async body => actions.push(['login', body]), signup: async body => actions.push(['signup', body]), referral: async code => actions.push(['referral', code]), logout: async () => actions.push(['logout']), enterGuest: () => actions.push(['guest']) }) },
+    '../state/MobileContext': { useMobile: () => ({ catalog, t: key => key, login: async body => actions.push(['login', body]), signup: async body => actions.push(['signup', body]), referral: async code => actions.push(['referral', code]), logout: async () => actions.push(['logout']), enterGuest: () => actions.push(['guest']) }) },
   };
   const source = fs.readFileSync(path.join(__dirname, '../src/screens/AuthScreens.tsx'), 'utf8');
   const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
@@ -84,16 +85,33 @@ test('signup confirmation is presentation-only and never submits mismatched pass
   assert.ok(!nodes(tree).some(item => item.type === 'Field' && /referral/i.test(item.props.label)));
 });
 
-test('referral gate keeps both required decorative controls disabled and submits only the entered code', async () => {
+test('referral auxiliary buttons respond to presses without submitting, logging out or bypassing the required code', async () => {
   const app = harness(['CODE-FROM-ANOTHER-ACCOUNT', false, '']);
   const tree = app.render('ReferralScreen');
-  const decorations = nodes(tree).filter(item => item.type === 'View' && item.props.accessibilityRole === 'button');
-  assert.equal(decorations.length, 2);
-  assert.ok(decorations.every(item => item.props.accessibilityState.disabled && !item.props.onPress));
+  for (const title of ['Destiny USA Code/Login OTP', 'Buying Agent Referral Code']) {
+    const auxiliary = button(tree, title);
+    assert.notEqual(auxiliary.disabled, true);
+    assert.equal(typeof auxiliary.onPress, 'function');
+    await auxiliary.onPress();
+  }
+  assert.deepEqual(app.actions, []);
   await button(tree, 'confirm').onPress();
   assert.deepEqual(JSON.parse(JSON.stringify(app.actions[0])), ['referral', 'CODE-FROM-ANOTHER-ACCOUNT']);
   button(app.render('ReferralScreen'), 'Log out').onPress(); await app.flush();
   assert.deepEqual(JSON.parse(JSON.stringify(app.actions[1])), ['logout']);
+});
+
+test('hiding referral auxiliary buttons leaves confirmation, code validation and logout intact', async () => {
+  const app = harness(['', false, ''], false);
+  let tree = app.render('ReferralScreen');
+  assert.ok(!nodes(tree).some(item => ['Destiny USA Code/Login OTP', 'Buying Agent Referral Code'].includes(item.props.title)));
+  assert.equal(button(tree, 'confirm').disabled, true);
+  nodes(tree).find(item => item.type === 'Field' && item.props.label === 'referral').props.onChangeText('VALID-CODE');
+  tree = app.render('ReferralScreen');
+  assert.equal(button(tree, 'confirm').disabled, false);
+  await button(tree, 'confirm').onPress();
+  button(app.render('ReferralScreen'), 'Log out').onPress(); await app.flush();
+  assert.deepEqual(JSON.parse(JSON.stringify(app.actions)), [['referral', 'VALID-CODE'], ['logout']]);
 });
 
 test('welcome guest action remains real and does not sign in a fabricated account', () => {

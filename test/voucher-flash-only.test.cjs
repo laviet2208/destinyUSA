@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const test = require('node:test');
 const typescript = require('typescript');
 
-function harness() {
+function harness({ guest = false } = {}) {
   const jsx = (type, props) => ({ type, props: props ?? {} });
   const ui = new Proxy({}, { get: (_, key) => String(key) });
   const item = { product: { id: 'product', images: [], name: 'Product' }, variant: { id: 'variant', name: 'Variant', price: 100, inventory: 5 }, quantity: 1 };
@@ -20,7 +20,7 @@ function harness() {
     '../ui/CommerceFooter': ui,
     '../ui/commerce': ui,
     '../ui/theme': { colors: {} },
-    '../state/MobileContext': { useMobile: () => ({ account: { id: 'customer', first_name: 'Name', phone: '0123', address: 'Address', balance: 1000 }, carts: { regular: [item], flashsale: [item] }, t: key => key }) },
+    '../state/MobileContext': { useMobile: () => ({ account: guest ? null : { id: 'customer', first_name: 'Name', phone: '0123', address: 'Address', balance: 1000 }, carts: { regular: [item], flashsale: [item] }, t: key => key }) },
     '../hooks/useResource': { useResource: requested => { resources.push(requested); return { loading: false, error: '', refresh() {}, data: { grants: [{ id: 'private', scope: 'flashsale', voucher: { Money: 20 } }, { id: 'wrong-private', scope: 'regular', voucher: { Money: 30 } }], items: [{ id: 'common', scope: 'flashsale', active: true, data: { Money: 10 } }] } }; } },
     '../services/api': { mediaUrl: () => '', api() { throw new Error('Rendering must not send an order'); } },
     '../services/commerce': { cartTotal: () => 100, money: String, voucherData: voucher => voucher.voucher ?? voucher.data },
@@ -58,4 +58,14 @@ test('voucher picker never loads regular vouchers and filters any wrongly scoped
   assert.equal(app.resources[1], '/vouchers?channel=flashsale');
   assert.equal(nodes(tree).filter(node => node.type === 'Pressable' && node.props.accessibilityRole === 'radio').length, 3);
   assert.equal(JSON.stringify(tree).includes('wrong-private'), false);
+});
+
+test('guest Flash Sale cart fills the remaining native height before its bottom navigation', () => {
+  const app = harness({ guest: true });
+  const tree = app.CartScreen({ navigation: {}, route: { name: 'cart_sale_screen', params: {} } });
+  const body = nodes(tree).find(node => node.type === 'View' && node.props.children?.type === 'EmptyState');
+  assert.equal(body.props.style.flex, 1);
+  assert.equal(body.props.style.justifyContent, 'center');
+  assert.equal(nodes(tree).filter(node => node.type === 'CommerceFooter').length, 1);
+  assert.equal(nodes(tree).some(node => node.type === 'FlatList'), false);
 });

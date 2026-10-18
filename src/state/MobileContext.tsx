@@ -6,10 +6,11 @@ import { api, apiBase, captureApiSession, getApiToken, isApiSessionCurrent, medi
 import { addCartItem, eligibleVariant } from '../services/commerce';
 import { walletIsVisible } from '../services/wallet-visibility';
 import { appInfoFooterIsVisible } from '../services/footer-visibility';
+import { referralButtonsAreVisible } from '../services/referral-visibility';
 import { normalizeLanguage, translate, type Language } from '../ui/strings';
 import type { FlashSchedule, Account, Banner, CartItem, Category, Channel, ContentRecord, PageResult, Product, Variant } from '../types';
 
-type CatalogState = { products: Product[]; types: Category[]; directories: Category[]; banners: Banner[]; topIds: string[]; directoryIds: string[]; flashIds: string[]; flashActive: boolean; flashSchedule?: FlashSchedule; showWallet: boolean; showAppInfoFooter: boolean };
+type CatalogState = { products: Product[]; types: Category[]; directories: Category[]; banners: Banner[]; topIds: string[]; directoryIds: string[]; flashIds: string[]; flashActive: boolean; flashSchedule?: FlashSchedule; showWallet: boolean; showAppInfoFooter: boolean; showReferralButtons: boolean };
 type LoginInput = { email: string; password: string; remember: boolean; savePassword: boolean };
 type MobileState = {
   account: Account | null; guest: boolean; booting: boolean; bootError: string; language: Language;
@@ -21,7 +22,7 @@ type MobileState = {
   refresh: () => void; addToCart: (channel: Channel, product: Product, variant: Variant, quantity: number) => Promise<void>;
   updateCart: (channel: Channel, variantId: string, quantity: number) => Promise<void>; removeCart: (channel: Channel, ids: string[]) => void;
 };
-const initialCatalog: CatalogState = { products: [], types: [], directories: [], banners: [], topIds: [], directoryIds: [], flashIds: [], flashActive: false, showWallet: false, showAppInfoFooter: false };
+const initialCatalog: CatalogState = { products: [], types: [], directories: [], banners: [], topIds: [], directoryIds: [], flashIds: [], flashActive: false, showWallet: false, showAppInfoFooter: false, showReferralButtons: false };
 const Context = createContext<MobileState | null>(null);
 const recordValue = (rows: ContentRecord[], id: string) => rows.find(row => row.id === id)?.data;
 const idList = (value: unknown): string[] => (Array.isArray(value) ? value : value && typeof value === 'object' ? Object.values(value) : []).map(item => typeof item === 'string' ? item : String(item?.id ?? '')).filter(Boolean);
@@ -120,7 +121,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
       if (controller.signal.aborted || !isApiSessionCurrent(session)) return;
       const applySettings = settingsRequest >= displayVersion.current.applied;
       if (applySettings) displayVersion.current.applied = settingsRequest;
-      setCatalog(previous => ({ products, types: types.items.map(toCategory), directories: directories.items.filter(row => Number((row.data as any).status ?? 1) === 1).map(toCategory), banners: ads.items.filter(row => Number((row.data as any).status) === 1).map(row => ({ id: row.id, image: mediaUrl((row.data as any).image), productId: (row.data as any).productId })), topIds: idList(recordValue(ui.items, 'productTop')), directoryIds: idList(recordValue(ui.items, 'productDirectory')), flashIds: idList(recordValue(flash.items, 'product')), flashActive: Number(recordValue(flash.items, 'isStart')) === 1, flashSchedule: recordValue(flash.items, 'schedule') ? { ...(recordValue(flash.items, 'schedule') as FlashSchedule), receivedAt: Date.now() } : undefined, showWallet: applySettings ? walletIsVisible(recordValue(wallet.items, '__value')) : previous.showWallet, showAppInfoFooter: applySettings ? appInfoFooterIsVisible(recordValue(ui.items, 'showAppInfoFooter')) : previous.showAppInfoFooter }));
+      setCatalog(previous => ({ products, types: types.items.map(toCategory), directories: directories.items.filter(row => Number((row.data as any).status ?? 1) === 1).map(toCategory), banners: ads.items.filter(row => Number((row.data as any).status) === 1).map(row => ({ id: row.id, image: mediaUrl((row.data as any).image), productId: (row.data as any).productId })), topIds: idList(recordValue(ui.items, 'productTop')), directoryIds: idList(recordValue(ui.items, 'productDirectory')), flashIds: idList(recordValue(flash.items, 'product')), flashActive: Number(recordValue(flash.items, 'isStart')) === 1, flashSchedule: recordValue(flash.items, 'schedule') ? { ...(recordValue(flash.items, 'schedule') as FlashSchedule), receivedAt: Date.now() } : undefined, showWallet: applySettings ? walletIsVisible(recordValue(wallet.items, '__value')) : previous.showWallet, showAppInfoFooter: applySettings ? appInfoFooterIsVisible(recordValue(ui.items, 'showAppInfoFooter')) : previous.showAppInfoFooter, showReferralButtons: applySettings ? referralButtonsAreVisible(recordValue(ui.items, 'showReferralButtons')) : previous.showReferralButtons }));
     };
     load().catch(failure => { if (!controller.signal.aborted) setError((failure as Error).message); }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
@@ -144,20 +145,21 @@ export function MobileProvider({ children }: { children: ReactNode }) {
     return () => { controller.abort(); clearTimeout(timer); clearInterval(poll); active.remove(); };
   }, [account?.id, account?.status, guest, catalog.flashSchedule]);
   useEffect(() => {
-    if (!guest && account?.status !== 'active') return;
-    const socket = account ? io(apiBase, { auth: { token: getApiToken() } }) : null;
+    const activeAccount = account?.status === 'active';
+    if (!guest && !activeAccount && account?.status !== 'referral_required') return;
+    const socket = activeAccount ? io(apiBase, { auth: { token: getApiToken() } }) : null;
     const controller = new AbortController();
     const session = captureApiSession();
     const syncSettings = () => {
       const request = ++displayVersion.current.next;
-      const prefix = account ? '' : '/public';
+      const prefix = activeAccount ? '' : '/public';
       void Promise.all([
         api<{ items: ContentRecord[] }>(`${prefix}/content/UI`, 'GET', undefined, undefined, controller.signal),
-        account ? api<{ items: ContentRecord[] }>('/content/isShowWallet', 'GET', undefined, undefined, controller.signal) : Promise.resolve({ items: [] as ContentRecord[] }),
+        activeAccount ? api<{ items: ContentRecord[] }>('/content/isShowWallet', 'GET', undefined, undefined, controller.signal) : Promise.resolve({ items: [] as ContentRecord[] }),
       ]).then(([ui, wallet]) => {
         if (!controller.signal.aborted && isApiSessionCurrent(session) && request >= displayVersion.current.applied) {
           displayVersion.current.applied = request;
-          setCatalog(previous => ({ ...previous, showWallet: account ? walletIsVisible(recordValue(wallet.items, '__value')) : false, showAppInfoFooter: appInfoFooterIsVisible(recordValue(ui.items, 'showAppInfoFooter')) }));
+          setCatalog(previous => ({ ...previous, showWallet: activeAccount ? walletIsVisible(recordValue(wallet.items, '__value')) : false, showAppInfoFooter: appInfoFooterIsVisible(recordValue(ui.items, 'showAppInfoFooter')), showReferralButtons: referralButtonsAreVisible(recordValue(ui.items, 'showReferralButtons')) }));
         }
       }).catch(() => {});
     };

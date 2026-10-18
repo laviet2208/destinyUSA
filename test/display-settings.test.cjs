@@ -17,7 +17,7 @@ test('footer visibility defaults to visible only after settings load and accepts
 });
 
 function settingsHarness(authenticated = false) {
-  const states = [authenticated ? { id: 'customer-fixture', status: 'active' } : null, !authenticated, false, '', 'vi', null, { showWallet: false, showAppInfoFooter: false }, false, '', 0, { regular: [], flashsale: [] }];
+  const states = [authenticated ? { id: 'customer-fixture', status: authenticated === 'referral_required' ? authenticated : 'active' } : null, !authenticated, false, '', 'vi', null, { showWallet: false, showAppInfoFooter: false, showReferralButtons: false }, false, '', 0, { regular: [], flashsale: [] }];
   const effects = [];
   const requests = [];
   const intervals = [];
@@ -35,6 +35,7 @@ function settingsHarness(authenticated = false) {
     '../services/commerce': {},
     '../services/wallet-visibility': { walletIsVisible: value => value === undefined || Number(value) === 1 },
     '../services/footer-visibility': { appInfoFooterIsVisible: value => value === undefined || Number(value) === 1 },
+    '../services/referral-visibility': { referralButtonsAreVisible: value => value === undefined || Number(value) === 1 },
     '../ui/strings': {},
   };
   const module = { exports: {} };
@@ -72,4 +73,30 @@ test('customer socket updates footer and wallet independently and ignores result
   harness.requests[3].resolve({ items: [{ id: '__value', data: 0 }] }); await harness.flush();
   assert.equal(harness.catalog().showAppInfoFooter, false);
   assert.equal(harness.catalog().showWallet, true);
+});
+
+test('referral-required accounts sync only public display settings without accessing wallet, catalog or active-only sockets', async () => {
+  const harness = settingsHarness('referral_required');
+  assert.deepEqual(harness.requests.map(request => request.url), ['/public/content/UI']);
+  assert.equal(Object.keys(harness.events).length, 0);
+  harness.requests[0].resolve({ items: [{ id: 'showReferralButtons', data: 1 }] }); await harness.flush();
+  assert.equal(harness.catalog().showReferralButtons, true);
+  assert.equal(harness.catalog().showWallet, false);
+  harness.intervals[0]();
+  harness.requests[1].resolve({ items: [{ id: 'showReferralButtons', data: 0 }] }); await harness.flush();
+  assert.equal(harness.catalog().showReferralButtons, false);
+  harness.foreground();
+  harness.requests[2].resolve({ items: [] }); await harness.flush();
+  assert.equal(harness.catalog().showReferralButtons, true);
+  harness.intervals[0]();
+  harness.cleanup();
+  harness.requests[3].resolve({ items: [{ id: 'showReferralButtons', data: 0 }] }); await harness.flush();
+  assert.equal(harness.catalog().showReferralButtons, true);
+});
+
+test('referral button visibility supports the existing numeric flag and keeps legacy visibility when unset', () => {
+  const module = { exports: {} };
+  vm.runInNewContext(compile(source('services/referral-visibility.ts')), { module, exports: module.exports });
+  for (const value of [undefined, 1, '1', true]) assert.equal(module.exports.referralButtonsAreVisible(value), true);
+  for (const value of [0, '0', false, null, 'invalid']) assert.equal(module.exports.referralButtonsAreVisible(value), false);
 });
