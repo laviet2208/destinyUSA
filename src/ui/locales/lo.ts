@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const lo: Dictionary = {
+  "desktopStatus": "ປະສົບການເທິງຄອມພິວເຕີ",
+  "desktopTitle": "ໜ້າຈໍສຳລັບຄອມພິວເຕີກຳລັງພັດທະນາ.",
+  "desktopMessage": "ພວກເຮົາກຳລັງປັບປຸງໜ້າຈໍ ແລະ ຟັງຊັນສຳລັບຄອມພິວເຕີ. ກະລຸນາເຂົ້າ Destiny USA ຜ່ານໂທລະສັບເພື່ອສືບຕໍ່ຊື້ສິນຄ້າ.",
+  "desktopMobileHint": "ໃຊ້ງານຕໍ່ເທິງໂທລະສັບຂອງທ່ານ",
   "footerContact": "ຕິດຕໍ່ພວກເຮົາ",
   "footerOpeningHours": "ເວລາເປີດບໍລິການ",
   "footerAsiaHours": "ເວລາອາຊີ",
@@ -37,7 +41,6 @@ export const lo: Dictionary = {
   "searchFlashSale": "ຄົ້ນຫາສິນຄ້າ Flash Sale",
   "viewImage": "ເບິ່ງຮູບພາບ",
   "supportLabel": "ຊ່ວຍເຫຼືອ",
-  "premiumShopping": "ຊື້ເຄື່ອງລະດັບພຣີມຽມ",
   "discoverMore": "ຄົ້ນພົບເພີ່ມເຕີມ",
   "welcomeBack": "ຍິນດີຕ້ອນຮັບກັບຄືນ",
   "createAccountIntro": "ເລີ່ມຊື້ເຄື່ອງ",

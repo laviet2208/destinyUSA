@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const fil: Dictionary = {
+  "desktopStatus": "Karanasan sa computer",
+  "desktopTitle": "Ginagawa pa ang bersyon para sa computer.",
+  "desktopMessage": "Pinapahusay pa namin ang interface at mga feature para sa computer. Sa ngayon, buksan ang Destiny USA sa iyong telepono upang magpatuloy sa pamimili.",
+  "desktopMobileHint": "Magpatuloy sa iyong telepono",
   "footerContact": "Makipag-ugnayan",
   "footerOpeningHours": "Oras ng pagbubukas",
   "footerAsiaHours": "Oras sa Asya",
@@ -37,7 +41,6 @@ export const fil: Dictionary = {
   "searchFlashSale": "Maghanap ng Flash Sale na produkto",
   "viewImage": "Tingnan ang larawan",
   "supportLabel": "Suporta",
-  "premiumShopping": "Premium na pamimili",
   "discoverMore": "Tumuklas pa",
   "welcomeBack": "Maligayang pagbabalik.",
   "createAccountIntro": "Simulan ang pamimili.",

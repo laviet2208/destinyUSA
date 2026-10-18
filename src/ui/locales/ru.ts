@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const ru: Dictionary = {
+  "desktopStatus": "Версия для компьютера",
+  "desktopTitle": "Интерфейс для компьютера находится в разработке.",
+  "desktopMessage": "Мы совершенствуем интерфейс и функции для компьютеров. Пока открывайте Destiny USA на телефоне, чтобы продолжить покупки.",
+  "desktopMobileHint": "Продолжите на телефоне",
   "footerContact": "Свяжитесь с нами",
   "footerOpeningHours": "Часы работы",
   "footerAsiaHours": "Время для Азии",
@@ -37,7 +41,6 @@ export const ru: Dictionary = {
   "searchFlashSale": "Поиск товаров Flash Sale",
   "viewImage": "Просмотр изображения",
   "supportLabel": "Поддержка",
-  "premiumShopping": "Премиальный шопинг",
   "discoverMore": "Открыть больше",
   "welcomeBack": "С возвращением.",
   "createAccountIntro": "Начните покупки.",

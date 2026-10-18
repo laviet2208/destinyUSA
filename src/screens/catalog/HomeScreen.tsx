@@ -44,7 +44,7 @@ export function HomeScreen(props: HomeScreenProps) {
   return <Screen scroll={false} surface={colors.primary}>
     <FlatList<DirectorySection> data={directorySections} keyExtractor={section => section.id} refreshControl={<RefreshControl refreshing={Boolean(refreshing)} onRefresh={onRefresh} tintColor={colors.primary}/>} style={styles.listSurface} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} initialNumToRender={2} maxToRenderPerBatch={2} windowSize={5} ListFooterComponent={<AppInfoFooter/>} ListHeaderComponent={<>
     <View style={[styles.header, { paddingHorizontal: layout.padding }]}>
-      <View style={styles.headerTop}><BrandLogo compact light subtitle={t('premiumShopping')}/><View style={styles.headerActions}>
+      <View style={styles.headerTop}><BrandLogo compact light/><View style={styles.headerActions}>
         <Pressable accessibilityRole="button" accessibilityLabel={t('notification')} onPress={props.onNotifications} style={styles.headButton}><Bell size={22} color={colors.background}/></Pressable>
         <Pressable accessibilityRole="button" accessibilityLabel={`${t('cart')} · ${props.cartCount}`} onPress={props.onCart} style={styles.headButton}><ShoppingBag size={22} color={colors.background}/>{props.cartCount > 0 && <View style={styles.badge}><AppText style={styles.badgeText}>{props.cartCount > 99 ? '99+' : props.cartCount}</AppText></View>}</Pressable>
       </View></View>

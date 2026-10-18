@@ -121,12 +121,12 @@ test('all sixteen languages include browsing labels and no Arabic dictionary', (
   }
 });
 
-test('web preview accepts only phone widths and does not add a desktop layout', () => {
+test('mobile web preview accepts only phone widths for the shopping interface', () => {
   const source = fs.readFileSync(path.join(__dirname, '../scripts/phone-preview.html'), 'utf8');
   const script = source.match(/<script>([\s\S]*?)<\/script>/)[1];
   for (const [query, expected] of [['?width=320', '320px'], ['?width=360', '360px'], ['?width=390', '390px'], ['?width=430', '430px'], ['?width=480', '480px'], ['?width=1024', '430px'], ['?width=invalid', '430px'], ['', '430px']]) {
     const frame = { style: { maxWidth: '430px' } };
-    vm.runInNewContext(script, { URLSearchParams, location: { search: query }, document: { querySelector: selector => { assert.equal(selector, 'iframe'); return frame; } } });
+    vm.runInNewContext(script, { URLSearchParams, location: { search: query }, navigator: { userAgent: 'Mozilla/5.0 (iPhone)', maxTouchPoints: 5 }, document: { querySelector: selector => { assert.equal(selector, 'iframe'); return frame; } } });
     assert.equal(frame.style.maxWidth, expected);
   }
 });

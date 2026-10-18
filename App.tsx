@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, Platform, StyleSheet, View } from 'react-native';
 import { NavigationContainer, DefaultTheme, createNavigationContainerRef, getFocusedRouteNameFromRoute, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -27,6 +27,8 @@ import { eligibleVariant } from './src/services/commerce';
 import { api } from './src/services/api';
 import { initializePush, stopPush } from './src/services/push';
 import type { Channel, Product } from './src/types';
+import { DesktopNotice } from './src/ui/DesktopNotice';
+import { isDesktopWeb } from './src/services/desktop-access';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -113,5 +115,8 @@ function MobilePresentation() {
   const rtl = directionFor(language) === 'rtl';
   return <UiLanguage.Provider value={language}><UiDirection.Provider value={rtl}><View style={[styles.root, { direction: rtl ? 'rtl' : 'ltr' }]}><MobileNavigation/></View></UiDirection.Provider></UiLanguage.Provider>;
 }
-export default function App() { return <SafeAreaProvider initialMetrics={initialWindowMetrics}><MotionProvider><MobileProvider><MobilePresentation/></MobileProvider></MotionProvider></SafeAreaProvider>; }
+export default function App() {
+  if (isDesktopWeb(Platform.OS, typeof navigator === 'undefined' ? undefined : navigator)) return <DesktopNotice/>;
+  return <SafeAreaProvider initialMetrics={initialWindowMetrics}><MotionProvider><MobileProvider><MobilePresentation/></MobileProvider></MotionProvider></SafeAreaProvider>;
+}
 const styles = StyleSheet.create({ root: { flex: 1, backgroundColor: colors.background } });

@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const my: Dictionary = {
+  "desktopStatus": "ကွန်ပျူတာပေါ်မှ အတွေ့အကြုံ",
+  "desktopTitle": "ကွန်ပျူတာအတွက် မျက်နှာပြင်ကို ဖန်တီးနေဆဲဖြစ်ပါသည်။",
+  "desktopMessage": "ကွန်ပျူတာအတွက် မျက်နှာပြင်နှင့် လုပ်ဆောင်ချက်များကို ပြင်ဆင်နေပါသည်။ ဆက်လက်ဈေးဝယ်ရန် Destiny USA ကို ဖုန်းဖြင့် ဝင်ရောက်ကြည့်ရှုပေးပါ။",
+  "desktopMobileHint": "သင့်ဖုန်းပေါ်တွင် ဆက်လက်အသုံးပြုပါ",
   "footerContact": "ဆက်သွယ်ရန်",
   "footerOpeningHours": "ဖွင့်ချိန်",
   "footerAsiaHours": "အာရှအချိန်",
@@ -37,7 +41,6 @@ export const my: Dictionary = {
   "searchFlashSale": "Flash Sale ပစ္စည်းရှာရန်",
   "viewImage": "ပုံကိုကြည့်ရန်",
   "supportLabel": "အကူအညီ",
-  "premiumShopping": "အဆင့်မြင့်ဈေးဝယ်ခြင်း",
   "discoverMore": "ထပ်မံလေ့လာရန်",
   "welcomeBack": "ပြန်လည်ကြိုဆိုပါသည်။",
   "createAccountIntro": "ဈေးဝယ်စတင်ပါ။",

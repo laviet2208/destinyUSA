@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const id: Dictionary = {
+  "desktopStatus": "Pengalaman di komputer",
+  "desktopTitle": "Antarmuka komputer sedang dikembangkan.",
+  "desktopMessage": "Kami sedang menyempurnakan antarmuka dan fitur untuk komputer. Untuk saat ini, kunjungi Destiny USA melalui ponsel untuk melanjutkan belanja.",
+  "desktopMobileHint": "Lanjutkan di ponsel Anda",
   "footerContact": "Hubungi kami",
   "footerOpeningHours": "Jam buka",
   "footerAsiaHours": "Jam Asia",
@@ -37,7 +41,6 @@ export const id: Dictionary = {
   "searchFlashSale": "Cari produk Flash Sale",
   "viewImage": "Lihat gambar",
   "supportLabel": "Bantuan",
-  "premiumShopping": "Belanja premium",
   "discoverMore": "Jelajahi lagi",
   "welcomeBack": "Selamat datang kembali.",
   "createAccountIntro": "Mulai berbelanja.",

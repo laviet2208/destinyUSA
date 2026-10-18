@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const zh: Dictionary = {
+  "desktopStatus": "电脑端体验",
+  "desktopTitle": "电脑端界面正在开发中。",
+  "desktopMessage": "我们正在完善电脑端的界面和功能。目前，请使用手机访问 Destiny USA，继续购物。",
+  "desktopMobileHint": "请使用手机继续访问",
   "footerContact": "联系我们",
   "footerOpeningHours": "营业时间",
   "footerAsiaHours": "亚洲时段",
@@ -37,7 +41,6 @@ export const zh: Dictionary = {
   "searchFlashSale": "搜索闪购商品",
   "viewImage": "查看图片",
   "supportLabel": "帮助",
-  "premiumShopping": "品质购物",
   "discoverMore": "探索更多",
   "welcomeBack": "欢迎回来。",
   "createAccountIntro": "开启购物之旅。",

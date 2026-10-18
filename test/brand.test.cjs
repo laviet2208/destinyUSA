@@ -40,7 +40,7 @@ test('every brand placement uses the exact inline symbol and wordmark extracted 
 });
 
 test('purple headers use the reference white badge while light surfaces do not add another logo card', () => {
-  for (const props of [{ light: true, subtitle: 'Premium shopping' }, { compact: true }]) {
+  for (const props of [{ light: true, subtitle: 'Brand caption' }, { compact: true }]) {
     const result = renderBrand(props);
     assert.equal(result.props.style.flexShrink, 1);
     assert.equal(result.props.children[0].props.style.backgroundColor, props.light ? '#FFFFFF' : 'transparent');

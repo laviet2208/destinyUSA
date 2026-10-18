@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const km: Dictionary = {
+  "desktopStatus": "បទពិសោធន៍លើកុំព្យូទ័រ",
+  "desktopTitle": "ចំណុចប្រទាក់សម្រាប់កុំព្យូទ័រកំពុងអភិវឌ្ឍ។",
+  "desktopMessage": "យើងកំពុងកែលម្អចំណុចប្រទាក់ និងមុខងារសម្រាប់កុំព្យូទ័រ។ សូមចូលទៅកាន់ Destiny USA តាមទូរស័ព្ទរបស់អ្នក ដើម្បីបន្តការទិញទំនិញ។",
+  "desktopMobileHint": "បន្តប្រើប្រាស់លើទូរស័ព្ទរបស់អ្នក",
   "footerContact": "ទាក់ទងយើង",
   "footerOpeningHours": "ម៉ោងបើកដំណើរការ",
   "footerAsiaHours": "ម៉ោងនៅអាស៊ី",
@@ -37,7 +41,6 @@ export const km: Dictionary = {
   "searchFlashSale": "ស្វែងរកផលិតផល Flash Sale",
   "viewImage": "មើលរូបភាព",
   "supportLabel": "ជំនួយ",
-  "premiumShopping": "ការទិញទំនិញកម្រិតខ្ពស់",
   "discoverMore": "ស្វែងរកបន្ថែម",
   "welcomeBack": "សូមស្វាគមន៍ការត្រឡប់មកវិញ។",
   "createAccountIntro": "ចាប់ផ្ដើមទិញទំនិញ។",

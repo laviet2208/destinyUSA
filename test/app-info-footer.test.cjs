@@ -11,6 +11,7 @@ function harness(openURL = async () => {}) {
   const cleanups = [];
   const urls = [];
   const routes = [];
+  const catalog = { showAppInfoFooter: true };
   let stateIndex = 0;
   let refIndex = 0;
   const jsx = (type, props) => ({ type, props });
@@ -24,7 +25,7 @@ function harness(openURL = async () => {}) {
     'react-native': { View: 'View', Pressable: 'Pressable', StyleSheet: { create: styles => styles }, Linking: { openURL: async url => { urls.push(url); await openURL(url); } } },
     '@react-navigation/native': { useNavigation: () => ({ navigate: route => routes.push(route) }) },
     'lucide-react-native': new Proxy({}, { get: (_, name) => name }),
-    '../state/MobileContext': { useMobile: () => ({ t: key => key }) },
+    '../state/MobileContext': { useMobile: () => ({ t: key => key, catalog }) },
     './components': { AppText: 'AppText' },
     './BrandLogo': { BrandLogo: 'BrandLogo' },
     './theme': { touchTarget: 48 },
@@ -36,7 +37,7 @@ function harness(openURL = async () => {}) {
   return {
     render() { stateIndex = 0; refIndex = 0; return module.exports.AppInfoFooter(); },
     unmount() { cleanups.forEach(cleanup => cleanup?.()); },
-    state, urls, routes,
+    state, urls, routes, catalog,
     flush: () => new Promise(resolve => setImmediate(resolve)),
   };
 }
@@ -91,4 +92,14 @@ test('all sixteen languages include the footer labels and contact fallback', () 
     const source = fs.readFileSync(path.join(directory, filename), 'utf8');
     for (const key of ['footerContact', 'footerOpeningHours', 'footerAsiaHours', 'footerRegularHours', 'footerMonThu', 'footerFriSat', 'footerSunday', 'contactLinkUnavailable']) assert.match(source, new RegExp(`"${key}"\\s*:\\s*"[^"\\n]+"`), filename);
   }
+});
+
+test('disabled information footer leaves no content, contacts or empty spacing', () => {
+  const preview = harness();
+  assert.ok(preview.render());
+  preview.catalog.showAppInfoFooter = false;
+  assert.equal(preview.render(), null);
+  assert.equal(preview.urls.length, 0);
+  preview.catalog.showAppInfoFooter = true;
+  assert.ok(preview.render());
 });

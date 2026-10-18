@@ -1,4 +1,8 @@
 export const en = {
+  "desktopStatus": "Desktop experience",
+  "desktopTitle": "Our desktop experience is in development.",
+  "desktopMessage": "We are refining the interface and features for computers. For now, please visit Destiny USA on your phone to continue shopping.",
+  "desktopMobileHint": "Continue on your phone",
   "footerContact": "Get in touch",
   "footerOpeningHours": "Opening hours",
   "footerAsiaHours": "Asia hours",
@@ -35,7 +39,6 @@ export const en = {
   "searchFlashSale": "Search Flash Sale products",
   "viewImage": "View image",
   "supportLabel": "Support",
-  "premiumShopping": "Premium shopping",
   "discoverMore": "Discover more",
   "welcomeBack": "Welcome back.",
   "createAccountIntro": "Start shopping.",

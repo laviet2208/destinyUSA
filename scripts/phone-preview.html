@@ -16,7 +16,10 @@
     <iframe src="/app/" title="Destiny USA — Mobile" allow="clipboard-write"></iframe>
     <script>
       const phoneWidth = Number(new URLSearchParams(location.search).get('width'));
-      if ([320, 360, 390, 430, 480].includes(phoneWidth)) {
+      const mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+      if (!mobile) {
+        document.querySelector('iframe').style.maxWidth = 'none';
+      } else if ([320, 360, 390, 430, 480].includes(phoneWidth)) {
         document.querySelector('iframe').style.maxWidth = phoneWidth + 'px';
       }
     </script>

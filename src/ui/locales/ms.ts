@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const ms: Dictionary = {
+  "desktopStatus": "Pengalaman pada komputer",
+  "desktopTitle": "Antara muka komputer sedang dibangunkan.",
+  "desktopMessage": "Kami sedang menambah baik antara muka dan ciri untuk komputer. Buat masa ini, layari Destiny USA melalui telefon untuk meneruskan pembelian.",
+  "desktopMobileHint": "Teruskan pada telefon anda",
   "footerContact": "Hubungi kami",
   "footerOpeningHours": "Waktu operasi",
   "footerAsiaHours": "Waktu Asia",
@@ -37,7 +41,6 @@ export const ms: Dictionary = {
   "searchFlashSale": "Cari produk Jualan Kilat",
   "viewImage": "Lihat gambar",
   "supportLabel": "Bantuan",
-  "premiumShopping": "Beli-belah premium",
   "discoverMore": "Terokai lagi",
   "welcomeBack": "Selamat kembali.",
   "createAccountIntro": "Mulakan beli-belah.",

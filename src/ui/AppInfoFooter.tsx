@@ -15,7 +15,7 @@ export const supportContact = {
 } as const;
 
 export function AppInfoFooter() {
-  const { t } = useMobile();
+  const { t, catalog } = useMobile();
   const navigation = useNavigation<any>();
   const [error, setError] = useState('');
   const opening = useRef(false);
@@ -29,9 +29,9 @@ export function AppInfoFooter() {
     catch { if (mounted.current) setError(t(kind === 'viber' ? 'viberUnavailable' : 'contactLinkUnavailable')); }
     finally { opening.current = false; }
   };
+  if (!catalog.showAppInfoFooter) return null;
   return <View style={styles.footer}>
     <View style={styles.brandRow}><BrandLogo light width={164}/><View style={styles.brandAccent}/></View>
-    <AppText style={styles.tagline}>{t('premiumShopping')}</AppText>
     <View style={styles.section}>
       <AppText style={styles.heading}>{t('footerContact')}</AppText>
       <Pressable accessibilityRole="link" accessibilityLabel={`${t('email')}: ${supportContact.email}`} onPress={() => { void openContact('email'); }} style={({ pressed }) => [styles.contact, pressed && styles.pressed]}>
@@ -58,7 +58,7 @@ export function AppInfoFooter() {
 
 const styles = StyleSheet.create({
   footer: { marginTop: 30, backgroundColor: '#2B143F', borderTopWidth: 2, borderTopColor: '#B999D0', paddingHorizontal: 22, paddingTop: 28, paddingBottom: 25 },
-  brandRow: { flexDirection: 'row', alignItems: 'center', gap: 24 }, brandAccent: { flex: 1, height: 1, backgroundColor: '#79538F' }, tagline: { marginTop: 11, marginBottom: 25, color: '#C5ADD8', fontSize: 10, lineHeight: 16, letterSpacing: 1 },
+  brandRow: { flexDirection: 'row', alignItems: 'center', gap: 24, marginBottom: 24 }, brandAccent: { flex: 1, height: 1, backgroundColor: '#79538F' },
   section: { gap: 13 }, heading: { color: '#F6F0FC', fontSize: 15, lineHeight: 22, fontWeight: '700' }, headingRow: { flexDirection: 'row', alignItems: 'center', gap: 9 },
   contact: { minHeight: touchTarget, paddingVertical: 4, flexDirection: 'row', alignItems: 'center', gap: 10 }, contactIcon: { width: 34, height: 34, borderRadius: 11, backgroundColor: '#432659', justifyContent: 'center', alignItems: 'center' }, contactCopy: { flex: 1, minWidth: 0, gap: 3 }, label: { color: '#BFA5D4', fontSize: 10, lineHeight: 16, fontWeight: '600' }, contactValue: { color: '#FFFFFF', fontSize: 12, lineHeight: 19, fontWeight: '600' }, contactName: { color: '#CFBADC', fontSize: 9, lineHeight: 15, letterSpacing: 0.25 }, pressed: { opacity: 0.72 }, error: { color: '#F3CCD4', fontSize: 11, lineHeight: 17 },
   divider: { height: 1, backgroundColor: '#543268', marginVertical: 23 }, asiaHours: { backgroundColor: '#3C2250', borderRadius: 12, padding: 13, gap: 6 }, asiaHeading: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8 }, asiaLabel: { color: '#DFCAF0', fontSize: 11, lineHeight: 17, fontWeight: '600', flexShrink: 1 }, timezone: { color: '#DCC6A1', fontSize: 10, lineHeight: 16, fontWeight: '600', letterSpacing: 0.5 }, asiaTime: { color: '#FFFFFF', fontSize: 19, lineHeight: 26, fontWeight: '600', fontVariant: ['tabular-nums'], letterSpacing: 0.3 },

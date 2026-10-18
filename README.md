@@ -38,7 +38,7 @@ Chạy Metro sau khi đã cài development build: `npm run start:local`. Script 
 
 ## Bản web mobile để test
 
-Dùng chung `App.tsx`, màn hình, navigation, API và nghiệp vụ với Android/iOS; không có một bộ giao diện web viết lại. Mở `http://127.0.0.1:5174/`: trên PC giới hạn trong khung điện thoại rộng tối đa 430px, trên màn hình nhỏ tự co theo màn hình. Khung iframe giúp gallery, danh sách, modal và `useWindowDimensions` cùng đo đúng chiều rộng điện thoại, không lấy chiều rộng desktop.
+Dùng chung `App.tsx`, màn hình, navigation, API và nghiệp vụ với Android/iOS; không có một bộ giao diện mua sắm web viết lại. Mở `http://127.0.0.1:5174/`: điện thoại dùng giao diện mobile; PC hiển thị thông báo giao diện/tính năng đang phát triển với bộ chọn 16 ngôn ngữ. Cả trang gốc và `/app/` đều áp dụng thông báo PC; không tải phiên đăng nhập, danh mục hoặc push ở màn hình này. Khung iframe giới hạn phần mua sắm mobile rộng tối đa 430px.
 
 Từ thư mục hệ thống `destiny-usa-v2`:
 
@@ -60,7 +60,7 @@ Chỉ chạy localhost/HTTPS để WebCrypto hoạt động. Preview mặc đị
 ## Giao diện và luồng đã nối
 - Auth dùng bố cục Destiny_USA_Auth_Luxury_Violet.html: welcome nền tím với ảnh nhúng được đóng gói local, form sáng, logo biểu tượng + chữ nằm ngang dùng chung trong app. Đăng ký có xác nhận mật khẩu phía UI, không có mục mã giới thiệu tùy chọn; mã giới thiệu bắt buộc vẫn xử lý ở màn riêng sau đăng ký theo trạng thái server. Không thêm API hoặc sao chép JavaScript demo, không thêm nút khôi phục/điều khoản giả. Nội dung auth mới có đủ16ngôn ngữ.
 - Bố cục mua sắm theo `Violet_Premium_Commerce_Demo.html`: header tím/tìm kiếm, danh mục tròn, lưới xem trước4sản phẩm, sidebar danh mục, bộ lọc/sắp xếp/lưới–danh sách, gallery/biến thể/số lượng ngay trong chi tiết, giỏ hàng gọn và checkout theo nhóm. Không sao chép dữ liệu/đánh giá/phí vận chuyển/phương thức thanh toán giả của demo. Chỉ thay cách hiển thị, không đổi giá và quy tắc tính tiền.
-- Chỉ dành cho điện thoại: lưới2cột co theo viewport, padding nhỏ hơn dưới350px, sidebar82–110px. Bản web mặc định tối đa430px; có thể thử `http://127.0.0.1:5174/?width=320` với các giá trị320/360/390/430/480. Đây là cùng app trong iframe, không phải layout desktop hoặc bản app độc lập.
+- Chỉ dành cho điện thoại: lưới2cột co theo viewport, padding nhỏ hơn dưới350px, sidebar82–110px. Bản web mobile mặc định tối đa430px; tham số `?width=320` nhận các giá trị320/360/390/430/480 khi đang ở trình duyệt mobile. Chỉ thu nhỏ cửa sổ PC không bỏ qua màn hình thông báo; để kiểm tra phần mua sắm trên máy tính cần mô phỏng thiết bị và user-agent mobile trong công cụ phát triển trình duyệt.
 - Chuẩn hiện hành: Destiny_Violet_Full_UI_Redesign.html, 4 tab Trang chủ / Danh mục / Giỏ hàng / Tài khoản. Voucher và thông báo mở thành màn riêng. Flash Sale đỏ dưới quảng cáo là ngoại lệ màu theo yêu cầu mới; xem chi tiết lịch tự động, voucher thưởng và giới thiệu tại docs/mobile-violet-redesign.md của hệ thống.
 - Ảnh thật dùng Expo Image với cache memory/disk trên native, skeleton, tải lại thủ công khi lỗi và nạp trước tối đa2ảnh gallery kế tiếp. Không đổi URL hay hợp đồng media. Hiệu ứng nhấn, chuyển trang, tab và tải ảnh tôn trọng Reduce Motion; không thêm thư viện.
 - Khách chưa đăng nhập được xem catalog công khai; mua hàng yêu cầu đăng nhập. Tài khoản đăng ký mới phải nhập mã giới thiệu hợp lệ của tài khoản khác; không có email/mật khẩu hay nhánh bỏ qua giới thiệu nhúng trong bundle.

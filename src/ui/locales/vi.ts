@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const vi: Dictionary = {
+  "desktopStatus": "Trải nghiệm trên máy tính",
+  "desktopTitle": "Giao diện cho PC đang được phát triển.",
+  "desktopMessage": "Giao diện và tính năng trên máy tính đang được hoàn thiện. Bạn vui lòng truy cập Destiny USA bằng điện thoại để tiếp tục mua sắm.",
+  "desktopMobileHint": "Tiếp tục trải nghiệm trên điện thoại",
   "footerContact": "Kết nối với chúng tôi",
   "footerOpeningHours": "Giờ mở cửa",
   "footerAsiaHours": "Giờ châu Á",
@@ -37,7 +41,6 @@ export const vi: Dictionary = {
   "searchFlashSale": "Tìm sản phẩm Flash Sale",
   "viewImage": "Xem ảnh",
   "supportLabel": "Hỗ trợ",
-  "premiumShopping": "Mua sắm cao cấp",
   "discoverMore": "Khám phá thêm",
   "welcomeBack": "Chào mừng trở lại.",
   "createAccountIntro": "Bắt đầu mua sắm.",

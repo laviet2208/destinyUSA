@@ -1,6 +1,10 @@
 import type { Dictionary } from './en';
 
 export const ko: Dictionary = {
+  "desktopStatus": "PC 이용 안내",
+  "desktopTitle": "PC용 화면을 개발 중입니다.",
+  "desktopMessage": "컴퓨터용 화면과 기능을 준비하고 있습니다. 지금은 휴대전화에서 Destiny USA에 접속하여 쇼핑을 계속해 주세요.",
+  "desktopMobileHint": "휴대전화에서 계속 이용해 주세요",
   "footerContact": "문의하기",
   "footerOpeningHours": "운영 시간",
   "footerAsiaHours": "아시아 운영 시간",
@@ -37,7 +41,6 @@ export const ko: Dictionary = {
   "searchFlashSale": "플래시 세일 상품 검색",
   "viewImage": "사진 보기",
   "supportLabel": "고객 지원",
-  "premiumShopping": "프리미엄 쇼핑",
   "discoverMore": "더 둘러보기",
   "welcomeBack": "다시 오신 것을 환영합니다.",
   "createAccountIntro": "쇼핑을 시작하세요.",
