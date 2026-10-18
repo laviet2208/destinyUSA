@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const zh: Dictionary = {
+  "footerContact": "联系我们",
+  "footerOpeningHours": "营业时间",
+  "footerAsiaHours": "亚洲时段",
+  "footerRegularHours": "常规营业时间",
+  "footerMonThu": "周一至周四",
+  "footerFriSat": "周五至周六",
+  "footerSunday": "周日",
+  "contactLinkUnavailable": "无法打开邮件应用，请复制上方的电子邮箱地址。",
   "authFindMore": "发现更多。",
   "authLoveMore": "喜爱更多。",
   "authWelcomeCopy": "精选好物，全新心动。\n下一份惊喜，从这里开始。",

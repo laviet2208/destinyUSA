@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const ja: Dictionary = {
+  "footerContact": "お問い合わせ",
+  "footerOpeningHours": "営業時間",
+  "footerAsiaHours": "アジア時間",
+  "footerRegularHours": "通常営業時間",
+  "footerMonThu": "月曜日～木曜日",
+  "footerFriSat": "金曜日～土曜日",
+  "footerSunday": "日曜日",
+  "contactLinkUnavailable": "メールアプリを開けませんでした。上記のメールアドレスをコピーしてください。",
   "authFindMore": "もっと発見。",
   "authLoveMore": "もっと好きに。",
   "authWelcomeCopy": "厳選アイテムと新しいお気に入り。\n次の素敵な出会いをDestinyで。",

@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const lo: Dictionary = {
+  "footerContact": "ຕິດຕໍ່ພວກເຮົາ",
+  "footerOpeningHours": "ເວລາເປີດບໍລິການ",
+  "footerAsiaHours": "ເວລາອາຊີ",
+  "footerRegularHours": "ເວລາປົກກະຕິ",
+  "footerMonThu": "ຈັນ – ພະຫັດ",
+  "footerFriSat": "ສຸກ – ເສົາ",
+  "footerSunday": "ອາທິດ",
+  "contactLinkUnavailable": "ບໍ່ສາມາດເປີດແອັບອີເມວໄດ້. ກະລຸນາຄັດລອກທີ່ຢູ່ອີເມວຂ້າງເທິງ.",
   "authFindMore": "ຄົ້ນພົບຫຼາຍຂຶ້ນ",
   "authLoveMore": "ຮັກຫຼາຍຂຶ້ນ",
   "authWelcomeCopy": "ສິນຄ້າຄັດສັນ ສິ່ງໃໝ່ທີ່ຖືກໃຈ\nການຄົ້ນພົບຄັ້ງຕໍ່ໄປເລີ່ມທີ່ນີ້",

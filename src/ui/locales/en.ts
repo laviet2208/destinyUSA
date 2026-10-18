@@ -1,4 +1,12 @@
 export const en = {
+  "footerContact": "Get in touch",
+  "footerOpeningHours": "Opening hours",
+  "footerAsiaHours": "Asia hours",
+  "footerRegularHours": "Regular hours",
+  "footerMonThu": "Monday – Thursday",
+  "footerFriSat": "Friday – Saturday",
+  "footerSunday": "Sunday",
+  "contactLinkUnavailable": "Unable to open your email app. Please copy the email address above.",
   "authFindMore": "Find more.",
   "authLoveMore": "Love more.",
   "authWelcomeCopy": "Curated finds, new favorites.\nYour next great discovery starts here.",

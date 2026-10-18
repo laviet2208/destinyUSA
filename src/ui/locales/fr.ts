@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const fr: Dictionary = {
+  "footerContact": "Contactez-nous",
+  "footerOpeningHours": "Horaires d’ouverture",
+  "footerAsiaHours": "Horaires Asie",
+  "footerRegularHours": "Horaires habituels",
+  "footerMonThu": "Lundi – jeudi",
+  "footerFriSat": "Vendredi – samedi",
+  "footerSunday": "Dimanche",
+  "contactLinkUnavailable": "Impossible d’ouvrir votre messagerie. Veuillez copier l’adresse e-mail ci-dessus.",
   "authFindMore": "Découvrez plus.",
   "authLoveMore": "Aimez plus.",
   "authWelcomeCopy": "Des trouvailles choisies, de nouveaux coups de cœur.\nVotre prochaine découverte commence ici.",

@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const id: Dictionary = {
+  "footerContact": "Hubungi kami",
+  "footerOpeningHours": "Jam buka",
+  "footerAsiaHours": "Jam Asia",
+  "footerRegularHours": "Jam reguler",
+  "footerMonThu": "Senin – Kamis",
+  "footerFriSat": "Jumat – Sabtu",
+  "footerSunday": "Minggu",
+  "contactLinkUnavailable": "Tidak dapat membuka aplikasi email. Silakan salin alamat email di atas.",
   "authFindMore": "Temukan lebih.",
   "authLoveMore": "Sukai lebih.",
   "authWelcomeCopy": "Pilihan istimewa, favorit baru.\nPenemuan hebat berikutnya dimulai di sini.",

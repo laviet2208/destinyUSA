@@ -8,6 +8,7 @@ import { languages } from '../../ui/strings';
 import { AppText, Button, Header, IconButton, Notice, Screen } from '../../ui/components';
 import { BottomSheet, PageSection } from '../../ui/commerce';
 import { colors } from '../../ui/theme';
+import { AppInfoFooter } from '../../ui/AppInfoFooter';
 import { accountStyles, AccountAvatar, MenuRow, type AccountScreenProps } from './account-ui';
 
 export function AccountScreen({ navigation }: AccountScreenProps) {
@@ -60,13 +61,14 @@ export function AccountScreen({ navigation }: AccountScreenProps) {
         <MenuRow title={t('language')} value={languages.find(item => item.id === language)?.name} icon={<Globe2 size={19} color={colors.primary}/>} onPress={() => setLanguageOpen(true)}/>
         {account && <><MenuRow title={t('logOut')} icon={<LogOut size={19} color={colors.primary}/>} onPress={() => { void run(logout); }}/><MenuRow title={t('requestAccountDeletion')} icon={<Trash2 size={19} color={colors.danger}/>} onPress={deleteRequest} danger/></>}
       </PageSection>
+      <AppInfoFooter/>
     </ScrollView>
     <BottomSheet visible={languageOpen} title={t('language')} closeLabel={t('close')} onClose={() => setLanguageOpen(false)} busy={busy}>{languages.map(item => <Pressable key={item.id} accessibilityRole="radio" accessibilityState={{ checked: language === item.id, disabled: busy }} disabled={busy} onPress={() => { void run(async () => { const session = captureApiSession(); await setLanguage(item.id); if (isApiSessionCurrent(session)) setLanguageOpen(false); }); }} style={styles.languageRow}><AppText style={styles.languageName}>{item.name}</AppText><View style={[styles.radio, language === item.id && styles.radioSelected]}>{language === item.id && <View style={styles.radioDot}/>}</View></Pressable>)}</BottomSheet>
   </Screen>;
 }
 
 const styles = StyleSheet.create({
-  content: { paddingBottom: 26 }, identity: { marginHorizontal: 18, marginBottom: 15, backgroundColor: colors.primary, borderRadius: 17, paddingVertical: 19, paddingStart: 17, paddingEnd: 9, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  content: { paddingBottom: 0 }, identity: { marginHorizontal: 18, marginBottom: 15, backgroundColor: colors.primary, borderRadius: 17, paddingVertical: 19, paddingStart: 17, paddingEnd: 9, flexDirection: 'row', alignItems: 'center', gap: 12 },
   identityText: { flex: 1, minWidth: 0, gap: 4 }, name: { fontSize: 17, lineHeight: 23, fontWeight: '800', color: colors.background }, identityCaption: { fontSize: 10, lineHeight: 15, color: '#D9C8E8' },
   quickActions: { flexDirection: 'row', marginHorizontal: 18, marginBottom: 13, gap: 10 }, quickAction: { flex: 1, minHeight: 70, paddingVertical: 13, paddingHorizontal: 4, backgroundColor: colors.softPurple, borderRadius: 12, alignItems: 'center', justifyContent: 'center', gap: 8 }, quickLabel: { textAlign: 'center', fontSize: 11, lineHeight: 16, fontWeight: '700', color: colors.primary },
   balance: { marginHorizontal: 18, marginBottom: 8, backgroundColor: '#F5F0FA', borderWidth: 1, borderColor: '#E9E0F0', borderRadius: 13, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 12 }, balanceLabel: { color: colors.muted, fontSize: 10, lineHeight: 15 }, balanceAmount: { color: colors.primary, fontSize: 23, lineHeight: 30, fontWeight: '800', letterSpacing: -0.8 },

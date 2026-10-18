@@ -8,6 +8,7 @@ import { colors, touchTarget } from '../../ui/theme';
 import { FlashSaleHero } from '../../ui/FlashSaleHero';
 import { AdCarousel } from '../../ui/AdCarousel';
 import { BrandLogo } from '../../ui/BrandLogo';
+import { AppInfoFooter } from '../../ui/AppInfoFooter';
 import { CatalogFeedback, CategoryTile, ProductCard, productPrice, type CatalogStatus, type DirectorySection } from './catalog-ui';
 import { phoneLayout } from './presentation';
 
@@ -41,7 +42,7 @@ export function HomeScreen(props: HomeScreenProps) {
   const heading = (title: string, onPress: () => void) => <View style={styles.sectionHeading}><AppText style={styles.sectionTitle}>{title}</AppText><Pressable accessibilityRole="button" onPress={onPress} style={styles.seeAll}><AppText variant="caption" style={styles.purple}>{t('seeAll')}</AppText><ArrowRight size={15} color={colors.primary}/></Pressable></View>;
   const grid = (products: Product[]) => <View style={styles.grid}>{products.slice(0, 4).map((product, index) => <ProductCard key={product.id} product={product} categoryName={categories.find(category => category.id === product.type_id)?.name} enterDelay={index * 35} onProduct={onProduct} onQuickAdd={props.onQuickAdd} quickAddLabel={t('quickAdd')} style={{ width: layout.cardWidth }}/>)}</View>;
   return <Screen scroll={false} surface={colors.primary}>
-    <FlatList<DirectorySection> data={directorySections} keyExtractor={section => section.id} refreshControl={<RefreshControl refreshing={Boolean(refreshing)} onRefresh={onRefresh} tintColor={colors.primary}/>} style={styles.listSurface} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} initialNumToRender={2} maxToRenderPerBatch={2} windowSize={5} ListHeaderComponent={<>
+    <FlatList<DirectorySection> data={directorySections} keyExtractor={section => section.id} refreshControl={<RefreshControl refreshing={Boolean(refreshing)} onRefresh={onRefresh} tintColor={colors.primary}/>} style={styles.listSurface} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} initialNumToRender={2} maxToRenderPerBatch={2} windowSize={5} ListFooterComponent={<AppInfoFooter/>} ListHeaderComponent={<>
     <View style={[styles.header, { paddingHorizontal: layout.padding }]}>
       <View style={styles.headerTop}><BrandLogo compact light subtitle={t('premiumShopping')}/><View style={styles.headerActions}>
         <Pressable accessibilityRole="button" accessibilityLabel={t('notification')} onPress={props.onNotifications} style={styles.headButton}><Bell size={22} color={colors.background}/></Pressable>
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   badge: { position: 'absolute', right: 1, top: 1, backgroundColor: colors.danger, borderRadius: 9, minWidth: 15, paddingHorizontal: 3 }, badgeText: { color: colors.background, fontSize: 9, lineHeight: 15, textAlign: 'center', fontWeight: '700' },
   search: { minHeight: Math.max(45, touchTarget), paddingHorizontal: 14, backgroundColor: colors.background, borderRadius: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },
   searchText: { flex: 1, fontSize: 12, color: '#8E8597', fontWeight: '400' },
-  content: { paddingBottom: 26 }, sections: { gap: 17, paddingTop: 16 }, grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 11 },
+  content: { paddingBottom: 0 }, sections: { gap: 17, paddingTop: 16 }, grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 11 },
   sectionHeading: { minHeight: 32, flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 3, marginBottom: 12 },
   sectionTitle: { flex: 1, fontSize: 16, lineHeight: 22, fontWeight: '800', letterSpacing: -0.45 },
   seeAll: { minHeight: touchTarget, marginVertical: -6, flexDirection: 'row', alignItems: 'center', gap: 4 },

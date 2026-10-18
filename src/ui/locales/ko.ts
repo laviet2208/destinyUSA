@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const ko: Dictionary = {
+  "footerContact": "문의하기",
+  "footerOpeningHours": "운영 시간",
+  "footerAsiaHours": "아시아 운영 시간",
+  "footerRegularHours": "일반 운영 시간",
+  "footerMonThu": "월요일 – 목요일",
+  "footerFriSat": "금요일 – 토요일",
+  "footerSunday": "일요일",
+  "contactLinkUnavailable": "이메일 앱을 열 수 없습니다. 위의 이메일 주소를 복사해 주세요.",
   "authFindMore": "더 많이 발견하세요.",
   "authLoveMore": "더 많이 좋아하세요.",
   "authWelcomeCopy": "엄선한 상품과 새로운 취향.\nDestiny에서 다음 발견을 시작하세요.",

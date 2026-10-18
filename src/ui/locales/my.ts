@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const my: Dictionary = {
+  "footerContact": "ဆက်သွယ်ရန်",
+  "footerOpeningHours": "ဖွင့်ချိန်",
+  "footerAsiaHours": "အာရှအချိန်",
+  "footerRegularHours": "ပုံမှန်ဖွင့်ချိန်",
+  "footerMonThu": "တနင်္လာ – ကြာသပတေး",
+  "footerFriSat": "သောကြာ – စနေ",
+  "footerSunday": "တနင်္ဂနွေ",
+  "contactLinkUnavailable": "အီးမေးလ်အက်ပ်ကို ဖွင့်၍မရပါ။ အထက်ပါ အီးမေးလ်လိပ်စာကို ကူးယူပါ။",
   "authFindMore": "ပိုမိုရှာဖွေပါ",
   "authLoveMore": "ပိုမိုနှစ်သက်ပါ",
   "authWelcomeCopy": "ရွေးချယ်ထားသောပစ္စည်းများ၊ အကြိုက်အသစ်များ\nနောက်ထပ်အတွေ့အကြုံကောင်းကို ဒီမှာစတင်ပါ",

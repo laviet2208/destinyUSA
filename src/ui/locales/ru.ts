@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const ru: Dictionary = {
+  "footerContact": "Свяжитесь с нами",
+  "footerOpeningHours": "Часы работы",
+  "footerAsiaHours": "Время для Азии",
+  "footerRegularHours": "Обычные часы работы",
+  "footerMonThu": "Понедельник – четверг",
+  "footerFriSat": "Пятница – суббота",
+  "footerSunday": "Воскресенье",
+  "contactLinkUnavailable": "Не удалось открыть почтовое приложение. Скопируйте адрес электронной почты выше.",
   "authFindMore": "Находите больше.",
   "authLoveMore": "Любите больше.",
   "authWelcomeCopy": "Избранные находки, новые любимые вещи.\nВаше следующее открытие начинается здесь.",

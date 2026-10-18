@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const vi: Dictionary = {
+  "footerContact": "Kết nối với chúng tôi",
+  "footerOpeningHours": "Giờ mở cửa",
+  "footerAsiaHours": "Giờ châu Á",
+  "footerRegularHours": "Giờ thông thường",
+  "footerMonThu": "Thứ Hai – Thứ Năm",
+  "footerFriSat": "Thứ Sáu – Thứ Bảy",
+  "footerSunday": "Chủ Nhật",
+  "contactLinkUnavailable": "Không mở được ứng dụng email. Bạn có thể sao chép địa chỉ email ở trên.",
   "authFindMore": "Khám phá thêm.",
   "authLoveMore": "Yêu thích hơn.",
   "authWelcomeCopy": "Sản phẩm chọn lọc, trải nghiệm mới.\nKhám phá điều tuyệt vời tiếp theo cùng Destiny.",

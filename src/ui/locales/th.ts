@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const th: Dictionary = {
+  "footerContact": "ติดต่อเรา",
+  "footerOpeningHours": "เวลาทำการ",
+  "footerAsiaHours": "เวลาทำการเอเชีย",
+  "footerRegularHours": "เวลาทำการปกติ",
+  "footerMonThu": "จันทร์ – พฤหัสบดี",
+  "footerFriSat": "ศุกร์ – เสาร์",
+  "footerSunday": "อาทิตย์",
+  "contactLinkUnavailable": "ไม่สามารถเปิดแอปอีเมลได้ กรุณาคัดลอกที่อยู่อีเมลด้านบน",
   "authFindMore": "ค้นพบมากขึ้น",
   "authLoveMore": "รักมากขึ้น",
   "authWelcomeCopy": "สินค้าคัดสรร สิ่งใหม่ที่ถูกใจ\nการค้นพบครั้งต่อไปเริ่มต้นที่นี่",

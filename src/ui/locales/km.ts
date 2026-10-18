@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const km: Dictionary = {
+  "footerContact": "ទាក់ទងយើង",
+  "footerOpeningHours": "ម៉ោងបើកដំណើរការ",
+  "footerAsiaHours": "ម៉ោងនៅអាស៊ី",
+  "footerRegularHours": "ម៉ោងធម្មតា",
+  "footerMonThu": "ច័ន្ទ – ព្រហស្បតិ៍",
+  "footerFriSat": "សុក្រ – សៅរ៍",
+  "footerSunday": "អាទិត្យ",
+  "contactLinkUnavailable": "មិនអាចបើកកម្មវិធីអ៊ីមែលបានទេ។ សូមចម្លងអាសយដ្ឋានអ៊ីមែលខាងលើ។",
   "authFindMore": "ស្វែងរកបន្ថែម",
   "authLoveMore": "ស្រឡាញ់បន្ថែម",
   "authWelcomeCopy": "ផលិតផលជ្រើសរើស និងចំណូលចិត្តថ្មីៗ\nការរកឃើញដ៏អស្ចារ្យបន្ទាប់ចាប់ផ្តើមនៅទីនេះ",

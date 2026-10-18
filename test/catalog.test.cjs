@@ -31,6 +31,7 @@ function renderHome(rtl) {
     '../../ui/FlashSaleHero': { FlashSaleHero: 'FlashSaleHero' },
     '../../ui/AdCarousel': { AdCarousel: 'AdCarousel' },
     '../../ui/BrandLogo': { BrandLogo: 'BrandLogo' },
+    '../../ui/AppInfoFooter': { AppInfoFooter: 'AppInfoFooter' },
     './presentation': loadPresentation(),
     './catalog-ui': { ...ui, ProductCard: 'ProductCard', CategoryTile: 'CategoryTile', CatalogFeedback: 'CatalogFeedback', catalogStyles: { inset: {}, horizontal: {}, pressed: {} } },
   };
@@ -51,6 +52,7 @@ function find(node, predicate) {
 for (const rtl of [false, true]) test(`home uses grid previews, all categories and real callbacks in ${rtl ? 'RTL' : 'LTR'}`, () => {
   const { tree, props, actions } = renderHome(rtl);
   const vertical = find(tree, item => item.type === 'FlatList' && !item.props.horizontal)[0];
+  assert.equal(vertical.props.ListFooterComponent.type, 'AppInfoFooter');
   const horizontal = find(tree, item => item.type === 'FlatList' && item.props.horizontal);
   assert.equal(horizontal.length, 1);
   assert.equal(horizontal[0].props.inverted, rtl);

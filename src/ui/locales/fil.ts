@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const fil: Dictionary = {
+  "footerContact": "Makipag-ugnayan",
+  "footerOpeningHours": "Oras ng pagbubukas",
+  "footerAsiaHours": "Oras sa Asya",
+  "footerRegularHours": "Karaniwang oras",
+  "footerMonThu": "Lunes – Huwebes",
+  "footerFriSat": "Biyernes – Sabado",
+  "footerSunday": "Linggo",
+  "contactLinkUnavailable": "Hindi mabuksan ang email app. Pakikopya ang email address sa itaas.",
   "authFindMore": "Tumuklas pa.",
   "authLoveMore": "Mas marami pang magugustuhan.",
   "authWelcomeCopy": "Mga piling produkto at bagong paborito.\nSimulan ang susunod mong pagtuklas sa Destiny.",

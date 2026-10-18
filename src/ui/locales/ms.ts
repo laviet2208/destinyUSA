@@ -1,6 +1,14 @@
 import type { Dictionary } from './en';
 
 export const ms: Dictionary = {
+  "footerContact": "Hubungi kami",
+  "footerOpeningHours": "Waktu operasi",
+  "footerAsiaHours": "Waktu Asia",
+  "footerRegularHours": "Waktu biasa",
+  "footerMonThu": "Isnin – Khamis",
+  "footerFriSat": "Jumaat – Sabtu",
+  "footerSunday": "Ahad",
+  "contactLinkUnavailable": "Tidak dapat membuka aplikasi e-mel. Sila salin alamat e-mel di atas.",
   "authFindMore": "Temui lebih banyak.",
   "authLoveMore": "Lebih banyak untuk disukai.",
   "authWelcomeCopy": "Produk terpilih dan kegemaran baharu.\nMulakan penemuan seterusnya bersama Destiny.",

@@ -54,6 +54,7 @@ function screenHarness(filename, options = {}) {
     '../../ui/commerce': new Proxy({}, { get: (_, key) => String(key) }),
     '../../ui/CommerceFooter': { CommerceFooter: 'CommerceFooter' },
     '../../ui/BrandLogo': { BrandLogo: 'BrandLogo' },
+    '../../ui/AppInfoFooter': { AppInfoFooter: 'AppInfoFooter' },
     '../../ui/theme': { colors: {}, radius: {}, spacing: {} },
     '../../ui/VoucherFace': { VoucherFace: 'VoucherFace' },
     '../../ui/strings': { languages: [{ id: 'en', name: 'English' }] },
