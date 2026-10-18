@@ -11,6 +11,13 @@ test('Android SDK matches the installed React Native baseline without changing i
   const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
   vm.runInNewContext(compiled, { module, exports: module.exports, process: { env: {} } });
   const config = module.exports.default;
+  assert.equal(config.name, 'Destiny USA');
+  assert.equal(config.web.name, config.name);
+  assert.equal(config.ios.infoPlist.CFBundleDisplayName, config.name);
+  assert.equal(config.ios.infoPlist.CFBundleName, config.name);
+  assert.equal(config.icon, './assets/icon.png');
+  assert.equal(config.android.icon ?? config.icon, config.icon);
+  assert.equal(config.ios.icon ?? config.icon, config.icon);
   const android = config.plugins.find(plugin => Array.isArray(plugin) && plugin[0] === 'expo-build-properties')[1].android;
   const versions = fs.readFileSync(path.join(__dirname, '../node_modules/react-native/gradle/libs.versions.toml'), 'utf8');
   assert.equal(android.compileSdkVersion, Number(versions.match(/^compileSdk = "(\d+)"/m)[1]));

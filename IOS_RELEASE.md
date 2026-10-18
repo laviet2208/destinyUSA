@@ -6,6 +6,8 @@ Chỉ clone repo app khách: https://github.com/laviet2208/destinyUSA.git, nhán
 
 | Thuộc tính | Giá trị hiện tại |
 | --- | --- |
+| Tên hiển thị Android/iOS | Destiny USA |
+| Biểu tượng ứng dụng | assets/icon.png, tạo từ assets/logomain.png bằng npm run icon:prepare |
 | Bundle ID iOS | destn.dstnm.destinymain |
 | Apple Developer Team | 827H8UVFKV |
 | Expo owner | vitla22 |

@@ -4,6 +4,7 @@
   "private": true,
   "main": "index.ts",
   "scripts": {
+    "icon:prepare": "node scripts/prepare-app-icon.cjs",
     "start": "expo start --dev-client",
     "start:local": "node --dns-result-order=ipv4first node_modules/expo/bin/cli start --dev-client --localhost",
     "android": "expo run:android",

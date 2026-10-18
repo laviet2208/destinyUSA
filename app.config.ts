@@ -25,8 +25,8 @@ export default {
     supportsTablet: true,
     googleServicesFile: './GoogleService-Info.plist',
     infoPlist: {
-      CFBundleDisplayName: 'Destinymain',
-      CFBundleName: 'destinymain',
+      CFBundleDisplayName: 'Destiny USA',
+      CFBundleName: 'Destiny USA',
       UIBackgroundModes: ['remote-notification'],
       UISupportedInterfaceOrientations: ['UIInterfaceOrientationPortrait', 'UIInterfaceOrientationLandscapeLeft', 'UIInterfaceOrientationLandscapeRight'],
       'UISupportedInterfaceOrientations~ipad': ['UIInterfaceOrientationPortrait', 'UIInterfaceOrientationPortraitUpsideDown', 'UIInterfaceOrientationLandscapeLeft', 'UIInterfaceOrientationLandscapeRight'],

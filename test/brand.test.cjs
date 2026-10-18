@@ -56,9 +56,15 @@ test('all embedded auth illustration assets are bundled WebP files rather than H
   }
 });
 
-test('native launcher icon remains a square 1024px PNG', () => {
+test('native launcher icon is an opaque 1024px PNG with the requested logo source bundled', async () => {
   const icon = fs.readFileSync(path.join(__dirname, '../assets/icon.png'));
   assert.equal(icon.subarray(1, 4).toString(), 'PNG');
   assert.equal(icon.readUInt32BE(16), 1024);
   assert.equal(icon.readUInt32BE(20), 1024);
+  const source = fs.readFileSync(path.join(__dirname, '../assets/logomain.png'));
+  assert.equal(source.subarray(1, 4).toString(), 'PNG');
+  assert.equal(source.readUInt32BE(16), source.readUInt32BE(20));
+  const { getPngInfo } = require('@expo/image-utils');
+  const pixels = await getPngInfo(path.join(__dirname, '../assets/icon.png'));
+  for (let offset = 3; offset < pixels.data.length; offset += 4) assert.equal(pixels.data[offset], 255);
 });

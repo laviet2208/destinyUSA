@@ -1,6 +1,7 @@
 # Destiny USA — app khách độc lập
 
 ## GitHub và Expo
+- Tên hiển thị Android/iOS: **Destiny USA**. Icon ứng dụng dùng `assets/icon.png` (1024×1024), tạo từ bản gốc `assets/logomain.png` bằng `npm run icon:prepare`. Đổi tên/icon cần build lại APK/IPA; không đổi package/bundle ID hay khóa ký.
 - Quy trình bàn giao clone → build iOS → TestFlight → cập nhật App Store: [IOS_RELEASE.md](IOS_RELEASE.md).
 - Source app khách: https://github.com/laviet2208/destinyUSA
 - Expo project: https://expo.dev/accounts/vitla22/projects/destiny-usa-customer
