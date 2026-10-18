@@ -214,7 +214,7 @@ export const id: Dictionary = {
   newPassword: 'Kata sandi Anda',
   referral: 'Kode referral',
   enterReferral: 'Masukkan kode referral Anda',
-  referralDescription: 'Kode referral diperlukan untuk mengakses akun Anda.',
+  "referralDescription": "Masukkan kode referral khusus akun ini. Hanya pemilik akun yang dapat menggunakannya, satu kali.",
   noDescription: 'Deskripsi tidak tersedia',
   saleNotStarted: 'Promo kilat belum dimulai',
   giftSent: 'Voucher terkirim',

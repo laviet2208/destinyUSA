@@ -214,7 +214,7 @@ export const ja: Dictionary = {
   "newPassword": "パスワード",
   "referral": "紹介コード",
   "enterReferral": "紹介コードを入力",
-  "referralDescription": "アカウントを利用するには紹介コードが必要です。",
+  "referralDescription": "このアカウント専用の紹介コードを入力してください。アカウントの所有者のみが一度だけ使用できます。",
   "noDescription": "説明はありません",
   "saleNotStarted": "フラッシュセールはまだ始まっていません",
   "giftSent": "バウチャーを送りました",

@@ -214,7 +214,7 @@ export const fr: Dictionary = {
   "newPassword": "Votre mot de passe",
   "referral": "Code de parrainage",
   "enterReferral": "Saisissez votre code de parrainage",
-  "referralDescription": "Un code de parrainage est nécessaire pour accéder à votre compte.",
+  "referralDescription": "Saisissez le code de parrainage attribué à ce compte. Seul son titulaire peut l’utiliser, une seule fois.",
   "noDescription": "Aucune description disponible",
   "saleNotStarted": "La vente flash n’a pas encore commencé",
   "giftSent": "Bon envoyé",

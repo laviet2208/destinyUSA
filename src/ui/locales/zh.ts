@@ -214,7 +214,7 @@ export const zh: Dictionary = {
   "newPassword": "我的密码",
   "referral": "邀请码",
   "enterReferral": "输入邀请码",
-  "referralDescription": "需要邀请码才能使用账户",
+  "referralDescription": "请输入本账户专属的邀请码。该码仅限账户本人使用一次。",
   "noDescription": "暂无商品介绍",
   "saleNotStarted": "限时抢购尚未开始",
   "giftSent": "礼券已转赠",

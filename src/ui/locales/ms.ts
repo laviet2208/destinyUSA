@@ -214,7 +214,7 @@ export const ms: Dictionary = {
   "newPassword": "Kata laluan anda",
   "referral": "Kod rujukan",
   "enterReferral": "Masukkan kod rujukan",
-  "referralDescription": "Kod rujukan diperlukan untuk mengakses akaun anda.",
+  "referralDescription": "Masukkan kod rujukan yang diberikan kepada akaun ini. Hanya pemilik akaun boleh menggunakannya, sekali sahaja.",
   "noDescription": "Tiada penerangan",
   "saleNotStarted": "Jualan Kilat belum bermula",
   "giftSent": "Baucar dihantar",

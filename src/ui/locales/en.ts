@@ -212,7 +212,7 @@ export const en = {
   "newPassword": "Your password",
   "referral": "Referral code",
   "enterReferral": "Enter your referral code",
-  "referralDescription": "A referral code is required to access your account.",
+  "referralDescription": "Enter the referral code assigned to this account. Only its owner can use it, once.",
   "noDescription": "No description available",
   "saleNotStarted": "Flash sale has not started yet",
   "giftSent": "Voucher sent",

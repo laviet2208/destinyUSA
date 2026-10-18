@@ -214,7 +214,7 @@ export const es: Dictionary = {
   "newPassword": "Tu contraseña",
   "referral": "Código de invitación",
   "enterReferral": "Introduce tu código de invitación",
-  "referralDescription": "Necesitas un código de invitación para acceder a tu cuenta.",
+  "referralDescription": "Introduce el código de invitación asignado a esta cuenta. Solo su titular puede usarlo, una única vez.",
   "noDescription": "No hay descripción disponible",
   "saleNotStarted": "La oferta relámpago aún no ha empezado",
   "giftSent": "Cupón enviado",

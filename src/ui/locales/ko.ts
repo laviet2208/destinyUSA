@@ -214,7 +214,7 @@ export const ko: Dictionary = {
   "newPassword": "비밀번호",
   "referral": "추천 코드",
   "enterReferral": "추천 코드 입력",
-  "referralDescription": "계정을 이용하려면 추천 코드가 필요합니다.",
+  "referralDescription": "이 계정에 발급된 전용 추천 코드를 입력하세요. 계정 소유자만 한 번 사용할 수 있습니다.",
   "noDescription": "설명이 없습니다",
   "saleNotStarted": "플래시 세일이 아직 시작되지 않았습니다",
   "giftSent": "바우처를 보냈습니다",

@@ -214,7 +214,7 @@ export const pt: Dictionary = {
   "newPassword": "Sua senha",
   "referral": "Código de indicação",
   "enterReferral": "Digite seu código de indicação",
-  "referralDescription": "É necessário um código de indicação para acessar sua conta.",
+  "referralDescription": "Insira o código de indicação atribuído a esta conta. Apenas o titular pode usá-lo, uma única vez.",
   "noDescription": "Nenhuma descrição disponível",
   "saleNotStarted": "A oferta relâmpago ainda não começou",
   "giftSent": "Cupom enviado",

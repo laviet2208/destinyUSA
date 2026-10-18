@@ -214,7 +214,7 @@ export const vi: Dictionary = {
   "newPassword": "Mật khẩu",
   "referral": "Mã giới thiệu",
   "enterReferral": "Nhập mã giới thiệu",
-  "referralDescription": "Cần mã giới thiệu để sử dụng tài khoản.",
+  "referralDescription": "Nhập mã giới thiệu được cấp riêng cho tài khoản này. Chỉ chính chủ được sử dụng một lần.",
   "noDescription": "Chưa có mô tả",
   "saleNotStarted": "Flash sale chưa bắt đầu",
   "giftSent": "Đã tặng voucher",

@@ -214,7 +214,7 @@ export const th: Dictionary = {
   "newPassword": "รหัสผ่านของคุณ",
   "referral": "รหัสแนะนำ",
   "enterReferral": "กรอกรหัสแนะนำ",
-  "referralDescription": "ต้องใช้รหัสแนะนำเพื่อเข้าใช้งานบัญชี",
+  "referralDescription": "กรอกรหัสแนะนำที่ออกให้บัญชีนี้ เจ้าของบัญชีเท่านั้นที่ใช้ได้หนึ่งครั้ง",
   "noDescription": "ยังไม่มีคำอธิบาย",
   "saleNotStarted": "แฟลชเซลยังไม่เริ่ม",
   "giftSent": "ส่งคูปองแล้ว",

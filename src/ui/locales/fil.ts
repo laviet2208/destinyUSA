@@ -214,7 +214,7 @@ export const fil: Dictionary = {
   "newPassword": "Iyong password",
   "referral": "Referral code",
   "enterReferral": "Ilagay ang referral code",
-  "referralDescription": "Kailangan ng referral code para ma-access ang iyong account.",
+  "referralDescription": "Ilagay ang referral code na nakatalaga sa account na ito. Ang may-ari lamang ang maaaring gumamit nito, nang isang beses.",
   "noDescription": "Walang paglalarawan",
   "saleNotStarted": "Hindi pa nagsisimula ang Flash Sale",
   "giftSent": "Naipadala ang voucher",

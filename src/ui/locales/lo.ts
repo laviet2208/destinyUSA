@@ -214,7 +214,7 @@ export const lo: Dictionary = {
   "newPassword": "ລະຫັດຜ່ານຂອງທ່ານ",
   "referral": "ລະຫັດແນະນຳ",
   "enterReferral": "ປ້ອນລະຫັດແນະນຳ",
-  "referralDescription": "ຕ້ອງມີລະຫັດແນະນຳເພື່ອໃຊ້ບັນຊີ",
+  "referralDescription": "ປ້ອນລະຫັດແນະນຳທີ່ອອກໃຫ້ບັນຊີນີ້. ມີພຽງເຈົ້າຂອງບັນຊີທີ່ໃຊ້ໄດ້ໜຶ່ງຄັ້ງ.",
   "noDescription": "ຍັງບໍ່ມີຄຳອະທິບາຍ",
   "saleNotStarted": "ການຂາຍດ່ວນຍັງບໍ່ເລີ່ມ",
   "giftSent": "ມອບຄູປອງແລ້ວ",
