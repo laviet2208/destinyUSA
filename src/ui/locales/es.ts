@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const es: Dictionary = {
+  "copyEmail": "Copiar correo",
+  "emailCopied": "Correo copiado",
+  "copyFailed": "No se pudo copiar. Mantén pulsado el correo para copiarlo.",
   "desktopStatus": "Experiencia en ordenador",
   "desktopTitle": "La versión para ordenador está en desarrollo.",
   "desktopMessage": "Estamos mejorando la interfaz y las funciones para ordenadores. Por ahora, visita Destiny USA desde tu teléfono para seguir comprando.",

@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const th: Dictionary = {
+  "copyEmail": "คัดลอกอีเมล",
+  "emailCopied": "คัดลอกอีเมลแล้ว",
+  "copyFailed": "ไม่สามารถคัดลอกได้ แตะอีเมลค้างไว้เพื่อคัดลอก",
   "desktopStatus": "ประสบการณ์บนคอมพิวเตอร์",
   "desktopTitle": "อินเทอร์เฟซสำหรับคอมพิวเตอร์กำลังพัฒนา",
   "desktopMessage": "เรากำลังปรับปรุงอินเทอร์เฟซและฟีเจอร์สำหรับคอมพิวเตอร์ ขณะนี้โปรดเข้า Destiny USA ผ่านโทรศัพท์เพื่อเลือกซื้อสินค้าต่อ",

@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const vi: Dictionary = {
+  "copyEmail": "Sao chép email",
+  "emailCopied": "Đã sao chép email",
+  "copyFailed": "Không thể sao chép. Nhấn giữ email để sao chép.",
   "desktopStatus": "Trải nghiệm trên máy tính",
   "desktopTitle": "Giao diện cho PC đang được phát triển.",
   "desktopMessage": "Giao diện và tính năng trên máy tính đang được hoàn thiện. Bạn vui lòng truy cập Destiny USA bằng điện thoại để tiếp tục mua sắm.",

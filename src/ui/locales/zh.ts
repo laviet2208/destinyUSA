@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const zh: Dictionary = {
+  "copyEmail": "复制邮箱",
+  "emailCopied": "邮箱已复制",
+  "copyFailed": "无法复制。请长按邮箱地址进行复制。",
   "desktopStatus": "电脑端体验",
   "desktopTitle": "电脑端界面正在开发中。",
   "desktopMessage": "我们正在完善电脑端的界面和功能。目前，请使用手机访问 Destiny USA，继续购物。",

@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const lo: Dictionary = {
+  "copyEmail": "ສຳເນົາອີເມວ",
+  "emailCopied": "ສຳເນົາອີເມວແລ້ວ",
+  "copyFailed": "ບໍ່ສາມາດສຳເນົາໄດ້. ກົດອີເມວຄ້າງໄວ້ເພື່ອສຳເນົາ.",
   "desktopStatus": "ປະສົບການເທິງຄອມພິວເຕີ",
   "desktopTitle": "ໜ້າຈໍສຳລັບຄອມພິວເຕີກຳລັງພັດທະນາ.",
   "desktopMessage": "ພວກເຮົາກຳລັງປັບປຸງໜ້າຈໍ ແລະ ຟັງຊັນສຳລັບຄອມພິວເຕີ. ກະລຸນາເຂົ້າ Destiny USA ຜ່ານໂທລະສັບເພື່ອສືບຕໍ່ຊື້ສິນຄ້າ.",

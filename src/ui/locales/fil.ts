@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const fil: Dictionary = {
+  "copyEmail": "Kopyahin ang email",
+  "emailCopied": "Nakopya ang email",
+  "copyFailed": "Hindi makopya. Pindutin nang matagal ang email para kopyahin.",
   "desktopStatus": "Karanasan sa computer",
   "desktopTitle": "Ginagawa pa ang bersyon para sa computer.",
   "desktopMessage": "Pinapahusay pa namin ang interface at mga feature para sa computer. Sa ngayon, buksan ang Destiny USA sa iyong telepono upang magpatuloy sa pamimili.",

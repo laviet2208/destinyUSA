@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const ko: Dictionary = {
+  "copyEmail": "이메일 복사",
+  "emailCopied": "이메일이 복사되었습니다",
+  "copyFailed": "복사할 수 없습니다. 이메일을 길게 눌러 복사하세요.",
   "desktopStatus": "PC 이용 안내",
   "desktopTitle": "PC용 화면을 개발 중입니다.",
   "desktopMessage": "컴퓨터용 화면과 기능을 준비하고 있습니다. 지금은 휴대전화에서 Destiny USA에 접속하여 쇼핑을 계속해 주세요.",

@@ -10,6 +10,7 @@ function screenHarness(filename, options = {}) {
   const references = [];
   const requests = [];
   const alerts = [];
+  const clipboard = [];
   const navigations = [];
   let stateIndex = 0;
   let refIndex = 0;
@@ -44,6 +45,7 @@ function screenHarness(filename, options = {}) {
     'react/jsx-runtime': { jsx, jsxs: jsx, Fragment: 'Fragment' },
     'react-native': new Proxy({ StyleSheet: { create: value => value, hairlineWidth: 1 }, Alert: { alert: (...arguments_) => alerts.push(arguments_) }, useWindowDimensions: () => ({ width: 390, height: 844 }), Linking: { openURL: async () => {} } }, { get: (target, key) => target[key] ?? String(key) }),
     'expo-crypto': { randomUUID: () => `operation-${++uuidIndex}` },
+    'expo-clipboard': { setStringAsync: async value => { clipboard.push(value); return options.copy ? options.copy(value) : true; } },
     'lucide-react-native': new Proxy({}, { get: (_, key) => String(key) }),
     '../../state/MobileContext': { useMobile: () => mobile },
     '../../services/api': { api: async (...arguments_) => { requests.push(arguments_); return options.api ? options.api(...arguments_) : {}; }, mediaUrl: value => value ?? '', captureApiSession: () => ({ ...session }), isApiSessionCurrent: value => value.token === session.token && value.generation === session.generation },
@@ -55,7 +57,7 @@ function screenHarness(filename, options = {}) {
     '../../ui/CommerceFooter': { CommerceFooter: 'CommerceFooter' },
     '../../ui/BrandLogo': { BrandLogo: 'BrandLogo' },
     '../../ui/AppInfoFooter': { AppInfoFooter: 'AppInfoFooter' },
-    '../../ui/theme': { colors: {}, radius: {}, spacing: {} },
+    '../../ui/theme': { colors: { deepPurple: '#321454' }, radius: {}, spacing: {} },
     '../../ui/VoucherFace': { VoucherFace: 'VoucherFace' },
     '../../ui/strings': { languages: [{ id: 'en', name: 'English' }] },
     '../catalog/RichProductDescription': { RichProductDescription: 'RichProductDescription' },
@@ -68,7 +70,7 @@ function screenHarness(filename, options = {}) {
   const navigation = { navigate: (...arguments_) => navigations.push(arguments_), goBack: () => navigations.push(['back']) };
   return {
     render(name, route) { stateIndex = 0; refIndex = 0; let tree = module.exports[name]({ navigation, route }); while (typeof tree?.type === 'function') tree = tree.type(tree.props); return tree; },
-    state, requests, alerts, navigations, mobile,
+    state, requests, alerts, navigations, mobile, clipboard,
     get refreshes() { return refreshes; },
     get accountRefreshes() { return accountRefreshes; },
     get logoutCount() { return logoutCount; },
@@ -115,6 +117,54 @@ test('About requests the selected locale instead of a fixed English page', () =>
   harness.mobile.language = 'vi'; harness.render('AboutScreen');
   harness.mobile.language = 'fr'; harness.render('AboutScreen');
   assert.deepEqual(paths, ['/public/about?language=vi', '/public/about?language=fr']);
+  const tree = harness.render('AboutScreen');
+  assert.equal(tree.props.surface, '#321454');
+  assert.equal(elements(tree).find(node => node.type === 'Header').props.tone, 'purple');
+  assert.equal(elements(tree).find(node => node.type === 'RichProductDescription').props.html, '<p>About</p>');
+});
+
+test('wallet copies the actual account email, gives feedback and retains deposit/withdrawal routes', async () => {
+  const harness = screenHarness('WalletScreen.tsx');
+  const walletHeader = () => elements(harness.render('WalletScreen')).find(node => node.type === 'FlatList').props.ListHeaderComponent;
+  const copyButton = () => elements(walletHeader()).find(node => node.props.accessibilityLabel === 'copyEmail');
+  assert.ok(elements(walletHeader()).some(node => node.type === 'BrandLogo'));
+  assert.ok(elements(walletHeader()).some(node => node.props.children === 'customer@example.test'));
+  assert.equal(elements(walletHeader()).some(node => node.props.children === 'Destiny USA · USDT'), false);
+  assert.ok(elements(walletHeader()).some(node => node.props.style?.backgroundColor === '#151419'));
+  copyButton().props.onPress(); await harness.flush();
+  assert.deepEqual(harness.clipboard, ['customer@example.test']);
+  assert.ok(elements(walletHeader()).some(node => node.props.accessibilityLabel === 'emailCopied'));
+  for (const label of ['deposit', 'withdraw']) {
+    elements(walletHeader()).find(node => node.type === 'Pressable' && elements(node).some(child => child.props.children === label)).props.onPress();
+  }
+  assert.deepEqual(JSON.parse(JSON.stringify(harness.navigations)), [['customer_care', {mode:'deposit'}], ['customer_care', {mode:'withdrawal'}]]);
+  assert.equal(harness.requests.length, 0);
+});
+
+test('wallet clipboard failures show a localized fallback without reporting success', async () => {
+  for (const copy of [async () => false, async () => { throw new Error('denied'); }]) {
+    const harness = screenHarness('WalletScreen.tsx', { copy });
+    const header = () => elements(harness.render('WalletScreen')).find(node => node.type === 'FlatList').props.ListHeaderComponent;
+    elements(header()).find(node => node.props.accessibilityLabel === 'copyEmail').props.onPress();
+    await harness.flush();
+    assert.ok(elements(header()).some(node => node.props.children === 'copyFailed'));
+    assert.equal(elements(header()).some(node => node.props.accessibilityLabel === 'emailCopied'), false);
+  }
+});
+
+test('wallet uses green credits and deposits, red debits and withdrawals in both history tabs', () => {
+  const harness = screenHarness('WalletScreen.tsx');
+  for (const mode of ['ledger', 'requests']) {
+    harness.state[0] = mode;
+    const list = elements(harness.render('WalletScreen')).find(node => node.type === 'FlatList');
+    for (const direction of mode === 'ledger' ? ['credit', 'debit'] : ['deposit', 'withdrawal']) {
+      const row = list.props.renderItem({ item: { id:'history-fixture', direction, amount:50, content:'Transaction', status:'pending', created_at:null } });
+      const amount = elements(row).find(node => Array.isArray(node.props.children) && node.props.children.includes(' USDT'));
+      const incoming = direction === 'credit' || direction === 'deposit';
+      assert.equal(amount.props.style[1].color, incoming ? '#16805C' : '#BD3949');
+      assert.equal(amount.props.children[0], mode === 'ledger' ? incoming ? '+' : '−' : '');
+    }
+  }
 });
 
 test('profile saves profile fields only, never balance, status, email or credentials', async () => {

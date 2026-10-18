@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const ru: Dictionary = {
+  "copyEmail": "Копировать e-mail",
+  "emailCopied": "E-mail скопирован",
+  "copyFailed": "Не удалось скопировать. Нажмите и удерживайте адрес e-mail.",
   "desktopStatus": "Версия для компьютера",
   "desktopTitle": "Интерфейс для компьютера находится в разработке.",
   "desktopMessage": "Мы совершенствуем интерфейс и функции для компьютеров. Пока открывайте Destiny USA на телефоне, чтобы продолжить покупки.",

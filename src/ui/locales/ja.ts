@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const ja: Dictionary = {
+  "copyEmail": "メールアドレスをコピー",
+  "emailCopied": "メールアドレスをコピーしました",
+  "copyFailed": "コピーできませんでした。メールアドレスを長押ししてコピーしてください。",
   "desktopStatus": "パソコン版について",
   "desktopTitle": "パソコン向け画面は開発中です。",
   "desktopMessage": "現在、パソコン向けの画面と機能を整備しています。お買い物を続けるには、スマートフォンからDestiny USAにアクセスしてください。",

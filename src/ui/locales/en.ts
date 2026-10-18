@@ -1,4 +1,7 @@
 export const en = {
+  "copyEmail": "Copy email",
+  "emailCopied": "Email copied",
+  "copyFailed": "Unable to copy. Touch and hold the email to copy it.",
   "desktopStatus": "Desktop experience",
   "desktopTitle": "Our desktop experience is in development.",
   "desktopMessage": "We are refining the interface and features for computers. For now, please visit Destiny USA on your phone to continue shopping.",

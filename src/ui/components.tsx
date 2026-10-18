@@ -33,10 +33,11 @@ export function Screen({ children, style, scroll = true, refreshing, onRefresh, 
   const rtl = useContext(UiDirection);
   return <SafeAreaView edges={['top', 'left', 'right']} style={[styles.screen, { backgroundColor: surface, direction: rtl ? 'rtl' : 'ltr' }]}><KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}><MotionScreen>{scroll ? <ScrollView keyboardShouldPersistTaps="handled" refreshControl={onRefresh ? <RefreshControl refreshing={Boolean(refreshing)} onRefresh={onRefresh} tintColor={colors.primary}/> : undefined} contentContainerStyle={[styles.scroll, style]}>{children}</ScrollView> : <View style={[styles.flex, style]}>{children}</View>}</MotionScreen></KeyboardAvoidingView></SafeAreaView>;
 }
-export function Header({ title, onBack, action }: { title: string; onBack?: () => void; action?: ReactNode }) {
+export function Header({ title, onBack, action, tone = 'light' }: { title: string; onBack?: () => void; action?: ReactNode; tone?: 'light' | 'purple' }) {
   const rtl = useContext(UiDirection);
   const language = useContext(UiLanguage);
-  return <View style={styles.header}>{onBack && <IconButton outlined label={translate(language, 'back')} onPress={onBack}><ArrowLeft size={22} color={colors.text} style={rtl ? { transform: [{ rotate: '180deg' }] } : undefined}/></IconButton>}<AppText variant="heading" style={styles.headerTitle}>{title}</AppText>{action}</View>;
+  const purple = tone === 'purple';
+  return <View style={[styles.header, purple && { backgroundColor: colors.deepPurple }]}>{onBack && <IconButton outlined={!purple} plain={purple} label={translate(language, 'back')} onPress={onBack}><ArrowLeft size={22} color={purple ? colors.onPrimary : colors.text} style={rtl ? { transform: [{ rotate: '180deg' }] } : undefined}/></IconButton>}<AppText variant="heading" style={[styles.headerTitle, purple && { color: colors.onPrimary }]}>{title}</AppText>{action}</View>;
 }
 export function SectionHeading({ title, action, onPress }: { title: string; action?: string; onPress?: () => void }) {
   const rtl = useContext(UiDirection);

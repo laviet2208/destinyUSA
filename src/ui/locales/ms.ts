@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 export const ms: Dictionary = {
+  "copyEmail": "Salin e-mel",
+  "emailCopied": "E-mel disalin",
+  "copyFailed": "Tidak dapat menyalin. Tekan lama e-mel untuk menyalinnya.",
   "desktopStatus": "Pengalaman pada komputer",
   "desktopTitle": "Antara muka komputer sedang dibangunkan.",
   "desktopMessage": "Kami sedang menambah baik antara muka dan ciri untuk komputer. Buat masa ini, layari Destiny USA melalui telefon untuk meneruskan pembelian.",
