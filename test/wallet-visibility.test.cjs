@@ -15,6 +15,7 @@ test('wallet visibility understands imported numeric values and a missing legacy
 
 test('wallet gate redirects an open wallet to Account, but keeps ordinary support available', () => {
   let showWallet = false;
+  let showAboutApp = false;
   const replacements = [];
   const modules = {
     react: { useEffect: callback => callback() },
@@ -22,7 +23,7 @@ test('wallet gate redirects an open wallet to Account, but keeps ordinary suppor
     'react-native': { StyleSheet: { create: value => value } },
     'lucide-react-native': {},
     '../../hooks/useResource': {},
-    '../../state/MobileContext': { useMobile: () => ({ catalog: { showWallet } }) },
+    '../../state/MobileContext': { useMobile: () => ({ catalog: { showWallet, showAboutApp } }) },
     '../../ui/components': {}, '../../ui/theme': { colors: {}, spacing: {} }, '../../ui/strings': {},
   };
   const loaded = { exports: {} };
@@ -36,4 +37,9 @@ test('wallet gate redirects an open wallet to Account, but keeps ordinary suppor
   assert.equal(loaded.exports.WalletAccess({ ...props, required: false }), 'wallet content');
   showWallet = true;
   assert.equal(loaded.exports.WalletAccess(props), 'wallet content');
+  assert.equal(loaded.exports.AboutAccess(props), null);
+  assert.equal(replacements[1][0], 'main_screen');
+  assert.equal(replacements[1][1].screen, 'account_page');
+  showAboutApp = true;
+  assert.equal(loaded.exports.AboutAccess(props), 'wallet content');
 });

@@ -17,7 +17,7 @@ test('footer visibility defaults to visible only after settings load and accepts
 });
 
 function settingsHarness(authenticated = false) {
-  const states = [authenticated ? { id: 'customer-fixture', status: authenticated === 'referral_required' ? authenticated : 'active' } : null, !authenticated, false, '', 'vi', null, { showWallet: false, showAppInfoFooter: false, showReferralButtons: false }, false, '', 0, { regular: [], flashsale: [] }];
+  const states = [authenticated ? { id: 'customer-fixture', status: authenticated === 'referral_required' ? authenticated : 'active' } : null, !authenticated, false, '', 'vi', null, { showWallet: false, showAppInfoFooter: false, showReferralButtons: false, showAboutApp: false }, false, '', 0, { regular: [], flashsale: [] }];
   const effects = [];
   const requests = [];
   const intervals = [];
@@ -35,6 +35,7 @@ function settingsHarness(authenticated = false) {
     '../services/commerce': {},
     '../services/wallet-visibility': { walletIsVisible: value => value === undefined || Number(value) === 1 },
     '../services/footer-visibility': { appInfoFooterIsVisible: value => value === undefined || Number(value) === 1 },
+    '../services/about-visibility': { aboutAppIsVisible: value => value === undefined || Number(value) === 1 },
     '../services/referral-visibility': { referralButtonsAreVisible: value => value === undefined || Number(value) === 1 },
     '../ui/strings': {},
   };
@@ -73,6 +74,33 @@ test('customer socket updates footer and wallet independently and ignores result
   harness.requests[3].resolve({ items: [{ id: '__value', data: 0 }] }); await harness.flush();
   assert.equal(harness.catalog().showAppInfoFooter, false);
   assert.equal(harness.catalog().showWallet, true);
+});
+
+test('About visibility syncs independently through customer socket and foreground, without changing footer or wallet', async () => {
+  const harness = settingsHarness(true);
+  harness.requests[0].resolve({ items: [{ id: 'showAboutApp', data: 0 }, { id: 'showAppInfoFooter', data: 1 }] });
+  harness.requests[1].resolve({ items: [{ id: '__value', data: 1 }] }); await harness.flush();
+  assert.equal(harness.catalog().showAboutApp, false);
+  assert.equal(harness.catalog().showAppInfoFooter, true);
+  assert.equal(harness.catalog().showWallet, true);
+  harness.events['settings:changed']();
+  harness.requests[2].resolve({ items: [{ id: 'showAboutApp', data: 1 }, { id: 'showAppInfoFooter', data: 0 }] });
+  harness.requests[3].resolve({ items: [{ id: '__value', data: 1 }] }); await harness.flush();
+  assert.equal(harness.catalog().showAboutApp, true);
+  assert.equal(harness.catalog().showAppInfoFooter, false);
+  harness.foreground();
+  harness.requests[4].resolve({ items: [{ id: 'showAboutApp', data: 0 }] });
+  harness.requests[5].resolve({ items: [{ id: '__value', data: 0 }] }); await harness.flush();
+  assert.equal(harness.catalog().showAboutApp, false);
+  harness.cleanup();
+});
+
+test('About visibility supports numeric flags and missing legacy settings', () => {
+  const module = { exports: {} };
+  vm.runInNewContext(compile(source('services/about-visibility.ts')), { module, exports: module.exports });
+  for (const value of [undefined, 1, '1', true]) assert.equal(module.exports.aboutAppIsVisible(value), true);
+  for (const value of [0, '0', false, null, 'invalid']) assert.equal(module.exports.aboutAppIsVisible(value), false);
+  assert.match(source('state/MobileContext.tsx'), /showAboutApp: false/);
 });
 
 test('referral-required accounts sync only public display settings without accessing wallet, catalog or active-only sockets', async () => {

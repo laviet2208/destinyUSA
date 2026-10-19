@@ -24,7 +24,7 @@ function screenHarness(filename, options = {}) {
     account: { id: 'customer-fixture', email: 'customer@example.test', first_name: 'First', last_name: 'Last', phone: '0123456789', address: 'Combined address', balance: 500, referral_code: 'REF' },
     t: key => key,
     language: 'en',
-    catalog: { showWallet: true },
+    catalog: { showWallet: true, showAboutApp: true },
     revision: 0,
     refresh: () => { refreshes += 1; },
     refreshAccount: async () => { accountRefreshes += 1; },
@@ -63,7 +63,7 @@ function screenHarness(filename, options = {}) {
     '../catalog/RichProductDescription': { RichProductDescription: 'RichProductDescription' },
     '../../ui/AboutDocument': { AboutDocument: 'AboutDocument' },
     '../../services/about-document': { isAboutDocument: html => /<(?:!doctype|html|head|style)\b/i.test(html) },
-    './account-ui': { accountStyles: {}, MenuRow: 'MenuRow', DataFeedback: 'DataFeedback', PageControls: 'PageControls', WalletAccess: ({ required = true, children }) => !required || mobile.catalog.showWallet ? children : null, useAccountResource: requestedPath => options.resource ? options.resource(requestedPath) : resource, recordDate: value => value ?? 'dateUnknown' },
+    './account-ui': { AboutAccess: ({ children }) => mobile.catalog.showAboutApp ? children : null, accountStyles: {}, MenuRow: 'MenuRow', DataFeedback: 'DataFeedback', PageControls: 'PageControls', WalletAccess: ({ required = true, children }) => !required || mobile.catalog.showWallet ? children : null, useAccountResource: requestedPath => options.resource ? options.resource(requestedPath) : resource, recordDate: value => value ?? 'dateUnknown' },
   };
   const source = fs.readFileSync(path.join(__dirname, '../src/screens/account', filename), 'utf8');
   const compiled = typescript.transpileModule(source, { compilerOptions: { module: typescript.ModuleKind.CommonJS, target: typescript.ScriptTarget.ES2022, jsx: typescript.JsxEmit.ReactJSX } }).outputText;
@@ -111,6 +111,21 @@ test('hiding wallet removes Account Balance and prevents wallet, withdrawal and 
   assert.equal(support.render('SupportScreen', { params: { mode: 'withdrawal' } }), null);
   assert.equal(support.render('SupportScreen', { params: { mode: 'deposit' } }), null);
   assert.ok(support.render('SupportScreen'));
+});
+
+test('About visibility hides its Account entry and prevents content from mounting without removing saved content', () => {
+  const account = screenHarness('AccountScreen.tsx');
+  assert.ok(elements(account.render('AccountScreen')).some(node => node.props.title === 'aboutApp'));
+  account.mobile.catalog.showAboutApp = false;
+  assert.equal(elements(account.render('AccountScreen')).some(node => node.props.title === 'aboutApp'), false);
+  let fetches = 0;
+  const harness = screenHarness('AboutScreen.tsx', { resource: () => { fetches += 1; return { data: { html: '<p>Saved</p>' } }; } });
+  harness.mobile.catalog.showAboutApp = false;
+  assert.equal(harness.render('AboutScreen'), null);
+  assert.equal(fetches, 0);
+  harness.mobile.catalog.showAboutApp = true;
+  assert.ok(harness.render('AboutScreen'));
+  assert.equal(fetches, 1);
 });
 
 test('About requests the selected locale instead of a fixed English page', () => {

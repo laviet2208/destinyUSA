@@ -7,9 +7,13 @@ import { colors } from '../../ui/theme';
 import { RichProductDescription } from '../catalog/RichProductDescription';
 import { AboutDocument } from '../../ui/AboutDocument';
 import { isAboutDocument } from '../../services/about-document';
-import { DataFeedback, useAccountResource, type AccountScreenProps } from './account-ui';
+import { AboutAccess, DataFeedback, useAccountResource, type AccountScreenProps } from './account-ui';
 
 export function AboutScreen({ navigation }: AccountScreenProps) {
+  return <AboutAccess navigation={navigation}><AboutContent navigation={navigation}/></AboutAccess>;
+}
+
+function AboutContent({ navigation }: AccountScreenProps) {
   const { t, language } = useMobile();
   const { width } = useWindowDimensions();
   const resource = useAccountResource<{ html: string }>(`/public/about?language=${encodeURIComponent(language)}`);

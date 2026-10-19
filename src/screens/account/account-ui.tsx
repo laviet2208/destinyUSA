@@ -9,6 +9,14 @@ import { directionFor } from '../../ui/strings';
 
 export type AccountScreenProps = { navigation: any; route?: any };
 
+export function AboutAccess({ navigation, children }: { navigation: any; children: ReactNode }) {
+  const { catalog } = useMobile();
+  useEffect(() => {
+    if (!catalog.showAboutApp) navigation.replace('main_screen', { screen: 'account_page' });
+  }, [catalog.showAboutApp, navigation]);
+  return catalog.showAboutApp ? children : null;
+}
+
 export function WalletAccess({ navigation, required = true, children }: { navigation: any; required?: boolean; children: ReactNode }) {
   const { catalog } = useMobile();
   const visible = !required || catalog.showWallet;

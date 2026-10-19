@@ -57,7 +57,7 @@ export function AccountScreen({ navigation }: AccountScreenProps) {
       </>}
       <PageSection style={styles.menuSection}><AppText variant="overline" style={styles.groupTitle}>{t('settingsSupport')}</AppText>
         {account && <MenuRow title={t('customerCare')} icon={<MessageCircle size={19} color={colors.primary}/>} onPress={() => navigation.navigate('customer_care')}/>}
-        <MenuRow title={t('aboutApp')} icon={<CircleUserRound size={19} color={colors.primary}/>} onPress={() => navigation.navigate('about_screen')}/>
+        {catalog.showAboutApp && <MenuRow title={t('aboutApp')} icon={<CircleUserRound size={19} color={colors.primary}/>} onPress={() => navigation.navigate('about_screen')}/>}
         <MenuRow title={t('language')} value={languages.find(item => item.id === language)?.name} icon={<Globe2 size={19} color={colors.primary}/>} onPress={() => setLanguageOpen(true)}/>
         {account && <><MenuRow title={t('logOut')} icon={<LogOut size={19} color={colors.primary}/>} onPress={() => { void run(logout); }}/><MenuRow title={t('requestAccountDeletion')} icon={<Trash2 size={19} color={colors.danger}/>} onPress={deleteRequest} danger/></>}
       </PageSection>
