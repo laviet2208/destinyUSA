@@ -5,12 +5,15 @@ import { CommerceFooter } from '../../ui/CommerceFooter';
 import { BrandLogo } from '../../ui/BrandLogo';
 import { colors } from '../../ui/theme';
 import { RichProductDescription } from '../catalog/RichProductDescription';
+import { AboutDocument } from '../../ui/AboutDocument';
+import { isAboutDocument } from '../../services/about-document';
 import { DataFeedback, useAccountResource, type AccountScreenProps } from './account-ui';
 
 export function AboutScreen({ navigation }: AccountScreenProps) {
   const { t, language } = useMobile();
   const { width } = useWindowDimensions();
   const resource = useAccountResource<{ html: string }>(`/public/about?language=${encodeURIComponent(language)}`);
+  if (resource.data?.html && isAboutDocument(resource.data.html)) return <Screen scroll={false} surface={colors.deepPurple}><Header title={t('aboutApp')} tone="purple" onBack={() => navigation.goBack()}/><AboutDocument html={resource.data.html} title={t('aboutApp')}/><CommerceFooter/></Screen>;
   return <Screen scroll={false} surface={colors.deepPurple}><Header title={t('aboutApp')} tone="purple" onBack={() => navigation.goBack()}/><ScrollView contentContainerStyle={styles.content}>
     <View style={styles.hero}><View pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={styles.orbit}/><BrandLogo light width={186}/><View style={styles.rule}/><AppText variant="title" style={styles.title}>{t('aboutApp')}</AppText></View>
     <View style={styles.article}>{resource.data?.html ? <RichProductDescription html={resource.data.html} width={Math.max(0, width - 76)}/> : <DataFeedback loading={resource.loading} error={resource.error} empty title={t('noContent')} onRetry={resource.refresh}/>}</View>

@@ -61,6 +61,8 @@ function screenHarness(filename, options = {}) {
     '../../ui/VoucherFace': { VoucherFace: 'VoucherFace' },
     '../../ui/strings': { languages: [{ id: 'en', name: 'English' }] },
     '../catalog/RichProductDescription': { RichProductDescription: 'RichProductDescription' },
+    '../../ui/AboutDocument': { AboutDocument: 'AboutDocument' },
+    '../../services/about-document': { isAboutDocument: html => /<(?:!doctype|html|head|style)\b/i.test(html) },
     './account-ui': { accountStyles: {}, MenuRow: 'MenuRow', DataFeedback: 'DataFeedback', PageControls: 'PageControls', WalletAccess: ({ required = true, children }) => !required || mobile.catalog.showWallet ? children : null, useAccountResource: requestedPath => options.resource ? options.resource(requestedPath) : resource, recordDate: value => value ?? 'dateUnknown' },
   };
   const source = fs.readFileSync(path.join(__dirname, '../src/screens/account', filename), 'utf8');
@@ -121,6 +123,15 @@ test('About requests the selected locale instead of a fixed English page', () =>
   assert.equal(tree.props.surface, '#321454');
   assert.equal(elements(tree).find(node => node.type === 'Header').props.tone, 'purple');
   assert.equal(elements(tree).find(node => node.type === 'RichProductDescription').props.html, '<p>About</p>');
+});
+
+test('full About documents use the complete layout without an extra legacy hero, article card or nested scroll container', () => {
+  const html = '<!doctype html><html><head><style>.hero{display:grid}</style></head><body><footer>Contacts</footer></body></html>';
+  const harness = screenHarness('AboutScreen.tsx', { data: { html } });
+  const tree = harness.render('AboutScreen');
+  assert.equal(elements(tree).find(node => node.type === 'AboutDocument').props.html, html);
+  assert.equal(elements(tree).filter(node => node.type === 'CommerceFooter').length, 1);
+  assert.ok(!elements(tree).some(node => ['RichProductDescription', 'ScrollView', 'BrandLogo'].includes(node.type)));
 });
 
 test('wallet copies the actual account email, gives feedback and retains deposit/withdrawal routes', async () => {
