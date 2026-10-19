@@ -23,7 +23,7 @@ function SocietyMark({ id }: { id: string }) {
 function ShoppingMark({ id }: { id: string }) {
   return <View accessible accessibilityLabel="Destiny USA — Online shopping" style={styles.shopping}>
     <Svg width={33} height={38} viewBox="0 0 50 58" accessibilityElementsHidden importantForAccessibility="no-hide-descendants"><Defs><LinearGradient id={`${id}shoppingRed`} x1="0" y1="0" x2="1" y2="1"><Stop offset="0" stopColor="#FF333E"/><Stop offset="1" stopColor="#D90024"/></LinearGradient></Defs><Path d="M16 20V13a9 9 0 0 1 18 0v7" fill="none" stroke="#20B4D6" strokeWidth="4"/><Path d="M7 19Q7 17 10 17H40Q43 17 43 20L48 52Q48 55 44 55H6Q2 55 3 51Z" fill={`url(#${id}shoppingRed)`}/><Circle cx="18" cy="32" r="2.3" fill="#FFFFFF"/><Path d="M30 32H36M14 40Q25 52 38 40" stroke="#FFFFFF" strokeWidth="3" fill="none" strokeLinecap="round"/></Svg>
-    <View style={styles.wordmark}><Image source={require('../../assets/auth/brand-mark.webp')} contentFit="contain" style={styles.earth}/><AppText numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75} style={styles.destiny}>destiny<AppText style={styles.usa}> usa</AppText></AppText></View>
+    <View style={styles.wordmark}><Image source={require('../../assets/logoonlyearth.png')} contentFit="contain" style={styles.earth}/><AppText numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75} style={styles.destiny}>destiny<AppText style={styles.usa}> usa</AppText></AppText></View>
     <AppText style={styles.shoppingCaption}>ONLINE SHOPPING</AppText>
   </View>;
 }

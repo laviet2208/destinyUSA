@@ -19,7 +19,7 @@ function cardHarness() {
     if (name === 'lucide-react-native') return { Pencil: 'Pencil' };
     if (name === 'react-native-svg') return new Proxy({ default: 'Svg', __esModule: true }, { get: (target, key) => target[key] ?? String(key) });
     if (name === './components') return { AppText: 'AppText', IconButton: 'IconButton' };
-    assert.equal(name, '../../assets/auth/brand-mark.webp');
+    assert.equal(name, '../../assets/logoonlyearth.png');
     assert.ok(fs.existsSync(path.join(__dirname, '../src/ui', name)));
     return name;
   } });
