@@ -58,6 +58,7 @@ function screenHarness(filename, options = {}) {
     '../../ui/AvailableBalance': { AvailableBalance: 'AvailableBalance' },
     '../../ui/BrandLogo': { BrandLogo: 'BrandLogo' },
     '../../ui/AppInfoFooter': { AppInfoFooter: 'AppInfoFooter' },
+    '../../ui/AccountIdentityCard': { AccountIdentityCard: 'AccountIdentityCard' },
     '../../ui/theme': { colors: { deepPurple: '#321454' }, radius: {}, spacing: {} },
     '../../ui/VoucherFace': { VoucherFace: 'VoucherFace' },
     '../../ui/strings': { languages: [{ id: 'en', name: 'English' }] },
@@ -95,6 +96,18 @@ function button(tree, title) {
 }
 
 const requestBody = (harness, index) => JSON.parse(JSON.stringify(harness.requests[index][2]));
+
+test('Account member card uses current identity and preserves the profile edit route', () => {
+  const harness = screenHarness('AccountScreen.tsx');
+  const card = elements(harness.render('AccountScreen')).find(node => node.type === 'AccountIdentityCard');
+  assert.equal(card.props.account, harness.mobile.account);
+  assert.equal(card.props.referralLabel, 'referral');
+  assert.equal(card.props.editLabel, 'profile');
+  card.props.onEdit();
+  assert.deepEqual(harness.navigations.map(arguments_ => [...arguments_]), [['account_info_screen']]);
+  harness.mobile.account = null;
+  assert.equal(elements(harness.render('AccountScreen')).some(node => node.type === 'AccountIdentityCard'), false);
+});
 
 test('hiding wallet removes Account Balance and prevents wallet, withdrawal and money-support screens mounting', () => {
   const account = screenHarness('AccountScreen.tsx');
