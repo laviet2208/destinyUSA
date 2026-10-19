@@ -182,6 +182,7 @@ export const en = {
   "orderPlaced": "Order placed",
   "emptyCart": "Your cart is empty",
   "balance": "Available balance",
+  "refreshBalance": "Refresh balance",
   "address": "Address",
   "phone": "Phone number",
   "name": "Full name",

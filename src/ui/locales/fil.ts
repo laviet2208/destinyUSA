@@ -184,6 +184,7 @@ export const fil: Dictionary = {
   "orderPlaced": "Nailagay na ang order",
   "emptyCart": "Walang laman ang iyong cart",
   "balance": "Magagamit na balanse",
+  "refreshBalance": "I-refresh ang balanse",
   "address": "Address",
   "phone": "Numero ng telepono",
   "name": "Buong pangalan",

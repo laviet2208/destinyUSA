@@ -184,6 +184,7 @@ export const ja: Dictionary = {
   "orderPlaced": "注文を受け付けました",
   "emptyCart": "カートは空です",
   "balance": "利用可能残高",
+  "refreshBalance": "残高を更新",
   "address": "住所",
   "phone": "電話番号",
   "name": "氏名",

@@ -184,6 +184,7 @@ export const ms: Dictionary = {
   "orderPlaced": "Pesanan dibuat",
   "emptyCart": "Troli anda kosong",
   "balance": "Baki tersedia",
+  "refreshBalance": "Kemas kini baki",
   "address": "Alamat",
   "phone": "Nombor telefon",
   "name": "Nama penuh",

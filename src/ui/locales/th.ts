@@ -184,6 +184,7 @@ export const th: Dictionary = {
   "orderPlaced": "สั่งซื้อสำเร็จ",
   "emptyCart": "ตะกร้าของคุณว่างเปล่า",
   "balance": "ยอดเงินคงเหลือ",
+  "refreshBalance": "อัปเดตยอดคงเหลือ",
   "address": "ที่อยู่",
   "phone": "หมายเลขโทรศัพท์",
   "name": "ชื่อ-นามสกุล",

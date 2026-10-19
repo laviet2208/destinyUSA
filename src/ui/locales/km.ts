@@ -184,6 +184,7 @@ export const km: Dictionary = {
   "orderPlaced": "បានបញ្ជាទិញ",
   "emptyCart": "កន្ត្រករបស់អ្នកទទេ",
   "balance": "សមតុល្យដែលអាចប្រើបាន",
+  "refreshBalance": "ធ្វើបច្ចុប្បន្នភាពសមតុល្យ",
   "address": "អាសយដ្ឋាន",
   "phone": "លេខទូរសព្ទ",
   "name": "ឈ្មោះពេញ",

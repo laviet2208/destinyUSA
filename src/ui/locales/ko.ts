@@ -184,6 +184,7 @@ export const ko: Dictionary = {
   "orderPlaced": "주문이 접수되었습니다",
   "emptyCart": "장바구니가 비어 있습니다",
   "balance": "사용 가능 잔액",
+  "refreshBalance": "잔액 새로고침",
   "address": "주소",
   "phone": "전화번호",
   "name": "성명",

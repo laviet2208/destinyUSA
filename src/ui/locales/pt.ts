@@ -184,6 +184,7 @@ export const pt: Dictionary = {
   "orderPlaced": "Pedido realizado",
   "emptyCart": "Seu carrinho está vazio",
   "balance": "Saldo disponível",
+  "refreshBalance": "Atualizar saldo",
   "address": "Endereço",
   "phone": "Número de telefone",
   "name": "Nome completo",

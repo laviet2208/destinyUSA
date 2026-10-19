@@ -184,6 +184,7 @@ export const ru: Dictionary = {
   orderPlaced: 'Заказ оформлен',
   emptyCart: 'Ваша корзина пуста',
   balance: 'Доступный баланс',
+  "refreshBalance": "Обновить баланс",
   address: 'Адрес',
   phone: 'Номер телефона',
   name: 'Полное имя',

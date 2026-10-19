@@ -5,6 +5,7 @@ import { useMobile } from '../../state/MobileContext';
 import { captureApiSession, isApiSessionCurrent } from '../../services/api';
 import { AppText, Button, Header, Notice, Screen } from '../../ui/components';
 import { CommerceFooter } from '../../ui/CommerceFooter';
+import { AvailableBalance } from '../../ui/AvailableBalance';
 import { colors } from '../../ui/theme';
 import { WalletAccess, type AccountScreenProps } from './account-ui';
 
@@ -21,6 +22,7 @@ function SupportContent({ navigation, route }: AccountScreenProps) {
   const withdrawal = route?.params?.mode === 'withdrawal';
   const openViber = async () => { if (opening.current) return; const session = captureApiSession(); opening.current = true; setBusy(true); setError(''); try { await Linking.openURL('viber://chat?number=%2B12138296490'); } catch { if (isApiSessionCurrent(session)) setError(t('viberUnavailable')); } finally { opening.current = false; if (isApiSessionCurrent(session)) setBusy(false); } };
   return <Screen scroll={false}><Header title={withdrawal ? t('withdraw') : route?.params?.mode === 'deposit' ? t('deposit') : t('customerCare')} onBack={() => navigation.goBack()}/><ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
+    {withdrawal && <AvailableBalance/>}
     <View style={styles.intro}><View accessibilityElementsHidden style={styles.supportSymbol}><MessageCircle size={36} strokeWidth={1.4} color={colors.primary}/></View><AppText style={styles.title}>{t('supportIntro')}</AppText><AppText style={styles.description}>{t('thissystemwilltranfer')}</AppText></View>
     {error && <Notice message={`${error}\n+12138296490`} danger/>}
     <View style={styles.contactCard}><Phone size={24} strokeWidth={1.5} color={colors.primary}/><View style={styles.contactText}><AppText variant="label">{t('viber')}</AppText><AppText muted selectable>+1 213 829 6490</AppText></View></View>

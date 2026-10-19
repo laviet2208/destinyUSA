@@ -184,6 +184,7 @@ export const vi: Dictionary = {
   "orderPlaced": "Đặt hàng thành công",
   "emptyCart": "Giỏ hàng chưa có sản phẩm",
   "balance": "Số dư hiện có",
+  "refreshBalance": "Cập nhật số dư",
   "address": "Địa chỉ",
   "phone": "Số điện thoại",
   "name": "Họ và tên",

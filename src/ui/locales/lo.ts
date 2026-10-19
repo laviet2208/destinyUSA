@@ -184,6 +184,7 @@ export const lo: Dictionary = {
   "orderPlaced": "ສັ່ງຊື້ສຳເລັດ",
   "emptyCart": "ກະຕ່າຂອງທ່ານວ່າງເປົ່າ",
   "balance": "ຍອດເງິນທີ່ໃຊ້ໄດ້",
+  "refreshBalance": "ອັບເດດຍອດເງິນ",
   "address": "ທີ່ຢູ່",
   "phone": "ເບີໂທລະສັບ",
   "name": "ຊື່ແລະນາມສະກຸນ",

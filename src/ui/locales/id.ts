@@ -184,6 +184,7 @@ export const id: Dictionary = {
   orderPlaced: 'Pesanan berhasil dibuat',
   emptyCart: 'Keranjang Anda kosong',
   balance: 'Saldo tersedia',
+  "refreshBalance": "Perbarui saldo",
   address: 'Alamat',
   phone: 'Nomor telepon',
   name: 'Nama lengkap',

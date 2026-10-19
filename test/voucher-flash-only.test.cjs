@@ -18,6 +18,7 @@ function harness({ guest = false } = {}) {
     '@react-navigation/native': { useIsFocused: () => true, usePreventRemove() {} },
     '../ui/components': ui,
     '../ui/CommerceFooter': ui,
+    '../ui/AvailableBalance': { AvailableBalance: 'AvailableBalance' },
     '../ui/commerce': ui,
     '../ui/theme': { colors: {} },
     '../state/MobileContext': { useMobile: () => ({ account: guest ? null : { id: 'customer', first_name: 'Name', phone: '0123', address: 'Address', balance: 1000 }, carts: { regular: [item], flashsale: [item] }, t: key => key }) },
@@ -58,6 +59,23 @@ test('voucher picker never loads regular vouchers and filters any wrongly scoped
   assert.equal(app.resources[1], '/vouchers?channel=flashsale');
   assert.equal(nodes(tree).filter(node => node.type === 'Pressable' && node.props.accessibilityRole === 'radio').length, 3);
   assert.equal(JSON.stringify(tree).includes('wrong-private'), false);
+});
+
+test('both carts and checkout show available balance next to the action without changing totals or showing guest balances', () => {
+  for (const channel of ['regular', 'flashsale']) {
+    const app = harness();
+    for (const screen of ['CartScreen', 'CheckoutScreen']) {
+      const props = { navigation: {}, route: { name: 'cart_page', params: { channel } } };
+      const tree = app[screen](props);
+      const action = nodes(tree).find(node => node.type === 'BottomAction');
+      assert.equal(action.props.children[0].type, 'AvailableBalance');
+      assert.equal(action.props.children[0].props.compact, true);
+      assert.equal(nodes(tree).filter(node => node.type === 'AvailableBalance').length, 1);
+      assert.ok(JSON.stringify(action).includes('100'));
+      const guest = harness({ guest: true });
+      assert.equal(nodes(guest[screen](props)).some(node => node.type === 'AvailableBalance'), false);
+    }
+  }
 });
 
 test('guest Flash Sale cart fills the remaining native height before its bottom navigation', () => {

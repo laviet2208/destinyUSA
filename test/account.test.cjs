@@ -55,6 +55,7 @@ function screenHarness(filename, options = {}) {
     '../../ui/components': new Proxy({}, { get: (_, key) => String(key) }),
     '../../ui/commerce': new Proxy({}, { get: (_, key) => String(key) }),
     '../../ui/CommerceFooter': { CommerceFooter: 'CommerceFooter' },
+    '../../ui/AvailableBalance': { AvailableBalance: 'AvailableBalance' },
     '../../ui/BrandLogo': { BrandLogo: 'BrandLogo' },
     '../../ui/AppInfoFooter': { AppInfoFooter: 'AppInfoFooter' },
     '../../ui/theme': { colors: { deepPurple: '#321454' }, radius: {}, spacing: {} },
@@ -111,6 +112,17 @@ test('hiding wallet removes Account Balance and prevents wallet, withdrawal and 
   assert.equal(support.render('SupportScreen', { params: { mode: 'withdrawal' } }), null);
   assert.equal(support.render('SupportScreen', { params: { mode: 'deposit' } }), null);
   assert.ok(support.render('SupportScreen'));
+});
+
+test('withdrawal support and form both display available balance without exposing it in ordinary support or deposit', () => {
+  const form = screenHarness('WithdrawalScreen.tsx');
+  assert.equal(elements(form.render('WithdrawalScreen')).filter(node => node.type === 'AvailableBalance').length, 1);
+  const support = screenHarness('SupportScreen.tsx');
+  assert.equal(elements(support.render('SupportScreen', { params: { mode: 'withdrawal' } })).filter(node => node.type === 'AvailableBalance').length, 1);
+  assert.equal(elements(support.render('SupportScreen')).filter(node => node.type === 'AvailableBalance').length, 0);
+  assert.equal(elements(support.render('SupportScreen', { params: { mode: 'deposit' } })).filter(node => node.type === 'AvailableBalance').length, 0);
+  assert.equal(form.requests.length, 0);
+  assert.equal(support.requests.length, 0);
 });
 
 test('About visibility hides its Account entry and prevents content from mounting without removing saved content', () => {

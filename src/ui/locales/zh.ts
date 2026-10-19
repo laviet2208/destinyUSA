@@ -184,6 +184,7 @@ export const zh: Dictionary = {
   "orderPlaced": "下单成功",
   "emptyCart": "购物车为空",
   "balance": "可用余额",
+  "refreshBalance": "刷新余额",
   "address": "地址",
   "phone": "电话号码",
   "name": "姓名",

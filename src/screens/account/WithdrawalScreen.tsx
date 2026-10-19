@@ -3,9 +3,9 @@ import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import * as Crypto from 'expo-crypto';
 import { useMobile } from '../../state/MobileContext';
 import { api, captureApiSession, isApiSessionCurrent } from '../../services/api';
-import { money } from '../../services/commerce';
 import { AppText, Button, Field, Header, Notice, Screen } from '../../ui/components';
 import { CommerceFooter } from '../../ui/CommerceFooter';
+import { AvailableBalance } from '../../ui/AvailableBalance';
 import { colors, touchTarget } from '../../ui/theme';
 import { accountStyles, WalletAccess, type AccountScreenProps } from './account-ui';
 
@@ -46,7 +46,7 @@ function WithdrawalContent({ navigation }: AccountScreenProps) {
     finally { submitting.current = false; if (isApiSessionCurrent(session)) setBusy(false); }
   };
   return <Screen scroll={false}><Header title={t('withdraw')} onBack={() => navigation.goBack()}/><ScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false} contentContainerStyle={[accountStyles.content, styles.formContent]}>
-    <View style={styles.balance}><AppText style={styles.balanceLabel}>{t('balance')}</AppText><AppText style={styles.amount}>{money(account?.balance ?? 0)} USDT</AppText></View>
+    <AvailableBalance/>
     {error && <Notice message={error} danger/>}
     <View style={styles.amountGroup}><AppText style={styles.sectionTitle}>{t('amount')}</AppText><View style={styles.presets}>{[50, 100, 200].map(value => <Pressable key={value} accessibilityRole="radio" accessibilityState={{ checked: !customAmount && number === value }} onPress={() => { setCustomAmount(false); setAmount(String(value)); }} style={[styles.preset, !customAmount && number === value && styles.selected]}><AppText style={[styles.presetText, !customAmount && number === value && styles.selectedText]}>{value} USDT</AppText></Pressable>)}<Pressable accessibilityRole="radio" accessibilityState={{ checked: customAmount }} onPress={() => { setCustomAmount(true); setAmount(''); }} style={[styles.preset, customAmount && styles.selected]}><AppText style={[styles.presetText, customAmount && styles.selectedText]}>{t('othermoney')}</AppText></Pressable></View>{customAmount && <Field label={`${t('amount')} (USDT)`} value={amount} onChangeText={setAmount} keyboardType="number-pad" maxLength={16}/>}</View>
     <Field label={t('walletAddress')} value={walletAddress} onChangeText={setWalletAddress} autoCapitalize="none" autoCorrect={false} maxLength={256}/><AppText muted style={styles.walletHint}>{t('walletRule')}</AppText>
@@ -56,8 +56,7 @@ function WithdrawalContent({ navigation }: AccountScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  formContent: { paddingTop: 0 }, balanceLabel: { fontSize: 12, lineHeight: 16, color: colors.muted },
-  balance: { gap: 0, padding: 14, backgroundColor: colors.softPurple, borderRadius: 13, marginBottom: 6 }, amount: { fontSize: 28, lineHeight: 34, fontWeight: '800', letterSpacing: -0.8, color: colors.primary },
+  formContent: { paddingTop: 0 },
   amountGroup: { gap: 10 }, sectionTitle: { fontSize: 13, lineHeight: 19, fontWeight: '800' },
   presets: { flexDirection: 'row', gap: 8 }, preset: { flex: 1, minWidth: 0, minHeight: touchTarget, paddingHorizontal: 6, paddingVertical: 10, borderWidth: 1, borderColor: '#E8E2ED', borderRadius: 9, alignItems: 'center', justifyContent: 'center' }, presetText: { fontSize: 11, lineHeight: 16, color: '#564C60', textAlign: 'center' }, selected: { borderColor: colors.primary, backgroundColor: '#F5F0FA' }, selectedText: { color: colors.primary, fontWeight: '700' },
   walletHint: { fontSize: 12, lineHeight: 18, marginTop: -8, marginBottom: 5 }, verification: { gap: 15, paddingTop: 20, borderTopWidth: 1, borderColor: colors.line },
