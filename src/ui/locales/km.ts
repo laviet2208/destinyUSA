@@ -40,7 +40,7 @@ export const km: Dictionary = {
   "saleUpcoming": "ជិតចាប់ផ្តើម",
   "saleEndsIn": "បញ្ចប់ក្នុង",
   "saleStartsIn": "ចាប់ផ្តើមក្នុង",
-  "vietnamTime": "ម៉ោងវៀតណាម",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "ស្វែងរកផលិតផល Flash Sale",
   "viewImage": "មើលរូបភាព",
   "supportLabel": "ជំនួយ",

@@ -40,7 +40,7 @@ export const ja: Dictionary = {
   "saleUpcoming": "開催予定",
   "saleEndsIn": "終了まで",
   "saleStartsIn": "開始まで",
-  "vietnamTime": "ベトナム時間",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "フラッシュセール商品を検索",
   "viewImage": "画像を見る",
   "supportLabel": "サポート",

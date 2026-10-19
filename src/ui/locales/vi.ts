@@ -40,7 +40,7 @@ export const vi: Dictionary = {
   "saleUpcoming": "SẮP BẮT ĐẦU",
   "saleEndsIn": "Kết thúc sau",
   "saleStartsIn": "Bắt đầu sau",
-  "vietnamTime": "Giờ Việt Nam",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "Tìm sản phẩm Flash Sale",
   "viewImage": "Xem ảnh",
   "supportLabel": "Hỗ trợ",

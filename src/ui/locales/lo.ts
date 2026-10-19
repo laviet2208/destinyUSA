@@ -40,7 +40,7 @@ export const lo: Dictionary = {
   "saleUpcoming": "ໃກ້ເລີ່ມ",
   "saleEndsIn": "ສິ້ນສຸດໃນ",
   "saleStartsIn": "ເລີ່ມໃນ",
-  "vietnamTime": "ເວລາຫວຽດນາມ",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "ຄົ້ນຫາສິນຄ້າ Flash Sale",
   "viewImage": "ເບິ່ງຮູບພາບ",
   "supportLabel": "ຊ່ວຍເຫຼືອ",

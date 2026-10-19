@@ -40,7 +40,7 @@ export const zh: Dictionary = {
   "saleUpcoming": "即将开始",
   "saleEndsIn": "距结束",
   "saleStartsIn": "距开始",
-  "vietnamTime": "越南时间",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "搜索闪购商品",
   "viewImage": "查看图片",
   "supportLabel": "帮助",

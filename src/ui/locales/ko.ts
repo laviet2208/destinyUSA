@@ -40,7 +40,7 @@ export const ko: Dictionary = {
   "saleUpcoming": "예정",
   "saleEndsIn": "종료까지",
   "saleStartsIn": "시작까지",
-  "vietnamTime": "베트남 시간",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "플래시 세일 상품 검색",
   "viewImage": "사진 보기",
   "supportLabel": "고객 지원",

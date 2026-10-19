@@ -38,7 +38,7 @@ export const en = {
   "saleUpcoming": "UPCOMING",
   "saleEndsIn": "Ends in",
   "saleStartsIn": "Starts in",
-  "vietnamTime": "Vietnam time",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "Search Flash Sale products",
   "viewImage": "View image",
   "supportLabel": "Support",

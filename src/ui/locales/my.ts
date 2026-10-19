@@ -40,7 +40,7 @@ export const my: Dictionary = {
   "saleUpcoming": "မကြာမီ",
   "saleEndsIn": "ပြီးဆုံးရန်",
   "saleStartsIn": "စတင်ရန်",
-  "vietnamTime": "ဗီယက်နမ်စံတော်ချိန်",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "Flash Sale ပစ္စည်းရှာရန်",
   "viewImage": "ပုံကိုကြည့်ရန်",
   "supportLabel": "အကူအညီ",

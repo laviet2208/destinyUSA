@@ -40,7 +40,7 @@ export const es: Dictionary = {
   "saleUpcoming": "PRÓXIMAMENTE",
   "saleEndsIn": "Termina en",
   "saleStartsIn": "Comienza en",
-  "vietnamTime": "Hora de Vietnam",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "Buscar productos Flash Sale",
   "viewImage": "Ver imagen",
   "supportLabel": "Ayuda",

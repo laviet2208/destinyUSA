@@ -40,7 +40,7 @@ export const ru: Dictionary = {
   "saleUpcoming": "СКОРО",
   "saleEndsIn": "До окончания",
   "saleStartsIn": "До начала",
-  "vietnamTime": "Время Вьетнама",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "Поиск товаров Flash Sale",
   "viewImage": "Просмотр изображения",
   "supportLabel": "Поддержка",

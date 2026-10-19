@@ -40,7 +40,7 @@ export const id: Dictionary = {
   "saleUpcoming": "SEGERA",
   "saleEndsIn": "Berakhir dalam",
   "saleStartsIn": "Dimulai dalam",
-  "vietnamTime": "Waktu Vietnam",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "Cari produk Flash Sale",
   "viewImage": "Lihat gambar",
   "supportLabel": "Bantuan",

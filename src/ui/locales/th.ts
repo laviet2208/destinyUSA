@@ -40,7 +40,7 @@ export const th: Dictionary = {
   "saleUpcoming": "เร็ว ๆ นี้",
   "saleEndsIn": "สิ้นสุดใน",
   "saleStartsIn": "เริ่มใน",
-  "vietnamTime": "เวลาเวียดนาม",
+  "vietnamTime": "GMT+7",
   "searchFlashSale": "ค้นหาสินค้าแฟลชเซล",
   "viewImage": "ดูรูปภาพ",
   "supportLabel": "ช่วยเหลือ",
